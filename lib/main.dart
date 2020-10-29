@@ -1,8 +1,15 @@
 import 'package:bodmoo/main_screen.dart';
+import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ScreenProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

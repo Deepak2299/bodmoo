@@ -1,14 +1,20 @@
+import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/screenData.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ItemView extends StatefulWidget {
+  BuildContext context;
   String title;
   Future<dynamic> futureFunction;
   int i = 0;
   ItemView(
-      {@required this.title, @required this.futureFunction, @required this.i});
+      {@required this.context,
+      @required this.title,
+      @required this.futureFunction,
+      @required this.i});
   @override
   _ItemViewState createState() => _ItemViewState();
 }
@@ -61,24 +67,9 @@ class _ItemViewState extends State<ItemView> {
 
                           itemBuilder: (context, i) {
                             return GestureDetector(
-                              onTap: () {
-                                switch (widget.i) {
-                                  case 0:
-                                    ScreenData.catgName = snapshots.data[i];
-                                    break;
-                                  case 1:
-                                    ScreenData.subCatgName = snapshots.data[i];
-                                    break;
-                                  case 2:
-                                    ScreenData.brandName = snapshots.data[i];
-                                    break;
-                                  case 3:
-                                    ScreenData.vehicleName = snapshots.data[i];
-                                    break;
-                                  default:
-                                    break;
-                                }
-                              },
+                              onTap: () => context
+                                  .read<ScreenProvider>()
+                                  .add(snapshots.data[i], widget.i),
                               child: Container(
 //                              height: 200,
                                 width: 100,
@@ -126,24 +117,9 @@ class _ItemViewState extends State<ItemView> {
                         itemCount: snapshots.data.length,
                         itemBuilder: (context, i) {
                           return GestureDetector(
-                            onTap: () {
-                              switch (widget.i) {
-                                case 0:
-                                  ScreenData.catgName = snapshots.data[i];
-                                  break;
-                                case 1:
-                                  ScreenData.subCatgName = snapshots.data[i];
-                                  break;
-                                case 2:
-                                  ScreenData.brandName = snapshots.data[i];
-                                  break;
-                                case 3:
-                                  ScreenData.vehicleName = snapshots.data[i];
-                                  break;
-                                default:
-                                  break;
-                              }
-                            },
+                            onTap: () => context
+                                .read<ScreenProvider>()
+                                .add(snapshots.data[i], widget.i),
                             child: Container(
                               height: 200,
                               width: 200,

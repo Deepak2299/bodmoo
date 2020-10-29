@@ -1,10 +1,10 @@
 //import 'package:payment_app/models/VarinatModel.dart';
 
 class ScreenData {
-  static String catgName;
-  static String subCatgName;
-  static String brandName;
-  static String vehicleName;
+  String catgName;
+  String subCatgName;
+  String brandName;
+  String vehicleName;
 //  static VariantsModel vm = VariantsModel();
 }
 

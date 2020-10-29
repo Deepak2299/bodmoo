@@ -19,6 +19,7 @@ dependencies:
   cupertino_icons: ^0.1.3
   http:
   shimmer:
+  provider:
 
 dev_dependencies:
   flutter_test:
