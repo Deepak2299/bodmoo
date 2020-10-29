@@ -1,12 +1,17 @@
 import 'package:bodmoo/screenData.dart';
 import 'package:flutter/foundation.dart';
 
-class ScreenProvider with ChangeNotifier {
+class ScreenProvider extends ChangeNotifier {
+//  ScreenProvider(value) : super(value);
   ScreenData screenData = new ScreenData();
+  bool click = false;
   ScreenData get getScreenData => screenData;
 //  String get catgName =>screenData.catgName;
   void add(String name, int i) {
     print(name);
+//    remove();
+//    notifyListeners();
+//    if (click)
     switch (i) {
       case 0:
         screenData.catgName = name;
@@ -26,6 +31,12 @@ class ScreenProvider with ChangeNotifier {
       default:
         break;
     }
+    click = true;
+    notifyListeners();
+  }
+
+  void remove() {
+    if (click) screenData = new ScreenData();
     notifyListeners();
   }
 }

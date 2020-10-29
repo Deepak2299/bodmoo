@@ -20,61 +20,63 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     print(context.watch<ScreenProvider>().getScreenData.catgName);
     return Scaffold(
-      body: ListView(
-        shrinkWrap: true,
+      body: Consumer<ScreenProvider>(builder: (context, screenProvider, _) {
+        return ListView(
+          shrinkWrap: true,
 //        physics: ScrollPhysics(),
-        children: [
-          SizedBox(
-            height: 20,
-          ),
-          ItemView(
-            title: "Categories",
-            futureFunction: getCategories(),
-            i: 0,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          context.watch<ScreenProvider>().getScreenData.catgName != null
-              ? ItemView(
-                  title: "Sub Categories",
-                  futureFunction: getSubCategories(
-                      catgName: context
-                          .watch<ScreenProvider>()
-                          .getScreenData
-                          .catgName),
-                  i: 1,
-                )
-              : Container(),
-          SizedBox(
-            height: 20,
-          ),
-          context.watch<ScreenProvider>().getScreenData.subCatgName != null
-              ? ItemView(
-                  title: "Brands",
-                  futureFunction: getBrands(),
-                  i: 2,
-                )
-              : Container(),
-          SizedBox(
-            height: 20,
-          ),
-          context.watch<ScreenProvider>().getScreenData.brandName != null
-              ? ItemView(
-                  title: "Vehicles",
-                  futureFunction: getVehiclesByBrand(
-                      brandName: context
-                          .watch<ScreenProvider>()
-                          .getScreenData
-                          .brandName),
-                  i: 3,
-                )
-              : Container(),
-          SizedBox(
-            height: 20,
-          ),
-        ],
-      ),
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            ItemView(
+              context: context,
+              title: "Categories",
+              futureFunction: getCategories(),
+              i: 0,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            screenProvider.getScreenData.catgName != null
+                ? ItemView(
+                    context: context,
+                    title: "Sub Categories",
+                    futureFunction: getSubCategories(
+                        catgName: Provider.of<ScreenProvider>(context)
+                            .getScreenData
+                            .catgName),
+                    i: 1,
+                  )
+                : Container(),
+            SizedBox(
+              height: 20,
+            ),
+            screenProvider.getScreenData.subCatgName != null
+                ? ItemView(
+                    context: context,
+                    title: "Brands",
+                    futureFunction: getBrands(),
+                    i: 2,
+                  )
+                : Container(),
+            SizedBox(
+              height: 20,
+            ),
+            screenProvider.getScreenData.brandName != null
+                ? ItemView(
+                    context: context,
+                    title: "Vehicles",
+                    futureFunction: getVehiclesByBrand(
+                        brandName: screenProvider.getScreenData.brandName),
+                    i: 3,
+                  )
+                : Container(),
+            SizedBox(
+              height: 20,
+            ),
+          ],
+        );
+      }),
     );
   }
 }
