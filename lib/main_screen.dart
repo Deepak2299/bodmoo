@@ -41,10 +41,8 @@ class _MainScreenState extends State<MainScreen> {
                 ? ItemView(
                     context: context,
                     title: "Sub Categories",
-                    futureFunction: getSubCategories(
-                        catgName: Provider.of<ScreenProvider>(context)
-                            .getScreenData
-                            .catgName),
+                    futureFunction:
+                        getSubCategories(catgName: Provider.of<ScreenProvider>(context).getScreenData.catgName),
                     i: 1,
                   )
                 : Container(),
@@ -66,8 +64,7 @@ class _MainScreenState extends State<MainScreen> {
                 ? ItemView(
                     context: context,
                     title: "Vehicles",
-                    futureFunction: getVehiclesByBrand(
-                        brandName: screenProvider.getScreenData.brandName),
+                    futureFunction: getVehiclesByBrand(brandName: screenProvider.getScreenData.brandName),
                     i: 3,
                   )
                 : Container(),
@@ -78,8 +75,7 @@ class _MainScreenState extends State<MainScreen> {
                 ? ItemView(
                     context: context,
                     title: "Variants",
-                    futureFunction: getVariants(
-                        Vehiclename: screenProvider.getScreenData.vehicleName),
+                    futureFunction: getVariants(Vehiclename: screenProvider.getScreenData.vehicleName),
                     i: 4,
                   )
                 : Container(),
@@ -91,24 +87,42 @@ class _MainScreenState extends State<MainScreen> {
       }),
       bottomNavigationBar: BottomAppBar(
         child: GestureDetector(
-          onTap: Provider.of<ScreenProvider>(context).getScreenData.vm != null
-              ? () {}
-              : null,
+          onTap: Provider.of<ScreenProvider>(context).getScreenData.vm != null ? () {} : null,
           child: Container(
-            color: Provider.of<ScreenProvider>(context).getScreenData.vm != null
-                ? Colors.blue
-                : Colors.grey,
+            color: Provider.of<ScreenProvider>(context).getScreenData.vm != null ? Colors.blue : Colors.grey,
             height: MediaQuery.of(context).size.height * 0.07,
             width: MediaQuery.of(context).size.width,
-            child: Center(
-              child: Text(
-                "Done",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+            child: Column(
+              children: <Widget>[
+                Center(
+                  child: Text(
+                    "Show",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text(Provider.of<ScreenProvider>(context).getScreenData.catgName + '->' ?? "",
+                        style: TextStyle(color: Colors.white)),
+                    Text(Provider.of<ScreenProvider>(context).getScreenData.subCatgName + '->' ?? "",
+                        style: TextStyle(color: Colors.white)),
+                    Text(Provider.of<ScreenProvider>(context).getScreenData.brandName + '->' ?? "",
+                        style: TextStyle(color: Colors.white)),
+                    Text(Provider.of<ScreenProvider>(context).getScreenData.vehicleName + '->' ?? "",
+                        style: TextStyle(color: Colors.white)),
+                    Text(
+                        Provider.of<ScreenProvider>(context).getScreenData.vm.modelName ??
+                            "" + Provider.of<ScreenProvider>(context).getScreenData.vm.manufactureYear ??
+                            "",
+                        style: TextStyle(color: Colors.white)),
+                  ],
+                )
+              ],
             ),
           ),
         ),
