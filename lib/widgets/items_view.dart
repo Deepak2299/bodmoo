@@ -204,25 +204,16 @@ class _ItemViewState extends State<ItemView> {
         switch (snapshots.connectionState) {
           case ConnectionState.waiting:
             if (widget.i == context.watch<ScreenProvider>().pos)
-              return Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: loading(context),
-              );
+              return loading(context);
             else {
-              return Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: snapshots.hasData ? show(context, snapshots) : Container(),
-              );
+              return snapshots.hasData ? show(context, snapshots) : Container();
             }
             break;
           default:
             if (snapshots.hasError)
               return Center(child: Text(snapshots.error.toString()));
             else if (snapshots.hasData) {
-              return Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: show(context, snapshots),
-              );
+              return show(context, snapshots);
             }
             return loading(context);
         }
