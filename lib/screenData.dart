@@ -1,11 +1,13 @@
 //import 'package:payment_app/models/VarinatModel.dart';
 
+import 'package:bodmoo/models/VarinatModel.dart';
+
 class ScreenData {
   String catgName;
   String subCatgName;
   String brandName;
   String vehicleName;
-//  static VariantsModel vm = VariantsModel();
+  VariantsModel vm = VariantsModel();
 }
 
 bool listView = true;

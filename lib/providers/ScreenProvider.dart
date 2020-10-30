@@ -8,7 +8,7 @@ class ScreenProvider extends ChangeNotifier {
   int i = 0;
   ScreenData get getScreenData => screenData;
   int get pos => i;
-  void add(String name, int im) {
+  void add(name, int im) {
     print(name);
 //    remove();
 //    notifyListeners();
@@ -18,20 +18,28 @@ class ScreenProvider extends ChangeNotifier {
         screenData.catgName = name;
         screenData.subCatgName = null;
         screenData.brandName = null;
+        screenData.vehicleName = null;
         i = 1;
         break;
       case 1:
         screenData.subCatgName = name;
         screenData.brandName = null;
+        screenData.vehicleName = null;
         i = 2;
         break;
       case 2:
         screenData.brandName = name;
+        screenData.vehicleName = null;
+
         i = 3;
         break;
       case 3:
         screenData.vehicleName = name;
-        i == -1;
+        screenData.vm = null;
+        i = 4;
+        break;
+      case 4:
+        screenData.vm = name;
         break;
       default:
         break;

@@ -21,6 +21,7 @@ class ItemView extends StatefulWidget {
 
 class _ItemViewState extends State<ItemView> {
   bool collapse = true;
+  bool gridView = false;
 
   Widget show(context, snapshots) {
     return collapse
@@ -55,7 +56,9 @@ class _ItemViewState extends State<ItemView> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          snapshots.data[i].toString(),
+                          widget.i == 4
+                              ? snapshots.data[i].modelName.toString()
+                              : snapshots.data[i].toString(),
 //                    style: textStyle,
                         ),
                       ],
@@ -73,6 +76,7 @@ class _ItemViewState extends State<ItemView> {
           )
         : GridView.builder(
             shrinkWrap: true,
+            physics: ScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 crossAxisSpacing: 15,
@@ -103,7 +107,9 @@ class _ItemViewState extends State<ItemView> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text(
-                        snapshots.data[i].toString(),
+                        widget.i == 4
+                            ? snapshots.data[i].modelName.toString()
+                            : snapshots.data[i].toString(),
 //                    style: textStyle,
                       ),
                     ],
@@ -174,21 +180,23 @@ class _ItemViewState extends State<ItemView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(widget.title),
-                FlatButton(
-                    height: 30,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
+                gridView
+                    ? FlatButton(
+                        height: 30,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
 //                    padding: EdgeInsets.all(5),
-                    color: Colors.red,
-                    onPressed: () {
-                      setState(() {
-                        collapse = !collapse;
-                      });
-                    },
-                    child: Text(
-                      !collapse ? "Collapse" : "View All",
-                      style: TextStyle(color: Colors.white),
-                    )),
+                        color: Colors.red,
+                        onPressed: () {
+                          setState(() {
+                            collapse = !collapse;
+                          });
+                        },
+                        child: Text(
+                          !collapse ? "Collapse" : "View All",
+                          style: TextStyle(color: Colors.white),
+                        ))
+                    : Container(),
               ],
             ),
           ),
@@ -202,14 +210,23 @@ class _ItemViewState extends State<ItemView> {
                       if (widget.i == context.watch<ScreenProvider>().pos)
                         return loading(context);
                       else {
+//                        if (snapshots.data.length > 4)
+//                          setState(() {
+//                            gridView = true;
+//                          });
                         return show(context, snapshots);
                       }
                       break;
                     default:
                       if (snapshots.hasError)
                         return loading(context);
-                      else
+                      else {
+//                        if (snapshots.data.length > 4)
+//                          setState(() {
+//                            gridView = true;
+//                          });
                         return show(context, snapshots);
+                      }
                   }
                 },
               )),

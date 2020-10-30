@@ -1,6 +1,7 @@
 import 'package:bodmoo/get/getBrands.dart';
 import 'package:bodmoo/get/getCategories.dart';
 import 'package:bodmoo/get/getSubCat.dart';
+import 'package:bodmoo/get/getVariants.dart';
 import 'package:bodmoo/get/getVehiclesbyBrand.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/screenData.dart';
@@ -23,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
       body: Consumer<ScreenProvider>(builder: (context, screenProvider, _) {
         return ListView(
           shrinkWrap: true,
-//        physics: ScrollPhysics(),
+          physics: ScrollPhysics(),
           children: [
             SizedBox(
               height: 20,
@@ -74,6 +75,15 @@ class _MainScreenState extends State<MainScreen> {
             SizedBox(
               height: 20,
             ),
+            screenProvider.getScreenData.vehicleName != null
+                ? ItemView(
+                    context: context,
+                    title: "Variants",
+                    futureFunction: getVariants(
+                        Vehiclename: screenProvider.getScreenData.vehicleName),
+                    i: 4,
+                  )
+                : Container(),
           ],
         );
       }),
