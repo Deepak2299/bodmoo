@@ -19,18 +19,20 @@ class ScreenProvider extends ChangeNotifier {
         screenData.subCatgName = null;
         screenData.brandName = null;
         screenData.vehicleName = null;
+        screenData.vm = null;
         i = 1;
         break;
       case 1:
         screenData.subCatgName = name;
         screenData.brandName = null;
         screenData.vehicleName = null;
+        screenData.vm = null;
         i = 2;
         break;
       case 2:
         screenData.brandName = name;
         screenData.vehicleName = null;
-
+        screenData.vm = null;
         i = 3;
         break;
       case 3:
@@ -40,6 +42,7 @@ class ScreenProvider extends ChangeNotifier {
         break;
       case 4:
         screenData.vm = name;
+        i = -1;
         break;
       default:
         break;

@@ -7,7 +7,7 @@ class ScreenData {
   String subCatgName;
   String brandName;
   String vehicleName;
-  VariantsModel vm = VariantsModel();
+  VariantsModel vm;
 }
 
 bool listView = true;

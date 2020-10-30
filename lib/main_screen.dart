@@ -4,8 +4,7 @@ import 'package:bodmoo/get/getSubCat.dart';
 import 'package:bodmoo/get/getVariants.dart';
 import 'package:bodmoo/get/getVehiclesbyBrand.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
-import 'package:bodmoo/screenData.dart';
-import 'package:bodmoo/utils/urls.dart';
+
 import 'package:bodmoo/widgets/items_view.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -84,9 +83,36 @@ class _MainScreenState extends State<MainScreen> {
                     i: 4,
                   )
                 : Container(),
+            SizedBox(
+              height: 20,
+            ),
           ],
         );
       }),
+      bottomNavigationBar: BottomAppBar(
+        child: GestureDetector(
+          onTap: Provider.of<ScreenProvider>(context).getScreenData.vm != null
+              ? () {}
+              : null,
+          child: Container(
+            color: Provider.of<ScreenProvider>(context).getScreenData.vm != null
+                ? Colors.blue
+                : Colors.grey,
+            height: MediaQuery.of(context).size.height * 0.07,
+            width: MediaQuery.of(context).size.width,
+            child: Center(
+              child: Text(
+                "Done",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
