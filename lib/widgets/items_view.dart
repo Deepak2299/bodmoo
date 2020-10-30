@@ -28,7 +28,7 @@ class _ItemViewState extends State<ItemView> {
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           shrinkWrap: true,
-          physics: ScrollPhysics(),
+          physics: BouncingScrollPhysics(),
           // crossAxisAlignment: CrossAxisAlignment.start,
           // mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -37,7 +37,7 @@ class _ItemViewState extends State<ItemView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(widget.title),
-                snapshots.data.length > 1
+                snapshots.data.length > 4
                     ? FlatButton(
                         // height: 30,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -63,7 +63,7 @@ class _ItemViewState extends State<ItemView> {
                       shrinkWrap: true,
 //                            padding: EdgeInsets.all(8),
                       scrollDirection: Axis.horizontal,
-                      physics: ScrollPhysics(),
+                      physics: BouncingScrollPhysics(),
                       itemBuilder: (context, i) {
                         return GestureDetector(
                           onTap: () => widget.context.read<ScreenProvider>().add(snapshots.data[i], widget.i),
@@ -105,7 +105,7 @@ class _ItemViewState extends State<ItemView> {
                     // height: 200,
                     child: GridView.builder(
                         shrinkWrap: true,
-                        physics: ScrollPhysics(),
+                        physics: BouncingScrollPhysics(),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3, crossAxisSpacing: 15, mainAxisSpacing: 15, childAspectRatio: 1),
                         itemCount: snapshots.data.length,
