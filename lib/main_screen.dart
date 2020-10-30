@@ -14,6 +14,13 @@ class MainScreen extends StatefulWidget {
   _MainScreenState createState() => _MainScreenState();
 }
 
+textWidget(String str) {
+  if (str != null)
+    return str + '->';
+  else
+    return '';
+}
+
 class _MainScreenState extends State<MainScreen> {
   bool collapse = true;
   @override
@@ -107,19 +114,28 @@ class _MainScreenState extends State<MainScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Text(Provider.of<ScreenProvider>(context).getScreenData.catgName + '->' ?? "",
-                        style: TextStyle(color: Colors.white)),
-                    Text(Provider.of<ScreenProvider>(context).getScreenData.subCatgName + '->' ?? "",
-                        style: TextStyle(color: Colors.white)),
-                    Text(Provider.of<ScreenProvider>(context).getScreenData.brandName + '->' ?? "",
-                        style: TextStyle(color: Colors.white)),
-                    Text(Provider.of<ScreenProvider>(context).getScreenData.vehicleName + '->' ?? "",
-                        style: TextStyle(color: Colors.white)),
                     Text(
-                        Provider.of<ScreenProvider>(context).getScreenData.vm.modelName ??
-                            "" + Provider.of<ScreenProvider>(context).getScreenData.vm.manufactureYear ??
-                            "",
-                        style: TextStyle(color: Colors.white)),
+                      textWidget(Provider.of<ScreenProvider>(context).getScreenData.catgName),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      textWidget(Provider.of<ScreenProvider>(context).getScreenData.subCatgName),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      textWidget(Provider.of<ScreenProvider>(context).getScreenData.brandName),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      textWidget(Provider.of<ScreenProvider>(context).getScreenData.vehicleName),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      Provider.of<ScreenProvider>(context).getScreenData.vm.modelName != null
+                          ? Provider.of<ScreenProvider>(context).getScreenData.vm.modelName
+                          : '',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ],
                 )
               ],
