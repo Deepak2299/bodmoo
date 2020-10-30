@@ -1,3 +1,5 @@
+import 'package:bodmoo/get/getCategories.dart';
+import 'package:bodmoo/get/getSubCat.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/screenData.dart';
 import 'package:bodmoo/utils/utils.dart';
@@ -24,10 +26,11 @@ class _ItemViewState extends State<ItemView> {
     print(snapshots.data);
     return Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          // shrinkWrap: true,
-          // physics: ScrollPhysics(),
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
+          shrinkWrap: true,
+          physics: ScrollPhysics(),
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          // mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Row(
               mainAxisSize: MainAxisSize.max,
@@ -60,7 +63,7 @@ class _ItemViewState extends State<ItemView> {
                       shrinkWrap: true,
 //                            padding: EdgeInsets.all(8),
                       scrollDirection: Axis.horizontal,
-
+                      physics: ScrollPhysics(),
                       itemBuilder: (context, i) {
                         return GestureDetector(
                           onTap: () => widget.context.read<ScreenProvider>().add(snapshots.data[i], widget.i),
@@ -98,41 +101,46 @@ class _ItemViewState extends State<ItemView> {
                       ),
                     ),
                   )
-                : GridView.builder(
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3, crossAxisSpacing: 15, mainAxisSpacing: 15, childAspectRatio: 1),
-                    itemCount: snapshots.data.length,
-                    itemBuilder: (context, i) {
-                      return GestureDetector(
-                        onTap: () => widget.context.read<ScreenProvider>().add(snapshots.data[i], widget.i),
-                        child: Container(
-                          height: 200,
-                          width: 200,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            image: DecorationImage(
-                              // ignore: missing_return
-                              image: AssetImage(IMAGE),
-                              fit: BoxFit.cover,
-                              colorFilter: ColorFilter.mode(Colors.black38, BlendMode.hardLight),
-                            ),
-                          ),
-                          padding: EdgeInsetsDirectional.only(top: 15),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Text(
-                                widget.i == 4 ? snapshots.data[i].modelName.toString() : snapshots.data[i].toString(),
-//                    style: textStyle,
+                : Container(
+                    // height: 200,
+                    child: GridView.builder(
+                        shrinkWrap: true,
+                        physics: ScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3, crossAxisSpacing: 15, mainAxisSpacing: 15, childAspectRatio: 1),
+                        itemCount: snapshots.data.length,
+                        itemBuilder: (context, i) {
+                          return GestureDetector(
+                            onTap: () => widget.context.read<ScreenProvider>().add(snapshots.data[i], widget.i),
+                            child: Container(
+                              height: 200,
+                              width: 200,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                image: DecorationImage(
+                                  // ignore: missing_return
+                                  image: AssetImage(IMAGE),
+                                  fit: BoxFit.cover,
+                                  colorFilter: ColorFilter.mode(Colors.black38, BlendMode.hardLight),
+                                ),
                               ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
+                              padding: EdgeInsetsDirectional.only(top: 15),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Text(
+                                    widget.i == 4
+                                        ? snapshots.data[i].modelName.toString()
+                                        : snapshots.data[i].toString(),
+//                    style: textStyle,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }),
+                  ),
           ],
         ));
   }
@@ -203,7 +211,7 @@ class _ItemViewState extends State<ItemView> {
             else {
               return Padding(
                 padding: const EdgeInsets.all(4.0),
-                child: show(context, snapshots),
+                child: snapshots.hasData ? show(context, snapshots) : Container(),
               );
             }
             break;
