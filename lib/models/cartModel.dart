@@ -1,6 +1,4 @@
-class orderModel
-{
-
+class orderModel {
   String orderId;
   String orderStatus;
   String orderPlaceDate;
@@ -8,32 +6,27 @@ class orderModel
   int numberOfItemsOrdered;
 }
 
-class orderDetailsModel
-{
+class orderDetailsModel {
   int cartTotal;
   int totalItems;
-  List<orderItemModel>parts;
+  List<orderItemModel> parts;
 }
 
-class orderItemModel
-{
-  String brandName, vehicleName, vehicleModel,modelYear;
+class orderItemModel {
+  String brandName, vehicleName, vehicleModel, modelYear;
   int qty;
   int price;
   String partName;
   String partId;
 }
 
-
-class placeOrderModel
-{
+class placeOrderModel {
   List<orderItemModel> itemsOrdered;
   String transactionId;
   UserModel userModel;
 }
 
-class UserModel
-{
+class UserModel {
   String userId;
   String customerName;
   String deliveryAdd;
