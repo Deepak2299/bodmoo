@@ -1,11 +1,11 @@
-class orderModel {
+class getOrdersModel
+{
   String orderId;
   String orderStatus;
   String orderPlaceDate;
   String orderDeliverDate;
   int numberOfItemsOrdered;
 }
-
 
 class orderItemModel {
   String brandName, vehicleName, vehicleModel, modelYear;
@@ -15,8 +15,10 @@ class orderItemModel {
   String partId;
 }
 
-class placeOrderModel {
+class postOrderModel {
   List<orderItemModel> itemsOrdered;
+  DateTime placeOrderDate;
+
   String transactionId;
   UserModel userModel;
 }
