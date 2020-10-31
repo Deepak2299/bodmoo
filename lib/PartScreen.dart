@@ -27,26 +27,12 @@ class _PartScreenState extends State<PartScreen> {
               SizedBox(height: 20),
               FutureBuilder(
                 future: getParts(
-                  category: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .catgName,
-                  subCategory: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .subCatgName,
-                  brandName: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .brandName,
-                  vehicleName: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .vehicleName,
-                  modelName: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .vm
-                      .modelName,
-                  year: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .vm
-                      .manufactureYear,
+                  category: Provider.of<ScreenProvider>(context).getScreenData.catgName,
+                  subCategory: Provider.of<ScreenProvider>(context).getScreenData.subCatgName,
+                  brandName: Provider.of<ScreenProvider>(context).getScreenData.brandName,
+                  vehicleName: Provider.of<ScreenProvider>(context).getScreenData.vehicleName,
+                  modelName: Provider.of<ScreenProvider>(context).getScreenData.vm.modelName,
+                  year: Provider.of<ScreenProvider>(context).getScreenData.vm.manufactureYear,
                 ),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -59,9 +45,7 @@ class _PartScreenState extends State<PartScreen> {
                       itemCount: partsList.length,
                       itemBuilder: (context, index) {
                         return ListTile(
-                          leading: Hero(
-                              tag: "images_${index}",
-                              child: Image.asset(IMAGE)),
+                          leading: Hero(tag: "images_${index}", child: Image.asset(IMAGE)),
                           title: Text(
                             partsList[index].partName,
                             style: TextStyle(fontWeight: FontWeight.bold),
@@ -79,13 +63,9 @@ class _PartScreenState extends State<PartScreen> {
 //                                    style: textStyle,
                               ),
                               Text(
-                                partsList[index].outOfStock
-                                    ? "OutOfStock"
-                                    : "Instock",
+                                partsList[index].outOfStock ? "OutOfStock" : "Instock",
                                 style: TextStyle(
-                                  color: partsList[index].outOfStock
-                                      ? Colors.red
-                                      : Colors.green,
+                                  color: partsList[index].outOfStock ? Colors.red : Colors.green,
                                 ),
                               ),
                             ],
@@ -93,7 +73,7 @@ class _PartScreenState extends State<PartScreen> {
 //                              isThreeLine: true,
                           trailing: FlatButton(
                             child: Text(
-                              "View\n Details",
+                              "View\nDetails",
                               textAlign: TextAlign.center,
                               style: TextStyle(color: Colors.red),
                             ),
@@ -103,7 +83,7 @@ class _PartScreenState extends State<PartScreen> {
                                   CupertinoPageRoute(
                                       builder: (context) => PartDetailsScren(
                                             partModel: pm,
-                                            pos: index,
+                                            partIndex: index,
                                           )));
                             },
                           ),
