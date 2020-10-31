@@ -107,14 +107,6 @@ class _PartScreenState extends State<PartScreen> {
                                           )));
                             },
                           ),
-                          onTap: () async {
-//                                await Navigator.push(
-//                                    context,
-//                                    CupertinoPageRoute(
-//                                        builder: (context) =>
-//                                            PartUpdateScreen(partsModel: pm, index: index - 1)));
-//                                setState(() {});
-                          },
                         );
                       },
                       separatorBuilder: (context, i) => Divider(
