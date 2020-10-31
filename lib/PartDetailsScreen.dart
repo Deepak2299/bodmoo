@@ -86,11 +86,11 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
 //          SizedBox(
 //            height: 10,
 //          ),
-              Text(
-                "Quantity " +
-                    widget.partModel.details[widget.pos].quantity.toString(),
-//                                    style: textStyle,
-              ),
+//              Text(
+//                "Quantity " +
+//                    widget.partModel.details[widget.pos].quantity.toString(),
+////                                    style: textStyle,
+//              ),
             ],
           ),
           Divider(
@@ -104,7 +104,6 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 15,
-
         child: Container(
           height: 50,
 //          height: MediaQuery.of(context).size.height * 0.07,
