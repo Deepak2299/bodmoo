@@ -6,11 +6,6 @@ class orderModel {
   int numberOfItemsOrdered;
 }
 
-class orderDetailsModel {
-  int cartTotal;
-  int totalItems;
-  List<orderItemModel> parts;
-}
 
 class orderItemModel {
   String brandName, vehicleName, vehicleModel, modelYear;
