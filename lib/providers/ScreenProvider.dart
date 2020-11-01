@@ -73,28 +73,22 @@ class ScreenProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int findItem({@required OrderItemModel item})
-  {
-    int i = cartItems.indexWhere((element)
-    {
-     return element.partId == item.partId;
-    }
-    );
+  int findItem({@required OrderItemModel item}) {
+    int i = cartItems.indexWhere((element) {
+      return element.partId == item.partId;
+    });
 
     return i;
   }
-  void updateQty({@required OrderItemModel item,@required int qty})
-  {
+
+  void updateQty({@required OrderItemModel item, @required int qty}) {
     int index = findItem(item: item);
-    if(index!=-1)
-      {
-        if(cartItems[index].orderQty+qty>0)
-          {
-             cartItems[index].orderQty+=qty;
-          }
-        else
-          cartItems.removeAt(index);
-      }
+    if (index != -1) {
+      if (cartItems[index].orderQty + qty > 0) {
+        cartItems[index].orderQty += qty;
+      } else
+        cartItems.removeAt(index);
+    }
   }
 
   void clearCart() {

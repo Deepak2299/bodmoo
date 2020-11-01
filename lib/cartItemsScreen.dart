@@ -60,7 +60,18 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                 itemBuilder: (context, index) {
                   OrderItemModel itemModel = Provider.of<ScreenProvider>(context).getCartItems[index];
                   return ListTile(
-                    leading: Image.asset(IMAGE),
+                    leading: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(Icons.remove),
+                          onPressed: () {
+                            Provider.of<ScreenProvider>(context, listen: false).itemRemove(itemModel);
+                          },
+                        ),
+                        Image.asset(IMAGE),
+                      ],
+                    ),
                     title: Text(itemModel.partName),
                     subtitle: Column(
                       mainAxisSize: MainAxisSize.min,
