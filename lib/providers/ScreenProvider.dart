@@ -5,23 +5,17 @@ import 'package:flutter/foundation.dart';
 class ScreenProvider extends ChangeNotifier {
 //  ScreenProvider(value) : super(value);
   ScreenData screenData = new ScreenData();
-  List<ItemOrderModel> items = [];
 
   bool click = false;
   int i = 0;
 
   // methods for ScreenData
-
   ScreenData get getScreenData => screenData;
   int get pos => i;
-  void add(name, int im) {
-    print(name);
-//    remove();
-//    notifyListeners();
-//    if (click)
-    switch (im) {
+  void updateData({@required dataValue, @required int dataIndex}) {
+    switch (dataIndex) {
       case 0:
-        screenData.catgName = name;
+        screenData.catgName = dataValue;
         screenData.subCatgName = null;
         screenData.brandName = null;
         screenData.vehicleName = null;
@@ -29,25 +23,25 @@ class ScreenProvider extends ChangeNotifier {
         i = 1;
         break;
       case 1:
-        screenData.subCatgName = name;
+        screenData.subCatgName = dataValue;
         screenData.brandName = null;
         screenData.vehicleName = null;
         screenData.vm = null;
         i = 2;
         break;
       case 2:
-        screenData.brandName = name;
+        screenData.brandName = dataValue;
         screenData.vehicleName = null;
         screenData.vm = null;
         i = 3;
         break;
       case 3:
-        screenData.vehicleName = name;
+        screenData.vehicleName = dataValue;
         screenData.vm = null;
         i = 4;
         break;
       case 4:
-        screenData.vm = name;
+        screenData.vm = dataValue;
         i = -1;
         break;
       default:
@@ -64,18 +58,23 @@ class ScreenProvider extends ChangeNotifier {
 
   // methods for ItemOrderModel
 
-  int get itemLength => items.length;
+  List<OrderItemModel> cartItems = [];
+  List<OrderItemModel> get getCartItems => cartItems;
 
-  List<ItemOrderModel> get getItems => items;
-
-  void itemAdd(ItemOrderModel itemOrderModel) {
-    items.add(itemOrderModel);
-    print(items.length);
+  int get cartItemsLength => cartItems.length;
+  void itemAdd(OrderItemModel itemOrderModel) {
+    cartItems.add(itemOrderModel);
+    print(cartItems.length);
     notifyListeners();
   }
 
-  void itemRemove(ItemOrderModel itemOrderModel) {
-    items.remove(itemOrderModel);
+  void itemRemove(OrderItemModel itemOrderModel) {
+    cartItems.remove(itemOrderModel);
+    notifyListeners();
+  }
+
+  void clearCart() {
+    cartItems.clear();
     notifyListeners();
   }
 }

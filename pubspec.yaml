@@ -20,7 +20,7 @@ dependencies:
   http:
   shimmer:
   provider:
-
+  badges: 1.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -3,7 +3,7 @@ import 'package:bodmoo/get/getParts.dart';
 import 'package:bodmoo/models/partsModel.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/utils/urls.dart';
-import 'package:bodmoo/widgets/add_to_cart.dart';
+import 'package:bodmoo/widgets/cartIcon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +21,8 @@ class _PartScreenState extends State<PartScreen> {
         title: Text("Parts"),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: AddToCart(),
+            padding: const EdgeInsets.only(top: 8.0, right: 18),
+            child: CartIcon(),
           )
         ],
       ),
@@ -34,26 +34,12 @@ class _PartScreenState extends State<PartScreen> {
               SizedBox(height: 20),
               FutureBuilder(
                 future: getParts(
-                  category: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .catgName,
-                  subCategory: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .subCatgName,
-                  brandName: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .brandName,
-                  vehicleName: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .vehicleName,
-                  modelName: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .vm
-                      .modelName,
-                  year: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .vm
-                      .manufactureYear,
+                  category: Provider.of<ScreenProvider>(context).getScreenData.catgName,
+                  subCategory: Provider.of<ScreenProvider>(context).getScreenData.subCatgName,
+                  brandName: Provider.of<ScreenProvider>(context).getScreenData.brandName,
+                  vehicleName: Provider.of<ScreenProvider>(context).getScreenData.vehicleName,
+                  modelName: Provider.of<ScreenProvider>(context).getScreenData.vm.modelName,
+                  year: Provider.of<ScreenProvider>(context).getScreenData.vm.manufactureYear,
                 ),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -66,9 +52,7 @@ class _PartScreenState extends State<PartScreen> {
                       itemCount: partsList.length,
                       itemBuilder: (context, index) {
                         return ListTile(
-                          leading: Hero(
-                              tag: "images_${index}",
-                              child: Image.asset(IMAGE)),
+                          leading: Hero(tag: "images_${index}", child: Image.asset(IMAGE)),
                           title: Text(
                             partsList[index].partName,
                             style: TextStyle(fontWeight: FontWeight.bold),
@@ -86,13 +70,9 @@ class _PartScreenState extends State<PartScreen> {
 //                                    style: textStyle,
                               ),
                               Text(
-                                partsList[index].outOfStock
-                                    ? "OutOfStock"
-                                    : "Instock",
+                                partsList[index].outOfStock ? "OutOfStock" : "Instock",
                                 style: TextStyle(
-                                  color: partsList[index].outOfStock
-                                      ? Colors.red
-                                      : Colors.green,
+                                  color: partsList[index].outOfStock ? Colors.red : Colors.green,
                                 ),
                               ),
                             ],
