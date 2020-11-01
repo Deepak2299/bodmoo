@@ -1,3 +1,5 @@
+List<getOrdersModel> getOrdersList;
+
 class getOrdersModel {
   String orderId;
   String orderStatus;
@@ -6,7 +8,10 @@ class getOrdersModel {
   int numberOfItemsOrdered;
 }
 
+List<orderItemModel> orderItems; //(get orderItems from Order ID)
+
 class orderItemModel {
+  String catgName, subCatgName;
   String brandName, vehicleName, vehicleModel, modelYear;
   int qty;
   int price;
@@ -15,11 +20,10 @@ class orderItemModel {
 }
 
 class postOrderModel {
-  List<orderItemModel> itemsOrdered;
+  UserModel user;
   DateTime placeOrderDate;
-
   String transactionId;
-  UserModel userModel;
+  List<orderItemModel> itemsOrdered;
 }
 
 class UserModel {
@@ -29,21 +33,20 @@ class UserModel {
   String phoneNumber;
 }
 
-
-
 //POST ORDER
-{
-  "user_id":"dada",
-  "customer_name":"RAM",
-  "Delivery_add":'A-100, sec37 fbd',
-  'phone_numer':"584223233",
-  'transaction_id':"razorpay_id1333",
-  'orderdate':2020-10-21,
-  'items':
-  [
+Map<String, dynamic> map = {
+  "user": {
+    "user_id": "33mrfs",
+    "customer_name": "RAM",
+    "Delivery_add": 'A-100, sec37, fbd',
+    'phone_numer': "584223233"
+  },
+  "transactionId": "razorpayId",
+  'orderdate': 2020 - 10 - 21,
+  'items': [
     {
-      'brand_name': 'dad',
-      
+      'part_id': '123',
+      'qty': '1',
     }
   ]
-}
+};
