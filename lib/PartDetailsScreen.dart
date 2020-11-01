@@ -99,7 +99,7 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                         vehicleYear: widget.partModel.modelYear.toString(),
                         partName: widget.partModel.details[widget.partIndex].partName,
                         totalPrice: widget.partModel.details[widget.partIndex].itemPrice.toString(),
-                        totalQuantity: 2);
+                        orderQty: 2);
                     Provider.of<ScreenProvider>(context, listen: false).itemAdd(item);
                   },
                   child: Center(

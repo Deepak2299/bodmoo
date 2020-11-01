@@ -15,7 +15,7 @@ class OrderItemModel {
     @required this.vehicleYear,
     @required this.partName,
     @required this.totalPrice,
-    @required this.totalQuantity,
+    @required this.orderQty,
   });
 
   String partId;
@@ -25,7 +25,7 @@ class OrderItemModel {
   String vehicleYear;
   String partName;
   String totalPrice;
-  int totalQuantity;
+  int orderQty;
 
   factory OrderItemModel.fromJson(String str) => OrderItemModel.fromMap(json.decode(str));
 
@@ -39,7 +39,7 @@ class OrderItemModel {
         vehicleYear: json["vehicle_year"] == null ? null : json["vehicle_year"],
         partName: json["part_name"] == null ? null : json["part_name"],
         totalPrice: json["total_price"] == null ? null : json["total_price"],
-        totalQuantity: json["total_quantity"] == null ? null : json["total_quantity"],
+        orderQty: json["total_quantity"] == null ? null : json["total_quantity"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -50,6 +50,6 @@ class OrderItemModel {
         "vehicle_year": vehicleYear == null ? null : vehicleYear,
         "part_name": partName == null ? null : partName,
         "total_price": totalPrice == null ? null : totalPrice,
-        "total_quantity": totalQuantity == null ? null : totalQuantity,
+        "total_quantity": orderQty == null ? null : orderQty,
       };
 }
