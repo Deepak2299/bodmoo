@@ -38,7 +38,9 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
             children: [
               Container(
                 height: MediaQuery.of(context).size.height * 0.5,
-                child: Hero(tag: "images_${widget.partIndex}", child: Image.asset(IMAGE)),
+                child: Hero(
+                    tag: "images_${widget.partIndex}",
+                    child: Image.asset(IMAGE)),
               ),
               Text(
                 widget.partModel.details[widget.partIndex].partName.toString(),
@@ -50,15 +52,22 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                 child: FlatButton(
                   padding: EdgeInsets.all(0),
                   // height: 20,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                  color:
-                      widget.partModel.details[widget.partIndex].outOfStock ? Colors.red.shade50 : Colors.green.shade50,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                  color: widget.partModel.details[widget.partIndex].outOfStock
+                      ? Colors.red.shade50
+                      : Colors.green.shade50,
                   onPressed: () {},
                   child: Text(
-                    widget.partModel.details[widget.partIndex].outOfStock ? "OutOfStock" : "Instock",
+                    widget.partModel.details[widget.partIndex].outOfStock
+                        ? "OutOfStock"
+                        : "Instock",
 //                textAlign: TextAlign.,
                     style: TextStyle(
-                      color: widget.partModel.details[widget.partIndex].outOfStock ? Colors.red : Colors.green,
+                      color:
+                          widget.partModel.details[widget.partIndex].outOfStock
+                              ? Colors.red
+                              : Colors.green,
                     ),
                   ),
                 ),
@@ -67,7 +76,9 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
 //            height: 10,
 //          ),
               Text(
-                "Rs " + widget.partModel.details[widget.partIndex].itemPrice.toString(),
+                "Rs " +
+                    widget.partModel.details[widget.partIndex].itemPrice
+                        .toString(),
                 style: TextStyle(fontSize: 30),
               ),
             ],
@@ -87,33 +98,81 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
           height: MediaQuery.of(context).size.height * 0.07,
           child: Row(
             children: <Widget>[
-              Expanded(
-                child: RaisedButton(
-                  color: Colors.white,
-                  onPressed: () {
-                    OrderItemModel item = new OrderItemModel(
-                        partId: widget.partModel.details[widget.partIndex].id,
-                        brandName: widget.partModel.carBrand,
-                        vehicleName: widget.partModel.carName,
-                        vehicleModel: widget.partModel.carModel,
-                        vehicleYear: widget.partModel.modelYear.toString(),
-                        partName: widget.partModel.details[widget.partIndex].partName,
-                        totalPrice: widget.partModel.details[widget.partIndex].itemPrice.toString(),
-                        orderQty: 2);
-                    Provider.of<ScreenProvider>(context, listen: false).itemAdd(item);
-                  },
-                  child: Center(
-                    child: Text(
-                      "ADD TO CART",
-                      style: TextStyle(
-                        // color: Colors.black,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
+              Provider.of<ScreenProvider>(context).getQty(
+                        Id: widget.partModel.details[widget.partIndex].id,
+                      ) ==
+                      0
+                  ? Expanded(
+                      child: RaisedButton(
+                        color: Colors.white,
+                        onPressed: () {
+                          OrderItemModel item = new OrderItemModel(
+                              partId:
+                                  widget.partModel.details[widget.partIndex].id,
+                              brandName: widget.partModel.carBrand,
+                              vehicleName: widget.partModel.carName,
+                              vehicleModel: widget.partModel.carModel,
+                              vehicleYear:
+                                  widget.partModel.modelYear.toString(),
+                              partName: widget
+                                  .partModel.details[widget.partIndex].partName,
+                              totalPrice: widget
+                                  .partModel.details[widget.partIndex].itemPrice
+                                  .toString(),
+                              orderQty: 1);
+                          Provider.of<ScreenProvider>(context, listen: false)
+                              .itemAdd(item);
+                        },
+                        child: Center(
+                          child: Text(
+                            "ADD TO CART",
+                            style: TextStyle(
+                              // color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(
+                                icon: Icon(Icons.remove),
+                                onPressed: () {
+                                  Provider.of<ScreenProvider>(context,
+                                          listen: false)
+                                      .updateQtyById(
+                                          Id: widget.partModel
+                                              .details[widget.partIndex].id,
+                                          qty: -1);
+//                                  setState(() {});
+                                }),
+                            Text(Provider.of<ScreenProvider>(context)
+                                .getQty(
+                                  Id: widget
+                                      .partModel.details[widget.partIndex].id,
+                                )
+                                .toString()),
+                            IconButton(
+                                icon: Icon(Icons.add),
+                                onPressed: () {
+                                  Provider.of<ScreenProvider>(context,
+                                          listen: false)
+                                      .updateQtyById(
+                                          Id: widget.partModel
+                                              .details[widget.partIndex].id,
+                                          qty: 1);
+//                                  setState(() {});
+                                }),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
               Expanded(
                 child: RaisedButton(
                   onPressed: () {},

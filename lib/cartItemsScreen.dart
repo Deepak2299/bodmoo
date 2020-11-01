@@ -48,7 +48,8 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                   ),
                   RaisedButton(
                     color: Colors.blue,
-                    child: Text("Continue Shopping", style: TextStyle(color: Colors.white)),
+                    child: Text("Continue Shopping",
+                        style: TextStyle(color: Colors.white)),
                     onPressed: () {
                       //TODO:ROUTE TO MAINSCREEN.DART
                       Navigator.pop(context);
@@ -58,7 +59,8 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
               ))
             : ListView.separated(
                 itemBuilder: (context, index) {
-                  OrderItemModel itemModel = Provider.of<ScreenProvider>(context).getCartItems[index];
+                  OrderItemModel itemModel =
+                      Provider.of<ScreenProvider>(context).getCartItems[index];
                   return ListTile(
                     leading: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -66,7 +68,8 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                         IconButton(
                           icon: Icon(Icons.remove),
                           onPressed: () {
-                            Provider.of<ScreenProvider>(context, listen: false).itemRemove(itemModel);
+                            Provider.of<ScreenProvider>(context, listen: false)
+                                .itemRemove(Id: itemModel.partId);
                           },
                         ),
                         Image.asset(IMAGE),
@@ -82,7 +85,10 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                             children: <Widget>[
                               tagStyle(str: itemModel.brandName),
                               tagStyle(str: itemModel.vehicleName),
-                              tagStyle(str: itemModel.vehicleModel + " " + itemModel.vehicleYear),
+                              tagStyle(
+                                  str: itemModel.vehicleModel +
+                                      " " +
+                                      itemModel.vehicleYear),
                             ],
                           ),
                         ),

@@ -68,27 +68,57 @@ class ScreenProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void itemRemove(OrderItemModel itemOrderModel) {
-    cartItems.remove(itemOrderModel);
+  void itemRemove({@required String Id}) {
+    int index = findItemById(Id: Id);
+    if (index != -1) {
+      cartItems.removeAt(index);
+    }
     notifyListeners();
   }
 
-  int findItem({@required OrderItemModel item}) {
+//  int findItem({@required OrderItemModel item}) {
+//    int i = cartItems.indexWhere((element) {
+//      return element.partId == item.partId;
+//    });
+//
+//    return i;
+//  }
+
+  int findItemById({@required String Id}) {
     int i = cartItems.indexWhere((element) {
-      return element.partId == item.partId;
+      return element.partId == Id;
     });
 
     return i;
   }
 
-  void updateQty({@required OrderItemModel item, @required int qty}) {
-    int index = findItem(item: item);
+  int getQty({@required String Id}) {
+    int index = findItemById(Id: Id);
+    if (index != -1) {
+      return cartItems[index].orderQty;
+    }
+    return 0;
+  }
+
+//  void updateQty({@required OrderItemModel item, @required int qty}) {
+//    int index = findItem(item: item);
+//    if (index != -1) {
+//      if (cartItems[index].orderQty + qty > 0) {
+//        cartItems[index].orderQty += qty;
+//      } else
+//        cartItems.removeAt(index);
+//    }
+//  }
+
+  void updateQtyById({@required String Id, @required int qty}) {
+    int index = findItemById(Id: Id);
     if (index != -1) {
       if (cartItems[index].orderQty + qty > 0) {
         cartItems[index].orderQty += qty;
       } else
         cartItems.removeAt(index);
     }
+    notifyListeners();
   }
 
   void clearCart() {
