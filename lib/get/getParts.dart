@@ -35,7 +35,7 @@ Future<PartsModel> getParts({
       category +
       '&' +
       subCategory;
-  print(url);
+//  print(url);
   var req = await http.get(url, headers: {'Content-type': 'application/json'});
   if (req.statusCode != 200) {
 //    ScreenErrorData.partsError = jsonDecode(req.body)['message'];
@@ -43,10 +43,10 @@ Future<PartsModel> getParts({
 //    ScreenErrorData.partsError = '';
   List<dynamic> body = json.decode(req.body)["output"];
 
-  print(body);
+//  print(body);
   if (body.length > 0) {
     // partsModel = PartsModel.fromJson(body[0]);
-    print(body[0][""]);
+//    print(body[0][""]);
     partsModel.id = body[0]["_id"];
     for (int i = 0; i < body[0]["details"].length; i++) {
       partsModel.details.add(PartDetail.fromMap(body[0]["details"][i]));

@@ -1,6 +1,10 @@
+import 'package:bodmoo/models/itemOrderModel.dart';
 import 'package:bodmoo/models/partsModel.dart';
+import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/utils/urls.dart';
+import 'package:bodmoo/widgets/add_to_cart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PartDetailsScren extends StatefulWidget {
   PartsModel partModel;
@@ -14,7 +18,14 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: AddToCart(),
+          )
+        ],
+      ),
       body: ListView(
         shrinkWrap: true,
         physics: ScrollPhysics(),
@@ -27,7 +38,9 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
             children: [
               Container(
                 height: MediaQuery.of(context).size.height * 0.5,
-                child: Hero(tag: "images_${widget.partIndex}", child: Image.asset(IMAGE)),
+                child: Hero(
+                    tag: "images_${widget.partIndex}",
+                    child: Image.asset(IMAGE)),
               ),
               Text(
                 widget.partModel.details[widget.partIndex].partName.toString(),
@@ -39,15 +52,22 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                 child: FlatButton(
                   padding: EdgeInsets.all(0),
                   // height: 20,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                  color:
-                      widget.partModel.details[widget.partIndex].outOfStock ? Colors.red.shade50 : Colors.green.shade50,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                  color: widget.partModel.details[widget.partIndex].outOfStock
+                      ? Colors.red.shade50
+                      : Colors.green.shade50,
                   onPressed: () {},
                   child: Text(
-                    widget.partModel.details[widget.partIndex].outOfStock ? "OutOfStock" : "Instock",
+                    widget.partModel.details[widget.partIndex].outOfStock
+                        ? "OutOfStock"
+                        : "Instock",
 //                textAlign: TextAlign.,
                     style: TextStyle(
-                      color: widget.partModel.details[widget.partIndex].outOfStock ? Colors.red : Colors.green,
+                      color:
+                          widget.partModel.details[widget.partIndex].outOfStock
+                              ? Colors.red
+                              : Colors.green,
                     ),
                   ),
                 ),
@@ -56,7 +76,9 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
 //            height: 10,
 //          ),
               Text(
-                "Rs " + widget.partModel.details[widget.partIndex].itemPrice.toString(),
+                "Rs " +
+                    widget.partModel.details[widget.partIndex].itemPrice
+                        .toString(),
                 style: TextStyle(fontSize: 30),
               ),
             ],
@@ -79,7 +101,22 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
               Expanded(
                 child: RaisedButton(
                   color: Colors.white,
-                  onPressed: () {},
+                  onPressed: () {
+                    ItemOrderModel item = new ItemOrderModel(
+                        partId: widget.partModel.details[widget.partIndex].id,
+                        brandName: widget.partModel.carBrand,
+                        vehicleName: widget.partModel.carName,
+                        vehicleModel: widget.partModel.carModel,
+                        vehicleYear: widget.partModel.modelYear.toString(),
+                        partName:
+                            widget.partModel.details[widget.partIndex].partName,
+                        totalPrice: widget
+                            .partModel.details[widget.partIndex].itemPrice
+                            .toString(),
+                        totalQuantity: 2);
+                    Provider.of<ScreenProvider>(context, listen: false)
+                        .itemAdd(item);
+                  },
                   child: Center(
                     child: Text(
                       "ADD TO CART",

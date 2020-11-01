@@ -8,9 +8,9 @@ Future<List<VariantsModel>> getVariants({
   @required String Vehiclename,
 }) async {
   List<VariantsModel> variants = [];
-  print(GET_VARIANTS_URL + Vehiclename);
+//  print(GET_VARIANTS_URL + Vehiclename);
   var req = await http.get(GET_VARIANTS_URL + Vehiclename);
-  print(req.body);
+//  print(req.body);
   if (req.statusCode != 200) {
 //    ScreenErrorData.modelError = jsonDecode(req.body)['message'];
   }

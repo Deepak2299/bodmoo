@@ -14,6 +14,6 @@ Future<List<dynamic>> getCategories() async {
   } else
 //    ScreenErrorData.catgError = '';
     catg = json.decode(req.body)["output"];
-  print(catg);
+//  print(catg);
   return catg;
 }

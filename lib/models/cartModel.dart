@@ -11,7 +11,7 @@ class getOrdersModel {
 List<orderItemModel> orderItems; //(get orderItems from Order ID)
 
 class orderItemModel {
-  String catgName, subCatgName;
+//  String catgName, subCatgName;
   String brandName, vehicleName, vehicleModel, modelYear;
   int qty;
   int price;

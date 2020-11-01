@@ -5,6 +5,7 @@ import 'package:bodmoo/get/getSubCat.dart';
 import 'package:bodmoo/get/getVariants.dart';
 import 'package:bodmoo/get/getVehiclesbyBrand.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
+import 'package:bodmoo/widgets/add_to_cart.dart';
 
 import 'package:bodmoo/widgets/items_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,75 +30,96 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     print(context.watch<ScreenProvider>().getScreenData.catgName);
     return Scaffold(
-      body: Consumer<ScreenProvider>(builder: (context, screenProvider, _) {
-        return ListView(
-          shrinkWrap: true,
-          physics: ScrollPhysics(),
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            ItemView(
-              context: context,
-              title: "Categories",
-              futureFunction: getCategories(),
-              i: 0,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            screenProvider.getScreenData.catgName != null
-                ? ItemView(
-                    context: context,
-                    title: "Sub Categories",
-                    futureFunction: getSubCategories(
-                        catgName: Provider.of<ScreenProvider>(context)
-                            .getScreenData
-                            .catgName),
-                    i: 1,
-                  )
-                : Container(),
-            SizedBox(
-              height: 20,
-            ),
-            screenProvider.getScreenData.subCatgName != null
-                ? ItemView(
-                    context: context,
-                    title: "Brands",
-                    futureFunction: getBrands(),
-                    i: 2,
-                  )
-                : Container(),
-            SizedBox(
-              height: 20,
-            ),
-            screenProvider.getScreenData.brandName != null
-                ? ItemView(
-                    context: context,
-                    title: "Vehicles",
-                    futureFunction: getVehiclesByBrand(
-                        brandName: screenProvider.getScreenData.brandName),
-                    i: 3,
-                  )
-                : Container(),
-            SizedBox(
-              height: 20,
-            ),
-            screenProvider.getScreenData.vehicleName != null
-                ? ItemView(
-                    context: context,
-                    title: "Variants",
-                    futureFunction: getVariants(
-                        Vehiclename: screenProvider.getScreenData.vehicleName),
-                    i: 4,
-                  )
-                : Container(),
-            SizedBox(
-              height: 20,
-            ),
-          ],
-        );
-      }),
+      body: Stack(
+        children: [
+          Consumer<ScreenProvider>(builder: (context, screenProvider, _) {
+            return ListView(
+              shrinkWrap: true,
+              physics: ScrollPhysics(),
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                ItemView(
+                  context: context,
+                  title: "Categories",
+                  futureFunction: getCategories(),
+                  i: 0,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                screenProvider.getScreenData.catgName != null
+                    ? ItemView(
+                        context: context,
+                        title: "Sub Categories",
+                        futureFunction: getSubCategories(
+                            catgName: Provider.of<ScreenProvider>(context)
+                                .getScreenData
+                                .catgName),
+                        i: 1,
+                      )
+                    : Container(),
+                SizedBox(
+                  height: 20,
+                ),
+                screenProvider.getScreenData.subCatgName != null
+                    ? ItemView(
+                        context: context,
+                        title: "Brands",
+                        futureFunction: getBrands(),
+                        i: 2,
+                      )
+                    : Container(),
+                SizedBox(
+                  height: 20,
+                ),
+                screenProvider.getScreenData.brandName != null
+                    ? ItemView(
+                        context: context,
+                        title: "Vehicles",
+                        futureFunction: getVehiclesByBrand(
+                            brandName: screenProvider.getScreenData.brandName),
+                        i: 3,
+                      )
+                    : Container(),
+                SizedBox(
+                  height: 20,
+                ),
+                screenProvider.getScreenData.vehicleName != null
+                    ? ItemView(
+                        context: context,
+                        title: "Variants",
+                        futureFunction: getVariants(
+                            Vehiclename:
+                                screenProvider.getScreenData.vehicleName),
+                        i: 4,
+                      )
+                    : Container(),
+                SizedBox(
+                  height: 20,
+                ),
+              ],
+            );
+          }),
+          Positioned(
+              right: 0,
+              top: 50,
+              child: Container(
+                padding: EdgeInsets.only(right: 20, left: 5, top: 5, bottom: 2),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                    ),
+                    color: Colors.white54),
+                child: AddToCart(
+                  size: 10,
+                  iconColor: Colors.blue,
+                ),
+              ))
+        ],
+      ),
       bottomNavigationBar: BottomAppBar(
         child: GestureDetector(
           onTap: Provider.of<ScreenProvider>(context).getScreenData.vm != null

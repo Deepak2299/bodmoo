@@ -13,7 +13,11 @@ class ItemView extends StatefulWidget {
   String title;
   Future<dynamic> futureFunction;
   int i = 0;
-  ItemView({@required this.context, @required this.title, @required this.futureFunction, @required this.i});
+  ItemView(
+      {@required this.context,
+      @required this.title,
+      @required this.futureFunction,
+      @required this.i});
   @override
   _ItemViewState createState() => _ItemViewState();
 }
@@ -22,8 +26,8 @@ class _ItemViewState extends State<ItemView> {
   bool collapse = true;
 
   Widget show(context, snapshots) {
-    print(widget.i.toString() + " : " + snapshots.data.length.toString());
-    print(snapshots.data);
+//    print(widget.i.toString() + " : " + snapshots.data.length.toString());
+//    print(snapshots.data);
     return Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(
@@ -40,7 +44,8 @@ class _ItemViewState extends State<ItemView> {
                 snapshots.data.length > 4
                     ? FlatButton(
                         // height: 30,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
 //                    padding: EdgeInsets.all(5),
                         color: Colors.red,
                         onPressed: () {
@@ -66,7 +71,9 @@ class _ItemViewState extends State<ItemView> {
                       physics: BouncingScrollPhysics(),
                       itemBuilder: (context, i) {
                         return GestureDetector(
-                          onTap: () => widget.context.read<ScreenProvider>().add(snapshots.data[i], widget.i),
+                          onTap: () => widget.context
+                              .read<ScreenProvider>()
+                              .add(snapshots.data[i], widget.i),
                           child: Container(
 //                              height: 200,
                             width: 100,
@@ -77,7 +84,8 @@ class _ItemViewState extends State<ItemView> {
                                 // ignore: missing_return
                                 image: AssetImage(IMAGE),
                                 fit: BoxFit.cover,
-                                colorFilter: ColorFilter.mode(Colors.black38, BlendMode.hardLight),
+                                colorFilter: ColorFilter.mode(
+                                    Colors.black38, BlendMode.hardLight),
                               ),
                             ),
                             padding: EdgeInsetsDirectional.only(top: 15),
@@ -86,7 +94,9 @@ class _ItemViewState extends State<ItemView> {
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Text(
-                                  widget.i == 4 ? snapshots.data[i].modelName.toString() : snapshots.data[i].toString(),
+                                  widget.i == 4
+                                      ? snapshots.data[i].modelName.toString()
+                                      : snapshots.data[i].toString(),
 //                    style: textStyle,
                                 ),
                               ],
@@ -95,7 +105,8 @@ class _ItemViewState extends State<ItemView> {
                         );
                       },
 
-                      itemCount: snapshots.data.length > 4 ? 4 : snapshots.data.length,
+                      itemCount:
+                          snapshots.data.length > 4 ? 4 : snapshots.data.length,
                       separatorBuilder: (context, i) => SizedBox(
                         width: 10,
                       ),
@@ -107,11 +118,16 @@ class _ItemViewState extends State<ItemView> {
                         shrinkWrap: true,
                         physics: BouncingScrollPhysics(),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3, crossAxisSpacing: 15, mainAxisSpacing: 15, childAspectRatio: 1),
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 15,
+                            mainAxisSpacing: 15,
+                            childAspectRatio: 1),
                         itemCount: snapshots.data.length,
                         itemBuilder: (context, i) {
                           return GestureDetector(
-                            onTap: () => widget.context.read<ScreenProvider>().add(snapshots.data[i], widget.i),
+                            onTap: () => widget.context
+                                .read<ScreenProvider>()
+                                .add(snapshots.data[i], widget.i),
                             child: Container(
                               height: 200,
                               width: 200,
@@ -121,12 +137,14 @@ class _ItemViewState extends State<ItemView> {
                                   // ignore: missing_return
                                   image: AssetImage(IMAGE),
                                   fit: BoxFit.cover,
-                                  colorFilter: ColorFilter.mode(Colors.black38, BlendMode.hardLight),
+                                  colorFilter: ColorFilter.mode(
+                                      Colors.black38, BlendMode.hardLight),
                                 ),
                               ),
                               padding: EdgeInsetsDirectional.only(top: 15),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
@@ -172,7 +190,9 @@ class _ItemViewState extends State<ItemView> {
                           child: Container(
                             height: 100,
                             width: 100,
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Colors.white),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.white),
                             padding: EdgeInsetsDirectional.only(top: 15),
                           )),
                       itemCount: 6,
@@ -180,13 +200,18 @@ class _ItemViewState extends State<ItemView> {
                 : GridView.builder(
                     shrinkWrap: true,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3, crossAxisSpacing: 15, mainAxisSpacing: 15, childAspectRatio: 1),
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 15,
+                        mainAxisSpacing: 15,
+                        childAspectRatio: 1),
                     itemCount: 6,
                     itemBuilder: (context, i) {
                       return Container(
                         height: 200,
                         width: 200,
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Colors.white),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.white),
                         padding: EdgeInsetsDirectional.only(top: 15),
                       );
                     }),
