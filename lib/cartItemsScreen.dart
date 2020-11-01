@@ -62,24 +62,19 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                   OrderItemModel itemModel =
                       Provider.of<ScreenProvider>(context).getCartItems[index];
                   return ListTile(
-                    leading: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.remove),
-                          onPressed: () {
-                            Provider.of<ScreenProvider>(context, listen: false)
-                                .itemRemove(Id: itemModel.partId);
-                          },
-                        ),
-                        Image.asset(IMAGE),
-                      ],
+                    leading: Container(
+                      width: 100,
+//                      height: 200,
+                      child: Image.asset(
+                        IMAGE,
+                        fit: BoxFit.fill,
+                      ),
                     ),
-                    title: Text(itemModel.partName),
-                    subtitle: Column(
+                    title: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
+                        Text(itemModel.partName),
                         Flexible(
                           child: Row(
                             children: <Widget>[
@@ -92,9 +87,76 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                             ],
                           ),
                         ),
+                        Flexible(
+                          child: Row(
+//                            mainAxisAlignment: MainAxisAlignment.sp,
+                            children: <Widget>[
+                              Text("Rs. " + itemModel.totalPrice),
+                              Spacer(),
+                              Text("Rs. " +
+                                  (double.parse(itemModel.totalPrice) *
+                                          itemModel.orderQty)
+                                      .toString()),
+                            ],
+                          ),
+                        ),
+                        Flexible(
+                          child: Row(
+//                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Free shipping",
+                                style: TextStyle(color: Colors.green),
+                              ),
+                              Spacer(),
+                              Row(
+//                                crossAxisAlignment: CrossAxisAlignment.baseline,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  IconButton(
+                                      icon: Icon(Icons.remove_circle_outline),
+                                      onPressed: () {
+                                        Provider.of<ScreenProvider>(context,
+                                                listen: false)
+                                            .updateQtyById(
+                                                Id: itemModel.partId, qty: -1);
+//                                  setState(() {});
+                                      }),
+                                  Text(itemModel.orderQty.toString()),
+                                  IconButton(
+                                      icon: Icon(Icons.add_circle_outline),
+                                      onPressed: () {
+                                        Provider.of<ScreenProvider>(context,
+                                                listen: false)
+                                            .updateQtyById(
+                                                Id: itemModel.partId, qty: 1);
+//                                  setState(() {});
+                                      }),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Flexible(
+                          child: Row(
+                            children: [
+                              Spacer(),
+                              FlatButton(
+                                shape: RoundedRectangleBorder(
+                                    side: BorderSide(width: 0.5)),
+                                onPressed: () {
+                                  Provider.of<ScreenProvider>(context,
+                                          listen: false)
+                                      .itemRemove(Id: itemModel.partId);
+                                },
+                                child: Text("Remove"),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
-                    trailing: Text(itemModel.totalPrice),
                   );
                 },
                 separatorBuilder: (context, index) => Divider(),

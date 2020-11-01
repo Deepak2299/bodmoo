@@ -1,8 +1,10 @@
+import 'package:bodmoo/cartItemsScreen.dart';
 import 'package:bodmoo/models/itemOrderModel.dart';
 import 'package:bodmoo/models/partsModel.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/utils/urls.dart';
 import 'package:bodmoo/widgets/cartIcon.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -136,43 +138,64 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                       ),
                     )
                   : Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                                icon: Icon(Icons.remove),
-                                onPressed: () {
-                                  Provider.of<ScreenProvider>(context,
-                                          listen: false)
-                                      .updateQtyById(
-                                          Id: widget.partModel
-                                              .details[widget.partIndex].id,
-                                          qty: -1);
-//                                  setState(() {});
-                                }),
-                            Text(Provider.of<ScreenProvider>(context)
-                                .getQty(
-                                  Id: widget
-                                      .partModel.details[widget.partIndex].id,
-                                )
-                                .toString()),
-                            IconButton(
-                                icon: Icon(Icons.add),
-                                onPressed: () {
-                                  Provider.of<ScreenProvider>(context,
-                                          listen: false)
-                                      .updateQtyById(
-                                          Id: widget.partModel
-                                              .details[widget.partIndex].id,
-                                          qty: 1);
-//                                  setState(() {});
-                                }),
-                          ],
+                      child: RaisedButton(
+                        color: Colors.white,
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => CartItemsScreen()));
+                        },
+                        child: Center(
+                          child: Text(
+                            "GO TO CART",
+                            style: TextStyle(
+                              // color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
                     ),
+//              Expanded(
+//                      child: Padding(
+//                        padding: const EdgeInsets.symmetric(horizontal: 20),
+//                        child: Row(
+//                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                          children: [
+//                            IconButton(
+//                                icon: Icon(Icons.remove),
+//                                onPressed: () {
+//                                  Provider.of<ScreenProvider>(context,
+//                                          listen: false)
+//                                      .updateQtyById(
+//                                          Id: widget.partModel
+//                                              .details[widget.partIndex].id,
+//                                          qty: -1);
+////                                  setState(() {});
+//                                }),
+//                            Text(Provider.of<ScreenProvider>(context)
+//                                .getQty(
+//                                  Id: widget
+//                                      .partModel.details[widget.partIndex].id,
+//                                )
+//                                .toString()),
+//                            IconButton(
+//                                icon: Icon(Icons.add),
+//                                onPressed: () {
+//                                  Provider.of<ScreenProvider>(context,
+//                                          listen: false)
+//                                      .updateQtyById(
+//                                          Id: widget.partModel
+//                                              .details[widget.partIndex].id,
+//                                          qty: 1);
+////                                  setState(() {});
+//                                }),
+//                          ],
+//                        ),
+//                      ),
+//                    ),
               Expanded(
                 child: RaisedButton(
                   onPressed: () {},
