@@ -14,7 +14,7 @@ class OrderItemModel {
     @required this.vehicleModel,
     @required this.vehicleYear,
     @required this.partName,
-    @required this.totalPrice,
+    @required this.partPrice,
     @required this.orderQty,
   });
 
@@ -24,7 +24,7 @@ class OrderItemModel {
   String vehicleModel;
   String vehicleYear;
   String partName;
-  String totalPrice;
+  String partPrice;
   int orderQty;
   factory OrderItemModel.fromJson(String str) => OrderItemModel.fromMap(json.decode(str));
 
@@ -37,7 +37,7 @@ class OrderItemModel {
         vehicleModel: json["vehicle_model"] == null ? null : json["vehicle_model"],
         vehicleYear: json["vehicle_year"] == null ? null : json["vehicle_year"],
         partName: json["part_name"] == null ? null : json["part_name"],
-        totalPrice: json["total_price"] == null ? null : json["total_price"],
+        partPrice: json["total_price"] == null ? null : json["total_price"],
         orderQty: json["total_quantity"] == null ? null : json["total_quantity"],
       );
 
@@ -48,7 +48,7 @@ class OrderItemModel {
         "vehicle_model": vehicleModel == null ? null : vehicleModel,
         "vehicle_year": vehicleYear == null ? null : vehicleYear,
         "part_name": partName == null ? null : partName,
-        "total_price": totalPrice == null ? null : totalPrice,
+        "total_price": partPrice == null ? null : partPrice,
         "total_quantity": orderQty == null ? null : orderQty,
       };
 }
