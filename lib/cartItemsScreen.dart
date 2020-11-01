@@ -173,7 +173,7 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                     child: Center(
                         child:
                             Text('Confirm Order', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
-                    onPressed: () {},
+                    onPressed: Provider.of<ScreenProvider>(context).getTotalPriceOfCart() == 0 ? null : () {},
                   ),
                 )
               ],
