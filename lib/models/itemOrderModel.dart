@@ -26,7 +26,6 @@ class OrderItemModel {
   String partName;
   String totalPrice;
   int orderQty;
-
   factory OrderItemModel.fromJson(String str) => OrderItemModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
