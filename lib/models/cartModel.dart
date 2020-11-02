@@ -1,38 +1,3 @@
-List<getOrdersModel> getOrdersList;
-
-class getOrdersModel {
-  String orderId;
-  String orderStatus;
-  String orderPlaceDate;
-  String orderDeliverDate;
-  int numberOfItemsOrdered;
-}
-
-List<orderItemModel> orderItems; //(get orderItems from Order ID)
-
-class orderItemModel {
-//  String catgName, subCatgName;
-  String brandName, vehicleName, vehicleModel, modelYear;
-  int qty;
-  int price;
-  String partName;
-  String partId;
-}
-
-class postOrderModel {
-  UserModel user;
-  DateTime placeOrderDate;
-  String transactionId;
-  List<orderItemModel> itemsOrdered;
-}
-
-class UserModel {
-  String userId;
-  String customerName;
-  List<String> deliveryAdd;
-  String phoneNumber;
-}
-
 //POST ORDER
 Map<String, dynamic> map = {
   "user": {
