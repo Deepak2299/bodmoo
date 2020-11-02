@@ -15,10 +15,10 @@ Future<bool> prepareOrder({@required List<OrderItemModel> items}) async {
       address: 'a99',
       customerName: 'prayant',
       customerMobile: '8800152601',
+      pinCode: '121003',
     ),
     paymentTransactionId: "152522" + rng.nextInt(1000).toString(),
     paymentType: "COD",
-    pinCode: '121003',
     orderItems: items,
   );
   return await postPlaceOrder(order: order);

@@ -37,8 +37,8 @@ class OrderItemModel {
         vehicleModel: json["vehicle_model"] == null ? null : json["vehicle_model"],
         vehicleYear: json["vehicle_year"] == null ? null : json["vehicle_year"],
         partName: json["part_name"] == null ? null : json["part_name"],
-        partPrice: json["total_price"] == null ? null : json["total_price"],
-        orderQty: json["total_quantity"] == null ? null : json["total_quantity"],
+        partPrice: json["item_price"] == null ? null : json["item_price"],
+        orderQty: json["quantity"] == null ? null : json["quantity"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -48,7 +48,7 @@ class OrderItemModel {
         "vehicle_model": vehicleModel == null ? null : vehicleModel,
         "vehicle_year": vehicleYear == null ? null : vehicleYear,
         "part_name": partName == null ? null : partName,
-        "total_price": partPrice == null ? null : partPrice,
-        "total_quantity": orderQty == null ? null : orderQty,
+        "item_price": partPrice == null ? null : partPrice,
+        "quantity": orderQty == null ? null : orderQty,
       };
 }

@@ -11,7 +11,6 @@ class OrderModel {
     this.paymentType,
     this.paymentTransactionId,
     this.orderStatus,
-    this.pinCode,
     this.orderItems,
     this.orderDate,
   });
@@ -22,7 +21,6 @@ class OrderModel {
   String paymentType;
   String paymentTransactionId;
   String orderStatus;
-  String pinCode;
   List<OrderItemModel> orderItems;
   DateTime orderDate;
 
@@ -37,7 +35,6 @@ class OrderModel {
         paymentType: json["paymentType"] == null ? null : json["paymentType"],
         paymentTransactionId: json["paymentTransactionId"] == null ? null : json["paymentTransactionId"],
         orderStatus: json["orderStatus"] == null ? null : json["orderStatus"],
-        pinCode: json["pin_code"] == null ? null : json["pin_code"],
         orderItems: json["items"] == null
             ? null
             : List<OrderItemModel>.from(json["items"].map((x) => OrderItemModel.fromMap(x))),
@@ -48,7 +45,6 @@ class OrderModel {
         "user": user == null ? null : user.toMap(),
         "paymentType": paymentType == null ? null : paymentType,
         "paymentTransactionId": paymentTransactionId == null ? null : paymentTransactionId,
-        "pin_code": pinCode == null ? null : pinCode,
         "items": orderItems == null ? null : List<dynamic>.from(orderItems.map((x) => x.toMap())),
       };
 }

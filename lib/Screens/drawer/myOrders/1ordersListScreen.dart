@@ -17,7 +17,7 @@ class _OrderListScreen1State extends State<OrderListScreen> {
       child: Scaffold(
         appBar: AppBar(title: Text("My Orders")),
         body: FutureBuilder(
-          future: getOrdersList(PhNo: "8800152601"),
+          future: getOrdersList(PhNo: "9435435345"),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               List<OrderModel> ordersList = snapshot.data;
@@ -52,7 +52,7 @@ class _OrderListScreen1State extends State<OrderListScreen> {
                         ),
 //                        Text(orderModel.paymentTransactionId),
                         Text(
-                          "Pin Code: " + orderModel.pinCode,
+                          "Pin Code: " + orderModel.user.pinCode,
                           style: TextStyle(fontSize: 12),
                         ),
                       ],
@@ -63,8 +63,7 @@ class _OrderListScreen1State extends State<OrderListScreen> {
                         Navigator.push(
                             context,
                             CupertinoPageRoute(
-                              builder: (context) =>
-                                  OrderDetailsScreen(orderModel: orderModel),
+                              builder: (context) => OrderDetailsScreen(orderModel: orderModel),
                             ));
                       },
                     ),
