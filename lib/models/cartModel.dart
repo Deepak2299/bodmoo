@@ -29,7 +29,7 @@ class postOrderModel {
 class UserModel {
   String userId;
   String customerName;
-  String deliveryAdd;
+  List<String> deliveryAdd;
   String phoneNumber;
 }
 
