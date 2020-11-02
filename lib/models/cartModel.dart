@@ -45,8 +45,14 @@ Map<String, dynamic> map = {
   'orderdate': 2020 - 10 - 21,
   'items': [
     {
+      'brandName': 'da',
+      'vehicleName': "ad",
+      'vehicleModel': "ad",
+      'modelYear': "ada",
+      'partName': 'sas',
       'part_id': '123',
-      'qty': '1',
+      'qty': 4,
+      'price': 215,
     }
   ]
 };
