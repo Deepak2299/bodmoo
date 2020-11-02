@@ -1,4 +1,5 @@
 import 'package:bodmoo/cartItemsScreen.dart';
+import 'package:bodmoo/methods/prepareOrder.dart';
 import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:bodmoo/models/partsModel.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
@@ -179,8 +180,9 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
 //                    ),
               Expanded(
                 child: RaisedButton(
-                  onPressed: () {
-                    OrderItemModel item = new OrderItemModel(
+                  onPressed: () async {
+                    List<OrderItemModel> item = List<OrderItemModel>();
+                    item.add(new OrderItemModel(
                         partId: widget.partModel.details[widget.partIndex].id,
                         brandName: widget.partModel.carBrand,
                         vehicleName: widget.partModel.carName,
@@ -188,7 +190,13 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                         vehicleYear: widget.partModel.modelYear.toString(),
                         partName: widget.partModel.details[widget.partIndex].partName,
                         partPrice: widget.partModel.details[widget.partIndex].itemPrice.toString(),
-                        orderQty: 1);
+                        orderQty: 1));
+                    bool b = await prepareOrder(items: item);
+                    if (b) {
+                      //TODO:SHOW ORDER PLACED SUCCEFULLY
+                    } else {
+                      //TODO: ERROR WHILE PLACING ORDER
+                    }
                   },
                   color: Colors.red,
                   child: Center(

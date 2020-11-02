@@ -45,14 +45,10 @@ class OrderModel {
       );
 
   Map<String, dynamic> toMap() => {
-        "_id": id == null ? null : id,
-        "orderNumber": orderNumber == null ? null : orderNumber,
         "user": user == null ? null : user.toMap(),
         "paymentType": paymentType == null ? null : paymentType,
         "paymentTransactionId": paymentTransactionId == null ? null : paymentTransactionId,
-        "orderStatus": orderStatus == null ? null : orderStatus,
         "pin_code": pinCode == null ? null : pinCode,
         "items": orderItems == null ? null : List<dynamic>.from(orderItems.map((x) => x.toMap())),
-        "order_date": orderDate == null ? null : orderDate.toIso8601String(),
       };
 }

@@ -1,3 +1,4 @@
+import 'package:bodmoo/methods/prepareOrder.dart';
 import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/utils/urls.dart';
@@ -173,7 +174,16 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                     child: Center(
                         child:
                             Text('Confirm Order', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
-                    onPressed: Provider.of<ScreenProvider>(context).getTotalPriceOfCart() == 0 ? null : () {},
+                    onPressed: Provider.of<ScreenProvider>(context).getTotalPriceOfCart() == 0
+                        ? null
+                        : () async {
+                            bool b = await prepareOrder(items: Provider.of<ScreenProvider>(context).cartItems);
+                            if (b) {
+                              //TODO:SHOW ORDER PLACED SUCCEFULLY
+                            } else {
+                              //TODO: ERROR WHILE PLACING ORDER
+                            }
+                          },
                   ),
                 )
               ],

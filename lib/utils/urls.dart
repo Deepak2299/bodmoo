@@ -38,3 +38,4 @@ String DELETE_SUB_CATG = BASE_URL + "store/removeSubCategory/";
 
 //ORDERS
 String GET_ORDERS_LIST = BASE_URL + 'store/getOrders/';
+String POST_ADD_ORDER = BASE_URL + 'store/newOrder';
