@@ -30,7 +30,8 @@ String ADD_CAR_PART_URL = BASE_URL + 'store/addCarParts/';
 
 // DELETE PARTS DETAILS
 String DELETE_CAR_PARTS = BASE_URL + "store/removeCarParts/";
-String DELETE_CAR_MODELS = BASE_URL + "store/removeCarParts/deleteParticularModel/";
+String DELETE_CAR_MODELS =
+    BASE_URL + "store/removeCarParts/deleteParticularModel/";
 String DELETE_BRAND = BASE_URL + "store/removeCarParts/deleteBrand/";
 String DELETE_VEHICLE = BASE_URL + "store/removeCarParts/deleteSpecificCar/";
 String DELETE_CATG = BASE_URL + "store/removeCategory/";
@@ -38,4 +39,7 @@ String DELETE_SUB_CATG = BASE_URL + "store/removeSubCategory/";
 
 //ORDERS
 String GET_ORDERS_LIST = BASE_URL + 'store/getOrders/';
-String POST_ADD_ORDER = BASE_URL + 'store/newOrder';
+String POST_ADD_ORDER = BASE_URL + 'store/newOrder/';
+
+// Part By Id
+String GET_PART_BY_ID = BASE_URL + "store/getProduct/";

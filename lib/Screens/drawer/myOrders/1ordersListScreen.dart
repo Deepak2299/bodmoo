@@ -1,4 +1,4 @@
-import 'file:///D:/FLUTTERAPPS/bodmoo/lib/Screens/drawer/myOrders/2orderDetailsScreen.dart';
+import 'package:bodmoo/Screens/drawer/myOrders/2orderDetailsScreen.dart';
 import 'package:bodmoo/methods/get/getOrdersList.dart';
 import 'package:bodmoo/models/cartModel.dart';
 import 'package:bodmoo/models/orderModel.dart';
@@ -17,7 +17,7 @@ class _OrderListScreen1State extends State<OrderListScreen> {
       child: Scaffold(
         appBar: AppBar(title: Text("My Orders")),
         body: FutureBuilder(
-          future: getOrdersList(),
+          future: getOrdersList(PhNo: "8800152601"),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               List<OrderModel> ordersList = snapshot.data;
@@ -26,24 +26,56 @@ class _OrderListScreen1State extends State<OrderListScreen> {
                   OrderModel orderModel = ordersList[orderIndex];
                   return ListTile(
                     title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Text(orderModel.id),
-                        Text(orderModel.orderDate.toIso8601String()),
-                        Text(orderModel.orderNumber),
-                        Text(orderModel.orderStatus),
-                        Text(orderModel.paymentType),
-                        Text(orderModel.paymentTransactionId),
-                        Text(orderModel.pinCode),
+                        Text(
+                          "Order No: " + orderModel.orderNumber,
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        Text(
+                          "Order at " + orderModel.orderDate.toIso8601String(),
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Status: " + orderModel.orderStatus,
+                              style: TextStyle(fontSize: 12),
+                            ),
+                            Text(
+                              "Payment Mode: " + orderModel.paymentType,
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
+//                        Text(orderModel.paymentTransactionId),
+                        Text(
+                          "Pin Code: " + orderModel.pinCode,
+                          style: TextStyle(fontSize: 12),
+                        ),
                       ],
                     ),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => OrderDetailsScreen(orderModel: orderModel),
-                          ));
-                    },
+                    trailing: IconButton(
+                      icon: Icon(Icons.arrow_forward_ios),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) =>
+                                  OrderDetailsScreen(orderModel: orderModel),
+                            ));
+                      },
+                    ),
+//                    onTap: () {
+//                      Navigator.push(
+//                          context,
+//                          CupertinoPageRoute(
+//                            builder: (context) =>
+//                                OrderDetailsScreen(orderModel: orderModel),
+//                          ));
+//                    },
                   );
                 },
                 separatorBuilder: (context, index) => Divider(),

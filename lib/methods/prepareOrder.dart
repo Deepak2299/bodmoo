@@ -2,19 +2,24 @@ import 'package:bodmoo/methods/post/postPlaceOrder.dart';
 import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:bodmoo/models/orderModel.dart';
 import 'package:bodmoo/models/userModel.dart';
+import 'package:bodmoo/utils/urls.dart';
 import 'package:flutter/cupertino.dart';
+import 'dart:math';
+import 'package:http/http.dart' as http;
 
 Future<bool> prepareOrder({@required List<OrderItemModel> items}) async {
-  OrderModel orderModel = OrderModel(
-    orderDate: DateTime.now(),
+  var rng = new Random();
+  OrderModel order = OrderModel(
+//    orderDate: DateTime.now(),
     user: UserModel(
       address: 'a99',
       customerName: 'prayant',
-      customerMobile: '85662',
+      customerMobile: '8800152601',
     ),
+    paymentTransactionId: "152522" + rng.nextInt(1000).toString(),
     paymentType: "COD",
     pinCode: '121003',
     orderItems: items,
   );
-  return await postPlaceOrder(order: orderModel);
+  return await postPlaceOrder(order: order);
 }
