@@ -1,5 +1,5 @@
-import 'package:bodmoo/get/getCategories.dart';
-import 'package:bodmoo/get/getSubCat.dart';
+import 'package:bodmoo/methods/get/getCategories.dart';
+import 'package:bodmoo/methods/get/getSubCat.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/screenData.dart';
 import 'package:bodmoo/utils/utils.dart';

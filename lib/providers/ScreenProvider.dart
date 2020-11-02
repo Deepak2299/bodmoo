@@ -1,4 +1,4 @@
-import 'package:bodmoo/models/itemOrderModel.dart';
+import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:bodmoo/screenData.dart';
 import 'package:flutter/foundation.dart';
 

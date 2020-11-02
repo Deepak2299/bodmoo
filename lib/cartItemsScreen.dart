@@ -1,4 +1,4 @@
-import 'package:bodmoo/models/itemOrderModel.dart';
+import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/utils/urls.dart';
 import 'package:flutter/material.dart';

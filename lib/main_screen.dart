@@ -1,9 +1,9 @@
 import 'package:bodmoo/PartScreen.dart';
-import 'package:bodmoo/get/getBrands.dart';
-import 'package:bodmoo/get/getCategories.dart';
-import 'package:bodmoo/get/getSubCat.dart';
-import 'package:bodmoo/get/getVariants.dart';
-import 'package:bodmoo/get/getVehiclesbyBrand.dart';
+import 'package:bodmoo/methods/get/getBrands.dart';
+import 'package:bodmoo/methods/get/getCategories.dart';
+import 'package:bodmoo/methods/get/getSubCat.dart';
+import 'package:bodmoo/methods/get/getVariants.dart';
+import 'package:bodmoo/methods/get/getVehiclesbyBrand.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/widgets/cartIcon.dart';
 

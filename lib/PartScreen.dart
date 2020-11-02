@@ -1,5 +1,5 @@
 import 'package:bodmoo/PartDetailsScreen.dart';
-import 'package:bodmoo/get/getParts.dart';
+import 'package:bodmoo/methods/get/getParts.dart';
 import 'package:bodmoo/models/partsModel.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/utils/urls.dart';
