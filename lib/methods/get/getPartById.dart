@@ -5,9 +5,9 @@ import 'package:bodmoo/utils/urls.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
-Future<PartsModel> getPartById({@required String partId, @required String brandName}) async {
+Future<PartsModel> getPartById({@required String partId}) async {
   PartsModel partsModel;
-  String url = GET_PART_BY_ID + brandName + '/' + partId;
+  String url = GET_PART_BY_ID + partId;
 //  print(url);
   var req = await http.get(url, headers: {'Content-type': 'application/json'});
   print(req.body);

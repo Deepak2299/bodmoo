@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "277639298038",
+    "firebase_url": "https://bodmoo-9c380.firebaseio.com",
+    "project_id": "bodmoo-9c380",
+    "storage_bucket": "bodmoo-9c380.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277639298038:android:e52adf2705e2aab762e5d7",
+        "android_client_info": {
+          "package_name": "com.example.bodmoo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "277639298038-m4ni2d14dvmaouq7muii77vo8nhipgo2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDce-LduVt4ofjKDEK_SyjWqS0Je9hO_ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "277639298038-m4ni2d14dvmaouq7muii77vo8nhipgo2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

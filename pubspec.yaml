@@ -21,6 +21,12 @@ dependencies:
   shimmer:
   provider:
   badges: 1.0.0
+
+#  LOGIN
+  firebase_analytics: ^5.0.15
+  firebase_auth: ^0.16.0
+  firebase_core: ^0.4.0+9
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
