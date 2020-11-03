@@ -2,6 +2,7 @@ import 'package:bodmoo/main_screen.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 void main() {
   runApp(

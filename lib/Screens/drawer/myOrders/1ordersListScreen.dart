@@ -57,24 +57,13 @@ class _OrderListScreen1State extends State<OrderListScreen> {
                         ),
                       ],
                     ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.arrow_forward_ios),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => OrderDetailsScreen(orderModel: orderModel),
-                            ));
-                      },
-                    ),
-//                    onTap: () {
-//                      Navigator.push(
-//                          context,
-//                          CupertinoPageRoute(
-//                            builder: (context) =>
-//                                OrderDetailsScreen(orderModel: orderModel),
-//                          ));
-//                    },
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => OrderDetailsScreen(orderModel: orderModel),
+                          ));
+                    },
                   );
                 },
                 separatorBuilder: (context, index) => Divider(),
