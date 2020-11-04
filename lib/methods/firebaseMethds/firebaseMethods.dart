@@ -9,21 +9,21 @@ import 'package:flutter/services.dart';
 
 FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-loadUserDetails({String PhoneNumber}) {}
-
-function({String verificationId, String phoneNumber, String sms}) async {
+Future<bool> function({String verificationId, String phoneNumber, String sms}) async {
   AuthCredential _credentials;
   _credentials = PhoneAuthProvider.getCredential(verificationId: verificationId, smsCode: sms);
   try {
-    _firebaseAuth.signInWithCredential(_credentials).then((AuthResult result) async {
-      if (result.user != null) {
-        showToast(msg: "Congrats, your phone number is verified");
-        loadUserDetails(PhoneNumber: phoneNumber);
-      } else
-        showToast(msg: "Phone number is not verified");
-    });
+    AuthResult result = await _firebaseAuth.signInWithCredential(_credentials);
+    if (result.user != null) {
+      showToast(msg: "Congrats, your phone number is verified");
+      return true;
+    } else
+      showToast(msg: "Phone number is not verified");
+    return false;
   } on PlatformException catch (e) {
     showToast(msg: e.message);
+
+    return false;
   }
 }
 

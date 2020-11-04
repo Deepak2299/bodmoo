@@ -28,3 +28,6 @@ String POST_ADD_ORDER = BASE_URL + 'store/products/newOrder/';
 
 // Part By Id
 String GET_PART_BY_ID = BASE_URL + "store/products/getProduct/";
+
+//USER LOGIN
+String LOGIN_URL = BASE_URL + '/store/users/login';
