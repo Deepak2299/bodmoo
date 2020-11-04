@@ -1,6 +1,8 @@
+import 'package:bodmoo/Screens/login/otpScreen.dart';
 import 'package:bodmoo/main_screen.dart';
 import 'package:bodmoo/methods/firebaseMethds/firebaseMethods.dart';
 import 'package:bodmoo/utils/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SignInWithPhoneNO extends StatefulWidget {
@@ -166,15 +168,9 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
               : () {
                   FocusScope.of(context).unfocus();
                   if (_key.currentState.validate()) {
-//                      Navigator.pushAndRemoveUntil(
-//                          context,
-//                          MaterialPageRoute(
-//                              builder: (context) => SignInWithEmail()),
-//                          ModalRoute.withName(""));
 
                     sendCodeToPhoneNumber(
                         phonenumber: "+" + codeController.text + phoneController.text, context: context);
-                    //TODO:NAVIGATE TO OTP SCREEN
                   }
                 },
           child: Container(
