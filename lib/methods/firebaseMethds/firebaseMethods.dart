@@ -9,9 +9,12 @@ import 'package:flutter/services.dart';
 
 FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-Future<bool> function({String verificationId, String phoneNumber, String sms}) async {
+Future<bool> function(
+    {String verificationId, String phoneNumber, String sms}) async {
   AuthCredential _credentials;
-  _credentials = PhoneAuthProvider.getCredential(verificationId: verificationId, smsCode: sms);
+
+  _credentials = PhoneAuthProvider.getCredential(
+      verificationId: verificationId, smsCode: sms);
   try {
     AuthResult result = await _firebaseAuth.signInWithCredential(_credentials);
     if (result.user != null) {
@@ -32,31 +35,33 @@ sendCodeToPhoneNumber({@required String phonenumber, BuildContext context}) {
   _firebaseAuth.verifyPhoneNumber(
       phoneNumber: phonenumber,
       timeout: Duration(seconds: 5),
-      // verificationCompleted: (AuthCredential authCredentials) {
-      //   function(credential: authCredentials, PHONE_NO: PHONE_NO);
-      //   // try {
-      //   //   _firebaseAuth.signInWithCredential(authCredentials).then((AuthResult result) async {
-      //   //     if (result.user != null) {
-      //   //       showToast(msg: "Congrats, your phone number is verified");
-      //   //
-      //   //       //sing out for phone and signin with email
-      //   //       await _firebaseAuth.signOut();
-      //   //       Navigator.pushAndRemoveUntil(
-      //   //           context, CupertinoPageRoute(builder: (context) => MainScreen()), ModalRoute.withName(''));
-      //   //     } else
-      //   //       showToast(msg: "Phone number is not verified");
-      //   //   });
-      //   // } on PlatformException catch (e) {
-      //   //   showToast(msg: e.message);
-      //   // }
-      // },
+//       verificationCompleted: (AuthCredential authCredentials) {
+//         function(credential: authCredentials, PHONE_NO: PHONE_NO);
+//         // try {
+//         //   _firebaseAuth.signInWithCredential(authCredentials).then((AuthResult result) async {
+//         //     if (result.user != null) {
+//         //       showToast(msg: "Congrats, your phone number is verified");
+//         //
+//         //       //sing out for phone and signin with email
+//         //       await _firebaseAuth.signOut();
+//         //       Navigator.pushAndRemoveUntil(
+//         //           context, CupertinoPageRoute(builder: (context) => MainScreen()), ModalRoute.withName(''));
+//         //     } else
+//         //       showToast(msg: "Phone number is not verified");
+//         //   });
+//         // } on PlatformException catch (e) {
+//         //   showToast(msg: e.message);
+//         // }
+//       },
       verificationFailed: (AuthException authException) {
         showToast(msg: authException.message);
       },
       codeSent: (String verificationId, [int forceResendingToken]) {
         Navigator.push(
           context,
-          CupertinoPageRoute(builder: (context) => OTPScreen(verificationId: verificationId, phoneNumber: PHONE_NO)),
+          CupertinoPageRoute(
+              builder: (context) => OTPScreen(
+                  verificationId: verificationId, phoneNumber: PHONE_NO)),
         ); //         TextEditingController smsController = TextEditingController();
 //         GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 //         showDialog(
