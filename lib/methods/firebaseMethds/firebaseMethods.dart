@@ -53,7 +53,6 @@ sendCodeToPhoneNumber({@required String phonenumber, BuildContext context}) {
       codeSent: (String verificationId, [int forceResendingToken]) {
         TextEditingController smsController = TextEditingController();
         GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-        //TODO:NAVIGATE TO OTP
         showDialog(
             context: context,
             barrierDismissible: false,

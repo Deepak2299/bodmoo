@@ -174,6 +174,7 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
 
                     sendCodeToPhoneNumber(
                         phonenumber: "+" + codeController.text + phoneController.text, context: context);
+                    //TODO:NAVIGATE TO OTP SCREEN
                   }
                 },
           child: Container(
