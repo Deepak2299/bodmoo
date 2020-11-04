@@ -26,18 +26,13 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
         elevation: 0,
         title: Text(
           "Bodmoo",
-          style: TextStyle(
-              color: Colors.white,
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.white, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           padding: EdgeInsets.only(bottom: 15),
           onPressed: () {
             Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => MainScreen()),
-                ModalRoute.withName(""));
+                context, MaterialPageRoute(builder: (context) => MainScreen()), ModalRoute.withName(""));
           },
           icon: Icon(
             IconData(
@@ -58,11 +53,7 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
                 children: <Widget>[
                   Text(
                     "Log in to get started",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        wordSpacing: 1.5),
+                    style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500, wordSpacing: 1.5),
                   ),
                   SizedBox(
                     height: 15,
@@ -70,10 +61,7 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
                   Text(
                     "Experience the all new Bodmoo!",
                     style: TextStyle(
-                        color: Color(0xff888888),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        wordSpacing: 1.5),
+                        color: Color(0xff888888), fontSize: 12, fontWeight: FontWeight.w500, wordSpacing: 1.5),
                   ),
                   SizedBox(
                     height: 20,
@@ -123,8 +111,7 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
                     },
                     validator: (String val) {
                       val = val.trim();
-                      if (val.length > 10 || val.length < 10)
-                        return "Invalid mobile number";
+                      if (val.length > 10 || val.length < 10) return "Invalid mobile number";
                     },
                     showCursor: true,
                     keyboardAppearance: Brightness.light,
@@ -162,10 +149,7 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
                       alignment: Alignment.centerRight,
                       child: Text(
                         "Use Email ID",
-                        style: TextStyle(
-                            color: flipkartBlue,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500),
+                        style: TextStyle(color: flipkartBlue, fontSize: 12, fontWeight: FontWeight.w500),
                       ),
                     ),
                   )
@@ -173,46 +157,37 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
               ),
             ),
           ),
-          Expanded(
-            child: Container(),
-          ),
-          Divider(),
-          FlatButton(
-            onPressed: !isEnabled
-                ? () {}
-                : () {
-                    FocusScope.of(context).unfocus();
-                    if (_key.currentState.validate()) {
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: GestureDetector(
+          onTap: !isEnabled
+              ? () {}
+              : () {
+                  FocusScope.of(context).unfocus();
+                  if (_key.currentState.validate()) {
 //                      Navigator.pushAndRemoveUntil(
 //                          context,
 //                          MaterialPageRoute(
 //                              builder: (context) => SignInWithEmail()),
 //                          ModalRoute.withName(""));
 
-                      sendCodeToPhoneNumber(
-                          phonenumber:
-                              "+" + codeController.text + phoneController.text,
-                          context: context);
-                    } else {
-                      phoneController.text = "";
-                    }
-                  },
-            child: Container(
-              color: isEnabled ? Colors.deepOrangeAccent : Colors.grey,
-              height: 43,
-              width: double.infinity,
-              child: Center(
-                child: Text(
-                  "Send OTP",
-                  style: TextStyle(color: Colors.white),
-                ),
+                    sendCodeToPhoneNumber(
+                        phonenumber: "+" + codeController.text + phoneController.text, context: context);
+                  }
+                },
+          child: Container(
+            color: isEnabled ? Colors.deepOrangeAccent : Colors.grey,
+            height: 43,
+            width: double.infinity,
+            child: Center(
+              child: Text(
+                "Send OTP",
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ),
-          SizedBox(
-            height: 5,
-          )
-        ],
+        ),
       ),
     );
   }
