@@ -1,4 +1,5 @@
 import 'package:bodmoo/main_screen.dart';
+import 'package:bodmoo/utils/utils.dart';
 import 'package:bodmoo/widgets/toastWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ sendCodeToPhoneNumber({@required String phonenumber, BuildContext context}) {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  backgroundColor: Colors.deepPurpleAccent,
+                  backgroundColor: Colors.white,
                   title: Text("Enter SMS Code"),
                   content: Form(
                     key: _formKey,
@@ -57,7 +58,7 @@ sendCodeToPhoneNumber({@required String phonenumber, BuildContext context}) {
                           validator: (String code) {
                             if (code.isEmpty) return "Enter SMS Code";
                           },
-                          cursorColor: Colors.white,
+                          cursorColor: flipkartBlue,
                           textInputAction: TextInputAction.done,
                           onFieldSubmitted: (value) {
                             FocusScope.of(context).unfocus();
@@ -65,14 +66,14 @@ sendCodeToPhoneNumber({@required String phonenumber, BuildContext context}) {
 //                          style: labelStyle,
                           decoration: InputDecoration(
                             labelText: "SMS Code",
-//                            labelStyle: labelStyle,
-//                            enabledBorder: myBorder,
-//                            focusedBorder: myBorder,
-//                            errorBorder: errorBorder,
-//                            border: myBorder,
-//                            errorStyle: errorStyle,
+                            focusColor: flipkartBlue,
+                            focusedBorder: fieldBorder,
+                            border: fieldBorder,
+                            enabledBorder: fieldBorder,
+                            errorBorder: errorBorder,
+                            errorStyle: TextStyle(color: Colors.redAccent),
                             filled: true,
-                            fillColor: Colors.white12,
+                            fillColor: Colors.transparent,
                           ),
                         ),
                       ],

@@ -1,69 +1,89 @@
+import 'package:bodmoo/main_screen.dart';
 import 'package:bodmoo/methods/firebaseMethds/firebaseMethods.dart';
+import 'package:bodmoo/utils/utils.dart';
 import 'package:flutter/material.dart';
 
-class PhoneVerification extends StatefulWidget {
+class SignInWithPhoneNO extends StatefulWidget {
   @override
-  _PhoneVerificationState createState() => _PhoneVerificationState();
+  _SignInWithPhoneNOState createState() => _SignInWithPhoneNOState();
 }
 
-class _PhoneVerificationState extends State<PhoneVerification> {
-  TextEditingController phoneController = TextEditingController();
-
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
+  TextEditingController phoneController = new TextEditingController();
+  bool isEnabled = false;
+  FocusNode emailNode = FocusNode();
+  GlobalKey<FormState> _key = GlobalKey();
   TextEditingController codeController = TextEditingController();
-
   FocusNode phoneNode = FocusNode();
   FocusNode codeNode = FocusNode();
+  @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        backgroundColor: flipkartBlue,
+        centerTitle: true,
+        elevation: 0,
+        title: Text(
+          "Bodmoo",
+          style: TextStyle(
+              color: Colors.white,
+              fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.bold),
+        ),
+        leading: IconButton(
+          padding: EdgeInsets.only(bottom: 15),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => MainScreen()),
+                ModalRoute.withName(""));
           },
-          child: Container(
-            padding: const EdgeInsets.all(40),
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                  Colors.blue,
-                  Colors.deepPurple,
-                  Colors.deepPurpleAccent
-                ])),
+          icon: Icon(
+            IconData(
+              0x2715,
+            ),
+          ),
+        ),
+      ),
+      body: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(20.0),
             child: Form(
-              key: _formKey,
+              key: _key,
               child: ListView(
-                physics: ScrollPhysics(),
                 shrinkWrap: true,
+//                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Text(
+                    "Log in to get started",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        wordSpacing: 1.5),
+                  ),
                   SizedBox(
-                    height: 50,
+                    height: 15,
                   ),
                   Text(
-                    'First verify your Mobile Number',
-//                    style: signStyle,
+                    "Experience the all new Bodmoo!",
+                    style: TextStyle(
+                        color: Color(0xff888888),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        wordSpacing: 1.5),
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
                   TextFormField(
+                    autofocus: true,
                     controller: codeController,
                     focusNode: codeNode,
-                    validator: (String code) {
-                      code = code.trim();
-                      if (code.isEmpty)
-                        return "Enter Country Code";
-                      else {
-                        if (code.length > 2 || code.length < 1)
-                          return "Check Country Code";
-                      }
-                    },
-                    cursorColor: Colors.white,
+                    validator: (String code) => codeValidation(code),
+                    cursorColor: flipkartBlue,
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
                     onFieldSubmitted: (value) {
@@ -71,82 +91,128 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                     },
 //                    style: labelStyle,
                     decoration: InputDecoration(
-                        hintText: "91",
-                        labelText: "Country Code",
-//                        labelStyle: labelStyle,
-//                        enabledBorder: labelBorder,
-//                        focusedBorder: labelBorder,
-//                        errorBorder: errorBorder,
-//                        border: labelBorder,
-//                        errorStyle: errorStyle,
-                        filled: true,
-                        fillColor: Colors.white12),
-                  ),
-                  SizedBox(height: 20),
-                  TextFormField(
-                    controller: phoneController,
-                    focusNode: phoneNode,
-                    validator: (String phone) {
-                      phone = phone.trim();
-                      if (phone.isEmpty)
-                        return "Enter Phone Number";
-                      else {
-                        if (phone.length != 10)
-                          return "Enter PhoneNumber with 10digits";
-                      }
-                    },
-                    cursorColor: Colors.white,
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.done,
-                    onFieldSubmitted: (value) {
-                      FocusScope.of(context).unfocus();
-                    },
-//                    style: labelStyle,
-                    decoration: InputDecoration(
-                      labelText: "Phone Number",
-//                      labelStyle: labelStyle,
-//                      enabledBorder: labelBorder,
-//                      focusedBorder: labelBorder,
-//                      errorBorder: errorBorder,
-//                      border: labelBorder,
-//                      errorStyle: errorStyle,
+                      hintText: "91",
+                      labelText: "Country Code",
+                      focusColor: flipkartBlue,
+                      focusedBorder: fieldBorder,
+                      border: fieldBorder,
+                      enabledBorder: fieldBorder,
+                      errorBorder: errorBorder,
+                      errorStyle: TextStyle(color: Colors.redAccent),
                       filled: true,
-                      fillColor: Colors.white12,
+                      fillColor: Colors.transparent,
+//                        fillColor: Colors.white12
                     ),
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  FlatButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    color: Colors.white12,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
+                  TextFormField(
+//                    autofocus: true,
+                    controller: phoneController,
+                    onChanged: (String val) {
+                      val = val.trim();
+                      if (val.length > 10 || val.length < 10)
+                        setState(() {
+                          isEnabled = false;
+                        });
+                      else
+                        setState(() {
+                          isEnabled = true;
+                        });
+                    },
+                    validator: (String val) {
+                      val = val.trim();
+                      if (val.length > 10 || val.length < 10)
+                        return "Invalid mobile number";
+                    },
+                    showCursor: true,
+                    keyboardAppearance: Brightness.light,
+                    cursorColor: flipkartBlue,
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (value) {
+                      FocusScope.of(context).unfocus();
+                    },
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                      labelText: "Phone Number",
+                      focusColor: flipkartBlue,
+                      focusedBorder: fieldBorder,
+                      border: fieldBorder,
+                      enabledBorder: fieldBorder,
+                      errorBorder: errorBorder,
+                      errorStyle: TextStyle(color: Colors.redAccent),
+                      filled: true,
+                      fillColor: Colors.transparent,
+                    ),
+                    focusNode: phoneNode,
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  InkWell(
+                    onTap: () {
+//                      Navigator.pushAndRemoveUntil(
+//                          context,
+//                          MaterialPageRoute(
+//                              builder: (context) => SignInWithEmail()),
+//                          ModalRoute.withName(""));
+                    },
+                    child: Align(
+                      alignment: Alignment.centerRight,
                       child: Text(
-                        'Send Code',
-//                        style: signStyle,
+                        "Use Email ID",
+                        style: TextStyle(
+                            color: flipkartBlue,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500),
                       ),
                     ),
-                    onPressed: () async {
-                      FocusScope.of(context).unfocus();
-                      if (_formKey.currentState.validate()) {
-                        phoneController.text = phoneController.text.trim();
-                        codeController.text = codeController.text.trim();
-                        print(phoneController.text + " " + codeController.text);
-                        String phoneNumber = "+" +
-                            codeController.text.trim() +
-                            phoneController.text.trim();
-                        sendCodeToPhoneNumber(
-                            phonenumber: phoneNumber, context: context);
-                      }
-                    },
-                  ),
+                  )
                 ],
               ),
             ),
           ),
-        ),
+          Expanded(
+            child: Container(),
+          ),
+          Divider(),
+          FlatButton(
+            onPressed: !isEnabled
+                ? () {}
+                : () {
+                    FocusScope.of(context).unfocus();
+                    if (_key.currentState.validate()) {
+//                      Navigator.pushAndRemoveUntil(
+//                          context,
+//                          MaterialPageRoute(
+//                              builder: (context) => SignInWithEmail()),
+//                          ModalRoute.withName(""));
+
+                      sendCodeToPhoneNumber(
+                          phonenumber:
+                              "+" + codeController.text + phoneController.text,
+                          context: context);
+                    } else {
+                      phoneController.text = "";
+                    }
+                  },
+            child: Container(
+              color: isEnabled ? Colors.deepOrangeAccent : Colors.grey,
+              height: 43,
+              width: double.infinity,
+              child: Center(
+                child: Text(
+                  "Send OTP",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 5,
+          )
+        ],
       ),
     );
   }
