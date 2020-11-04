@@ -21,6 +21,7 @@ dependencies:
   shimmer:
   provider:
   badges: 1.0.0
+  fluttertoast:
 
 #  LOGIN
   firebase_analytics: ^5.0.15

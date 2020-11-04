@@ -1,3 +1,4 @@
+import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/main_screen.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MainScreen(),
+      home: PhoneVerification(),
     );
   }
 }

@@ -1,22 +1,30 @@
+import 'package:bodmoo/main_screen.dart';
+import 'package:bodmoo/widgets/toastWidget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 
 sendCodeToPhoneNumber({@required String phonenumber, BuildContext context}) {
-  PHONE_NO = phonenumber;
+  var PHONE_NO = phonenumber;
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   _firebaseAuth.verifyPhoneNumber(
       phoneNumber: phonenumber,
       timeout: Duration(seconds: 5),
       verificationCompleted: (AuthCredential authCredentials) {
         try {
-          _firebaseAuth.signInWithCredential(authCredentials).then((AuthResult result) async {
+          _firebaseAuth
+              .signInWithCredential(authCredentials)
+              .then((AuthResult result) async {
             if (result.user != null) {
               showToast(msg: "Congrats, your phone number is verified");
 
               //sing out for phone and signin with email
               await _firebaseAuth.signOut();
               Navigator.pushAndRemoveUntil(
-                  context, CupertinoPageRoute(builder: (context) => SignupScreen()), ModalRoute.withName(''));
+                  context,
+                  CupertinoPageRoute(builder: (context) => MainScreen()),
+                  ModalRoute.withName(''));
             } else
               showToast(msg: "Phone number is not verified");
           });
@@ -38,7 +46,7 @@ sendCodeToPhoneNumber({@required String phonenumber, BuildContext context}) {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   backgroundColor: Colors.deepPurpleAccent,
-                  title: Text("Enter SMS Code", style: signStyle),
+                  title: Text("Enter SMS Code"),
                   content: Form(
                     key: _formKey,
                     child: Column(
@@ -46,21 +54,23 @@ sendCodeToPhoneNumber({@required String phonenumber, BuildContext context}) {
                       children: <Widget>[
                         TextFormField(
                           controller: smsController,
-                          validator: (String code) => smsValidator(code),
+                          validator: (String code) {
+                            if (code.isEmpty) return "Enter SMS Code";
+                          },
                           cursorColor: Colors.white,
                           textInputAction: TextInputAction.done,
                           onFieldSubmitted: (value) {
                             FocusScope.of(context).unfocus();
                           },
-                          style: labelStyle,
+//                          style: labelStyle,
                           decoration: InputDecoration(
                             labelText: "SMS Code",
-                            labelStyle: labelStyle,
-                            enabledBorder: myBorder,
-                            focusedBorder: myBorder,
-                            errorBorder: errorBorder,
-                            border: myBorder,
-                            errorStyle: errorStyle,
+//                            labelStyle: labelStyle,
+//                            enabledBorder: myBorder,
+//                            focusedBorder: myBorder,
+//                            errorBorder: errorBorder,
+//                            border: myBorder,
+//                            errorStyle: errorStyle,
                             filled: true,
                             fillColor: Colors.white12,
                           ),
@@ -70,27 +80,36 @@ sendCodeToPhoneNumber({@required String phonenumber, BuildContext context}) {
                   ),
                   actions: <Widget>[
                     FlatButton(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
                       color: Colors.white12,
                       child: Text(
                         "Done",
-                        style: signStyle,
+//                        style: signStyle,
                       ),
                       onPressed: () async {
                         FocusScope.of(context).unfocus();
                         if (_formKey.currentState.validate()) {
                           String sms = smsController.text.trim();
                           AuthCredential _credentials;
-                          _credentials = PhoneAuthProvider.getCredential(verificationId: verificationId, smsCode: sms);
+                          _credentials = PhoneAuthProvider.getCredential(
+                              verificationId: verificationId, smsCode: sms);
 
-                          _firebaseAuth.signInWithCredential(_credentials).then((AuthResult result) async {
+                          _firebaseAuth
+                              .signInWithCredential(_credentials)
+                              .then((AuthResult result) async {
                             if (result.user != null) {
-                              showToast(msg: "Congrats, your phone number is verified");
+                              showToast(
+                                  msg:
+                                      "Congrats, your phone number is verified");
                               //sing out for phone and signin with email
-                              await _firebaseAuth.signOut();
+//                              await _firebaseAuth.signOut();
                               Navigator.pop(context);
-                              Navigator.pushAndRemoveUntil(context,
-                                  CupertinoPageRoute(builder: (context) => SignupScreen()), ModalRoute.withName(''));
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) => MainScreen()),
+                                  ModalRoute.withName(''));
                             } else {
                               showToast(msg: "Phone number is not verified");
                             }
