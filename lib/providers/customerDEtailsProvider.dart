@@ -20,7 +20,6 @@ class CustomerDetailsProvider extends ChangeNotifier {
   String get getCustomerPhone => this.phoneNumber;
   String get getToken => this.token;
   List<String> get getAddress => this.address;
-
 }
 
 String PREFS_LOGIN_KEY = 'BODMOO_LOGIN';
