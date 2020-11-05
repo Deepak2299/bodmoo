@@ -217,7 +217,7 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                             .partModel.details[widget.partIndex].itemPrice
                             .toString(),
                         orderQty: 1));
-                    bool b = await prepareOrder(items: item);
+                    bool b = await prepareOrder(items: item, context: context);
                     if (b) {
                       //TODO:SHOW ORDER PLACED SUCCEFULLY
                     } else {

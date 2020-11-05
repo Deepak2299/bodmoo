@@ -207,7 +207,8 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                                 bool b = await prepareOrder(
                                     items: Provider.of<ScreenProvider>(context,
                                             listen: false)
-                                        .cartItems);
+                                        .cartItems,
+                                    context: context);
                                 if (b) {
                                   //TODO:SHOW ORDER PLACED SUCCEFULLY
                                 } else {

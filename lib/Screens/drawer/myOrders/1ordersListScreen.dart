@@ -2,8 +2,10 @@ import 'package:bodmoo/Screens/drawer/myOrders/2orderDetailsScreen.dart';
 import 'package:bodmoo/methods/get/getOrdersList.dart';
 import 'package:bodmoo/models/cartModel.dart';
 import 'package:bodmoo/models/orderModel.dart';
+import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OrderListScreen extends StatefulWidget {
   @override
@@ -17,7 +19,9 @@ class _OrderListScreen1State extends State<OrderListScreen> {
       child: Scaffold(
         appBar: AppBar(title: Text("My Orders")),
         body: FutureBuilder(
-          future: getOrdersList(PhNo: "9435435345"),
+          future: getOrdersList(
+              PhNo: Provider.of<ScreenProvider>(context, listen: false)
+                  .getPhoneNumber),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               List<OrderModel> ordersList = snapshot.data;
@@ -61,7 +65,8 @@ class _OrderListScreen1State extends State<OrderListScreen> {
                       Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => OrderDetailsScreen(orderModel: orderModel),
+                            builder: (context) =>
+                                OrderDetailsScreen(orderModel: orderModel),
                           ));
                     },
                   );

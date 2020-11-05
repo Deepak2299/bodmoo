@@ -2,9 +2,11 @@ import 'package:bodmoo/Screens/login/signUpScreen.dart';
 import 'package:bodmoo/main_screen.dart';
 import 'package:bodmoo/methods/firebaseMethds/firebaseMethods.dart';
 import 'package:bodmoo/methods/post/getUserDetails.dart';
+import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OTPScreen extends StatefulWidget {
   String verificationId, phoneNumber, code;
@@ -95,6 +97,8 @@ class _OTPScreenState extends State<OTPScreen> {
                     phoneNumber: widget.code + widget.phoneNumber,
                     sms: otpController.text);
                 print(verified.toString());
+                Provider.of<ScreenProvider>(context, listen: false)
+                    .addPhoneNumber(widget.phoneNumber);
                 if (verified) {
                   bool userexist = await getUserDetailsOrLogin(
                       PhNo: widget.code + widget.phoneNumber);
