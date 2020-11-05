@@ -1,15 +1,25 @@
 import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/Screens/login/signUpScreen.dart';
+import 'package:bodmoo/Screens/splashScreen.dart';
 import 'package:bodmoo/main_screen.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
+import 'package:bodmoo/providers/loginProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ScreenProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ScreenProvider>(
+          create: (_) => ScreenProvider(),
+        ),
+        ChangeNotifierProvider<LoginProvider>(
+          create: (_) => LoginProvider(),
+        ),
+      ],
+      // create: (context) => ScreenProvider(),
       child: MyApp(),
     ),
   );
@@ -26,7 +36,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SignInWithPhoneNO(),
+      home: SplashScreen(),
     );
   }
 }

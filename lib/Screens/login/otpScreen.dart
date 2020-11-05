@@ -35,22 +35,15 @@ class _OTPScreenState extends State<OTPScreen> {
               children: <Widget>[
                 Text(
                   "Verify your phone number here",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      wordSpacing: 1.5),
+                  style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500, wordSpacing: 1.5),
                 ),
                 SizedBox(
                   height: 15,
                 ),
                 Text(
                   "Paste OTP here",
-                  style: TextStyle(
-                      color: Color(0xff888888),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      wordSpacing: 1.5),
+                  style:
+                      TextStyle(color: Color(0xff888888), fontSize: 12, fontWeight: FontWeight.w500, wordSpacing: 1.5),
                 ),
                 SizedBox(
                   height: 20,
@@ -92,19 +85,15 @@ class _OTPScreenState extends State<OTPScreen> {
         bottomNavigationBar: BottomAppBar(
           child: GestureDetector(
               onTap: () async {
-                bool verified = await function(
+                bool verified = await authFunction(
                     verificationId: widget.verificationId,
                     phoneNumber: widget.code + widget.phoneNumber,
                     sms: otpController.text);
-                print(verified.toString());
-                Provider.of<ScreenProvider>(context, listen: false)
-                    .addPhoneNumber(widget.phoneNumber);
+                Provider.of<ScreenProvider>(context, listen: false).addPhoneNumber(widget.phoneNumber);
                 if (verified) {
-                  bool userexist = await getUserDetailsOrLogin(
-                      PhNo: widget.code + widget.phoneNumber);
-                  if (!userexist)
-                    Navigator.push(context,
-                        CupertinoPageRoute(builder: (context) => MainScreen()));
+                  bool userexist = await getUserDetailsOrLogin(PhNo: widget.phoneNumber);
+                  if (userexist)
+                    Navigator.push(context, CupertinoPageRoute(builder: (context) => MainScreen()));
                   else
                     Navigator.push(
                         context,

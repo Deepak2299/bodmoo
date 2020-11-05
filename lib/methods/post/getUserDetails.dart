@@ -11,6 +11,9 @@ Future<bool> getUserDetailsOrLogin({@required String PhNo}) async {
     headers: {'Content-type': 'application/json'},
     body: jsonEncode(body),
   );
+  print(req.body);
+  print(req.statusCode);
+
   if (req.statusCode == 200) {
     return true;
     //TODO: DECODE USER MODEL

@@ -29,25 +29,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
         centerTitle: true,
         elevation: 0,
         title: Text(
-          "Welcome to new user",
-          style: TextStyle(
-              color: Colors.white,
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.bold),
+          "Welcome to new user, ${widget.phoneNumber}",
+          style: TextStyle(color: Colors.white, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           padding: EdgeInsets.only(bottom: 15),
           onPressed: () {
             Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => MainScreen()),
-                ModalRoute.withName(""));
+                context, MaterialPageRoute(builder: (context) => MainScreen()), ModalRoute.withName(""));
           },
-          icon: Icon(
-            IconData(
-              0x2715,
-            ),
-          ),
+          icon: Icon(Icons.close),
         ),
       ),
       body: Column(
@@ -58,27 +49,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               key: _key,
               child: ListView(
                 shrinkWrap: true,
-//                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-//                  Text(
-//                    "Log in to get started",
-//                    style: TextStyle(
-//                        color: Colors.black,
-//                        fontSize: 15,
-//                        fontWeight: FontWeight.w500,
-//                        wordSpacing: 1.5),
-//                  ),
-//                  SizedBox(
-//                    height: 15,
-//                  ),
-//                  Text(
-//                    "Experience the all new Bodmoo!",
-//                    style: TextStyle(
-//                        color: Color(0xff888888),
-//                        fontSize: 12,
-//                        fontWeight: FontWeight.w500,
-//                        wordSpacing: 1.5),
-//                  ),
                   SizedBox(
                     height: 50,
                   ),
@@ -103,7 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         });
                     },
                     cursorColor: flipkartBlue,
-                    keyboardType: TextInputType.name,
+                    // keyboardType: TextInputType,
                     textInputAction: TextInputAction.next,
                     onFieldSubmitted: (value) {
                       FocusScope.of(context).requestFocus(addNode);
@@ -151,7 +122,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     onFieldSubmitted: (value) {
                       FocusScope.of(context).unfocus();
                     },
-                    keyboardType: TextInputType.streetAddress,
+                    // keyboardType: TextInputType.streetAddress,
                     decoration: InputDecoration(
                       hintText: "Abc, India",
                       labelText: "Address",
@@ -201,16 +172,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
               : () async {
                   FocusScope.of(context).unfocus();
                   if (_key.currentState.validate()) {
-                    bool signed = await addUser(
-                        Name: nameController.text,
-                        PhNo: widget.phoneNumber,
-                        Addrees: addController.text);
+                    bool signed =
+                        await addUser(Name: nameController.text, PhNo: widget.phoneNumber, Addrees: addController.text);
                     print(signed.toString());
                     if (signed)
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => MainScreen()));
+                      Navigator.push(context, CupertinoPageRoute(builder: (context) => MainScreen()));
                     else
                       showToast(msg: "Already exists");
                   }
