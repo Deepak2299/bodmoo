@@ -1,7 +1,7 @@
 import 'package:bodmoo/Screens/login/signUpScreen.dart';
 import 'package:bodmoo/main_screen.dart';
 import 'package:bodmoo/methods/firebaseMethds/firebaseMethods.dart';
-import 'package:bodmoo/methods/post/getUserDetails.dart';
+import 'file:///D:/FLUTTERAPPS/bodmoo/lib/methods/login/getUserDetails.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:flutter/cupertino.dart';

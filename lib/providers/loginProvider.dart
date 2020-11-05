@@ -22,11 +22,9 @@ Future<bool> checkPrefsForLogin() async {
     return false;
 }
 
-savePrefsForLogin({@required bool signIn})
-async{
+savePrefsForLogin({@required bool signIn}) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool(PREFS_LOGIN_KEY, signIn);
 
   print(prefs.getBool(PREFS_LOGIN_KEY).toString());
-
 }

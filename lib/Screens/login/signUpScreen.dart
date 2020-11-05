@@ -1,5 +1,5 @@
 import 'package:bodmoo/main_screen.dart';
-import 'package:bodmoo/methods/post/addUser.dart';
+import 'file:///D:/FLUTTERAPPS/bodmoo/lib/methods/login/addUser.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:bodmoo/widgets/toastWidget.dart';
 import 'package:flutter/cupertino.dart';
