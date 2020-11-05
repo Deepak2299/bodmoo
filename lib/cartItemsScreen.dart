@@ -64,11 +64,11 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                       Provider.of<ScreenProvider>(context).getCartItems[index];
                   return ListTile(
                     leading: Container(
-                      width: 100,
+//                      width: 100,
 //                      height: 200,
                       child: Image.asset(
                         IMAGE,
-                        fit: BoxFit.fill,
+//                        fit: BoxFit.fill,
                       ),
                     ),
                     title: Column(

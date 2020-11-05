@@ -13,10 +13,10 @@ String GET_SUB_CATG_URL = BASE_URL + 'store/products/getByCategory/';
 String GET_BRANDS_URL = BASE_URL + 'store/products/brands/';
 
 //CARS NAME
-String GET_CARS_URL = BASE_URL + 'products/getByBrand/';
+String GET_CARS_URL = BASE_URL + 'store/products/getByBrand/';
 
 //VARIANTS
-String GET_VARIANTS_URL = BASE_URL + 'getCarVarients/';
+String GET_VARIANTS_URL = BASE_URL + 'store/products/getCarVarients/';
 
 // CAR PARTS
 String GET_ALL_CAR_PART_URL = BASE_URL + 'store/products/getCarParts/';
