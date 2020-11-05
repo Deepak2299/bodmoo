@@ -14,7 +14,7 @@ class CartIcon extends StatelessWidget {
       },
       child: Badge(
         animationType: BadgeAnimationType.fade,
-         badgeContent: Text(
+        badgeContent: Text(
           Provider.of<ScreenProvider>(context).cartItemsLength.toString(),
         ),
         child: Icon(

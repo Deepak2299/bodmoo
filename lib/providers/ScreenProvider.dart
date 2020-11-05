@@ -135,12 +135,6 @@ class ScreenProvider extends ChangeNotifier {
     return total;
   }
 
-  String PhNo;
 
-  String get getPhoneNumber => PhNo;
 
-  void addPhoneNumber(String ph) {
-    PhNo = ph;
-    notifyListeners();
-  }
 }

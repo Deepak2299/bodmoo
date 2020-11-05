@@ -1,6 +1,6 @@
 import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
-import 'package:bodmoo/providers/loginProvider.dart';
+import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {

@@ -2,7 +2,7 @@ import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/Screens/login/signUpScreen.dart';
 import 'package:bodmoo/Screens/splashScreen.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
-import 'package:bodmoo/providers/loginProvider.dart';
+import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';

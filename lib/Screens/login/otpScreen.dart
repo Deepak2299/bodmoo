@@ -89,7 +89,6 @@ class _OTPScreenState extends State<OTPScreen> {
                     verificationId: widget.verificationId,
                     phoneNumber: widget.code + widget.phoneNumber,
                     sms: otpController.text);
-                Provider.of<ScreenProvider>(context, listen: false).addPhoneNumber(widget.phoneNumber);
                 if (verified) {
                   bool userexist = await getUserDetailsOrLogin(PhNo: widget.phoneNumber);
                   if (userexist)

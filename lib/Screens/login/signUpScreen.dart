@@ -1,4 +1,3 @@
-
 import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:bodmoo/methods/login/addUser.dart';
 import 'package:bodmoo/utils/utils.dart';
@@ -38,7 +37,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           onPressed: () {
             Navigator.pushAndRemoveUntil(
                 context, MaterialPageRoute(builder: (context) => HomeScreen()), ModalRoute.withName(""));
-
           },
           icon: Icon(Icons.close),
         ),

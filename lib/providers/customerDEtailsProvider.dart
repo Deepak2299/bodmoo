@@ -3,20 +3,18 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomerDetailsProvider extends ChangeNotifier {
-
+  String phoneNumber;
   String customerName;
   List<String> address;
   String token;
 
-  setCustomerDetails({@required String name,List<String>address,String token})
-  {
+  setCustomerDetails({@required String name, List<String> address, String token,String phone}) {
     this.customerName = name;
     this.address = address;
     this.token = token;
+    this.phoneNumber = phone;
     notifyListeners();
   }
-
-
 
   //TODO: OPTIONAL  TO BE COMPLETED
 }
