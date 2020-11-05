@@ -134,7 +134,4 @@ class ScreenProvider extends ChangeNotifier {
       }
     return total;
   }
-
-
-
 }

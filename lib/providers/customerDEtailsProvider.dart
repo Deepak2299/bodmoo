@@ -8,7 +8,7 @@ class CustomerDetailsProvider extends ChangeNotifier {
   List<String> address;
   String token;
 
-  setCustomerDetails({@required String name, List<String> address, String token,String phone}) {
+  setCustomerDetails({@required String name, List<String> address, String token, String phone}) {
     this.customerName = name;
     this.address = address;
     this.token = token;
@@ -16,7 +16,11 @@ class CustomerDetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  //TODO: OPTIONAL  TO BE COMPLETED
+  String get getCustomerName => this.customerName;
+  String get getCustomerPhone => this.phoneNumber;
+  String get getToken => this.token;
+  List<String> get getAddress => this.address;
+
 }
 
 String PREFS_LOGIN_KEY = 'BODMOO_LOGIN';
