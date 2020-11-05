@@ -1,4 +1,4 @@
-import 'package:bodmoo/cartItemsScreen.dart';
+import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
 import 'package:bodmoo/methods/prepareOrder.dart';
 import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:bodmoo/models/partsModel.dart';

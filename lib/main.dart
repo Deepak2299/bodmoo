@@ -1,7 +1,6 @@
 import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/Screens/login/signUpScreen.dart';
 import 'package:bodmoo/Screens/splashScreen.dart';
-import 'package:bodmoo/main_screen.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/loginProvider.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +14,8 @@ void main() {
         ChangeNotifierProvider<ScreenProvider>(
           create: (_) => ScreenProvider(),
         ),
-        ChangeNotifierProvider<LoginProvider>(
-          create: (_) => LoginProvider(),
+        ChangeNotifierProvider<CustomerDetailsProvider>(
+          create: (_) => CustomerDetailsProvider(),
         ),
       ],
       // create: (context) => ScreenProvider(),

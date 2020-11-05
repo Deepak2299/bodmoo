@@ -1,5 +1,6 @@
-import 'package:bodmoo/main_screen.dart';
-import 'file:///D:/FLUTTERAPPS/bodmoo/lib/methods/login/addUser.dart';
+
+import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
+import 'package:bodmoo/methods/login/addUser.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:bodmoo/widgets/toastWidget.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,7 +37,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           padding: EdgeInsets.only(bottom: 15),
           onPressed: () {
             Navigator.pushAndRemoveUntil(
-                context, MaterialPageRoute(builder: (context) => MainScreen()), ModalRoute.withName(""));
+                context, MaterialPageRoute(builder: (context) => HomeScreen()), ModalRoute.withName(""));
+
           },
           icon: Icon(Icons.close),
         ),
@@ -176,7 +178,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         await addUser(Name: nameController.text, PhNo: widget.phoneNumber, Addrees: addController.text);
                     print(signed.toString());
                     if (signed)
-                      Navigator.push(context, CupertinoPageRoute(builder: (context) => MainScreen()));
+                      Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeScreen()));
                     else
                       showToast(msg: "Already exists");
                   }

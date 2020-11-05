@@ -1,5 +1,5 @@
 import 'package:bodmoo/Screens/login/otpScreen.dart';
-import 'package:bodmoo/main_screen.dart';
+import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:bodmoo/methods/firebaseMethds/firebaseMethods.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,7 +38,7 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
           onPressed: () {
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => MainScreen()),
+                MaterialPageRoute(builder: (context) => HomeScreen()),
                 ModalRoute.withName(""));
           },
           icon: Icon(

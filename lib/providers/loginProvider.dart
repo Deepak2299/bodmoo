@@ -2,10 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginProvider extends ChangeNotifier {
-  bool SignedIn = false;
+class CustomerDetailsProvider extends ChangeNotifier {
 
-  bool get isSignedIn => SignedIn;
+  String customerName;
+  List<String> address;
+  String token;
+
+  setCustomerDetails({@required String name,List<String>address,String token})
+  {
+    this.customerName = name;
+    this.address = address;
+    this.token = token;
+    notifyListeners();
+  }
+
+
 
   //TODO: OPTIONAL  TO BE COMPLETED
 }

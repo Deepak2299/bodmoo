@@ -1,5 +1,5 @@
 import 'package:bodmoo/Screens/login/phoneVerification.dart';
-import 'package:bodmoo/main_screen.dart';
+import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:bodmoo/providers/loginProvider.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
               fullscreenDialog: true,
               builder: (context) {
                 if (b)
-                  return MainScreen();
+                  return HomeScreen();
                 else
                   return SignInWithPhoneNO();
               }));

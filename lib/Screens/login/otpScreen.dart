@@ -1,7 +1,7 @@
 import 'package:bodmoo/Screens/login/signUpScreen.dart';
-import 'package:bodmoo/main_screen.dart';
+import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:bodmoo/methods/firebaseMethds/firebaseMethods.dart';
-import 'file:///D:/FLUTTERAPPS/bodmoo/lib/methods/login/getUserDetails.dart';
+import 'package:bodmoo/methods/login/getUserDetails.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -93,7 +93,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 if (verified) {
                   bool userexist = await getUserDetailsOrLogin(PhNo: widget.phoneNumber);
                   if (userexist)
-                    Navigator.push(context, CupertinoPageRoute(builder: (context) => MainScreen()));
+                    Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeScreen()));
                   else
                     Navigator.push(
                         context,

@@ -1,5 +1,5 @@
-import 'package:bodmoo/PartScreen.dart';
 import 'package:bodmoo/Screens/drawer/myOrders/1ordersListScreen.dart';
+import 'package:bodmoo/Screens/realMeat/PartScreen.dart';
 
 import 'package:bodmoo/methods/get/getBrands.dart';
 import 'package:bodmoo/methods/get/getCategories.dart';
@@ -7,16 +7,15 @@ import 'package:bodmoo/methods/get/getSubCat.dart';
 import 'package:bodmoo/methods/get/getVariants.dart';
 import 'package:bodmoo/methods/get/getVehiclesbyBrand.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
-import 'package:bodmoo/widgets/cartIcon.dart';
 
 import 'package:bodmoo/widgets/items_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-class MainScreen extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
 textWidget(String str) {
@@ -26,7 +25,7 @@ textWidget(String str) {
     return '';
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   bool collapse = true;
   @override
   Widget build(BuildContext context) {
