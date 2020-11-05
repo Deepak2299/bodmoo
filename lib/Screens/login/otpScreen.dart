@@ -7,8 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OTPScreen extends StatefulWidget {
-  String verificationId, phoneNumber;
-  OTPScreen({@required this.verificationId, this.phoneNumber});
+  String verificationId, phoneNumber, code;
+  OTPScreen({@required this.verificationId, this.phoneNumber, this.code});
 //  FocusNode Node = FocusNode();
   TextEditingController otpController = TextEditingController();
   @override
@@ -92,20 +92,22 @@ class _OTPScreenState extends State<OTPScreen> {
               onTap: () async {
                 bool verified = await function(
                     verificationId: widget.verificationId,
-                    phoneNumber: widget.phoneNumber,
+                    phoneNumber: widget.code + widget.phoneNumber,
                     sms: otpController.text);
                 print(verified.toString());
                 if (verified) {
-                  bool userexist =
-                      await getUserDetailsOrLogin(PhNo: widget.phoneNumber);
-                  if (userexist)
+                  bool userexist = await getUserDetailsOrLogin(
+                      PhNo: widget.code + widget.phoneNumber);
+                  if (!userexist)
                     Navigator.push(context,
                         CupertinoPageRoute(builder: (context) => MainScreen()));
                   else
                     Navigator.push(
                         context,
                         CupertinoPageRoute(
-                            builder: (context) => SignUpScreen()));
+                            builder: (context) => SignUpScreen(
+                                  phoneNumber: widget.phoneNumber,
+                                )));
                 }
               },
               child: Container(

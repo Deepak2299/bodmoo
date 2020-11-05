@@ -1,8 +1,13 @@
 import 'package:bodmoo/main_screen.dart';
+import 'package:bodmoo/methods/post/addUser.dart';
 import 'package:bodmoo/utils/utils.dart';
+import 'package:bodmoo/widgets/toastWidget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
+  String phoneNumber;
+  SignUpScreen({@required this.phoneNumber});
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -86,6 +91,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if (code == "") return "Enter your name";
                       return null;
                     },
+                    onChanged: (String val) {
+                      val = val.trim();
+                      if (val == "")
+                        setState(() {
+                          isEnabled = false;
+                        });
+                      else
+                        setState(() {
+                          isEnabled = true;
+                        });
+                    },
                     cursorColor: flipkartBlue,
                     keyboardType: TextInputType.name,
                     textInputAction: TextInputAction.next,
@@ -113,21 +129,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   TextFormField(
 //                    autofocus: true,
                     controller: addController,
-                    onChanged: (String val) {
-                      val = val.trim();
-                      if (val == "")
-                        setState(() {
-                          isEnabled = false;
-                        });
-                      else
-                        setState(() {
-                          isEnabled = true;
-                        });
-                    },
-                    validator: (String val) {
-                      val = val.trim();
-                      if (val == "") return "Enter address";
-                    },
+//                    onChanged: (String val) {
+//                      val = val.trim();
+//                      if (val == "")
+//                        setState(() {
+//                          isEnabled = false;
+//                        });
+//                      else
+//                        setState(() {
+//                          isEnabled = true;
+//                        });
+//                    },
+//                    validator: (String val) {
+//                      val = val.trim();
+//                      if (val == "") return "Enter address";
+//                    },
                     showCursor: true,
                     keyboardAppearance: Brightness.light,
                     cursorColor: flipkartBlue,
@@ -182,12 +198,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: GestureDetector(
           onTap: !isEnabled
               ? () {}
-              : () {
+              : () async {
                   FocusScope.of(context).unfocus();
                   if (_key.currentState.validate()) {
-//              sendCodeToPhoneNumber(
-//                  phonenumber: "+" + codeController.text + phoneController.text, context: context);
-//            }
+                    bool signed = await addUser(
+                        Name: nameController.text,
+                        PhNo: widget.phoneNumber,
+                        Addrees: addController.text);
+                    print(signed.toString());
+                    if (signed)
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => MainScreen()));
+                    else
+                      showToast(msg: "Already exists");
                   }
                 },
           child: Container(
@@ -196,7 +221,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             width: double.infinity,
             child: Center(
               child: Text(
-                "Send OTP",
+                "Sign Up",
                 style: TextStyle(color: Colors.white),
               ),
             ),

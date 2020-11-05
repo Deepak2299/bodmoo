@@ -14,11 +14,13 @@ Future<bool> addUser({
     "mobile": PhNo,
     "address": Addrees
   };
+  print(body);
   var req = await http.post(
     SIGNUP_URL,
     headers: {'Content-type': 'application/json'},
     body: jsonEncode(body),
   );
+  print(req.body);
   if (req.statusCode == 200) {
     return true;
     //TODO: DECODE USER MODEL

@@ -10,7 +10,10 @@ import 'package:flutter/services.dart';
 FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 Future<bool> function(
-    {String verificationId, String phoneNumber, String sms}) async {
+    {String verificationId,
+    String phoneNumber,
+    String code,
+    String sms}) async {
   AuthCredential _credentials;
 
   _credentials = PhoneAuthProvider.getCredential(
@@ -30,10 +33,13 @@ Future<bool> function(
   }
 }
 
-sendCodeToPhoneNumber({@required String phonenumber, BuildContext context}) {
+sendCodeToPhoneNumber(
+    {@required String phonenumber,
+    @required String code,
+    BuildContext context}) {
   String PHONE_NO = phonenumber;
   _firebaseAuth.verifyPhoneNumber(
-      phoneNumber: phonenumber,
+      phoneNumber: code + phonenumber,
       timeout: Duration(seconds: 5),
 //       verificationCompleted: (AuthCredential authCredentials) {
 //         function(credential: authCredentials, PHONE_NO: PHONE_NO);
@@ -61,7 +67,10 @@ sendCodeToPhoneNumber({@required String phonenumber, BuildContext context}) {
           context,
           CupertinoPageRoute(
               builder: (context) => OTPScreen(
-                  verificationId: verificationId, phoneNumber: PHONE_NO)),
+                    verificationId: verificationId,
+                    phoneNumber: PHONE_NO,
+                    code: code,
+                  )),
         ); //         TextEditingController smsController = TextEditingController();
 //         GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 //         showDialog(
