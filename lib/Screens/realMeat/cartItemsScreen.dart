@@ -1,6 +1,8 @@
+import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/methods/prepareOrder.dart';
 import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
+import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -198,23 +200,36 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold))),
-                    onPressed:
-                        Provider.of<ScreenProvider>(context, listen: false)
-                                    .getTotalPriceOfCart() ==
-                                0
-                            ? null
-                            : () async {
-                                bool b = await prepareOrder(
-                                    items: Provider.of<ScreenProvider>(context,
-                                            listen: false)
-                                        .cartItems,
-                                    context: context);
-                                if (b) {
-                                  //TODO:SHOW ORDER PLACED SUCCEFULLY
-                                } else {
-                                  //TODO: ERROR WHILE PLACING ORDER
-                                }
-                              },
+                    onPressed: Provider.of<ScreenProvider>(context,
+                                    listen: false)
+                                .getTotalPriceOfCart() ==
+                            0
+                        ? null
+                        : () async {
+                            if (Provider.of<CustomerDetailsProvider>(context,
+                                        listen: false)
+                                    .getCustomerPhone !=
+                                null) {
+                              bool b = await prepareOrder(
+                                  items: Provider.of<ScreenProvider>(context,
+                                          listen: false)
+                                      .cartItems,
+                                  context: context);
+                              if (b) {
+                                //TODO:SHOW ORDER PLACED SUCCEFULLY
+                              } else {
+                                //TODO: ERROR WHILE PLACING ORDER
+                              }
+                            } else {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      fullscreenDialog: true,
+                                      builder: (context) => SignInWithPhoneNO(
+                                            stored: true,
+                                          )));
+                            }
+                          },
                   ),
                 )
               ],

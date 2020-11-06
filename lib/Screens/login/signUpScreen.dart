@@ -1,13 +1,16 @@
 import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:bodmoo/methods/login/addUser.dart';
+import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:bodmoo/widgets/toastWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   String phoneNumber;
-  SignUpScreen({@required this.phoneNumber});
+  bool stored;
+  SignUpScreen({@required this.phoneNumber, this.stored});
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -30,13 +33,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
         elevation: 0,
         title: Text(
           "Welcome to new user, ${widget.phoneNumber}",
-          style: TextStyle(color: Colors.white, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Colors.white,
+              fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           padding: EdgeInsets.only(bottom: 15),
           onPressed: () {
             Navigator.pushAndRemoveUntil(
-                context, MaterialPageRoute(builder: (context) => HomeScreen()), ModalRoute.withName(""));
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+                ModalRoute.withName(""));
           },
           icon: Icon(Icons.close),
         ),
@@ -172,12 +180,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
               : () async {
                   FocusScope.of(context).unfocus();
                   if (_key.currentState.validate()) {
-                    bool signed =
-                        await addUser(Name: nameController.text, PhNo: widget.phoneNumber, Addrees: addController.text);
+                    bool signed = await addUser(
+                        Name: nameController.text,
+                        PhNo: widget.phoneNumber,
+                        Addrees: addController.text);
                     print(signed.toString());
-                    if (signed)
-                      Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeScreen()));
-                    else
+                    if (signed) {
+                      savePrefsForLogin(signIn: true);
+                      Provider.of<CustomerDetailsProvider>(context,
+                              listen: false)
+                          .setCustomerDetails(
+                              name: nameController.text,
+                              phone: widget.phoneNumber,
+                              address: [addController.text]);
+                      if (widget.stored) {
+                        int count = 0;
+                        Navigator.of(context).popUntil((_) => count++ >= 2);
+                      } else
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => HomeScreen()));
+                    } else
                       showToast(msg: "Already exists");
                   }
                 },

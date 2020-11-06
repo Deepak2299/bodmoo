@@ -5,21 +5,35 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CustomerDetailsProvider extends ChangeNotifier {
   String phoneNumber;
   String customerName;
-  List<String> address;
+  List<String> addressList;
   String token;
 
-  setCustomerDetails({@required String name, List<String> address, String token, String phone}) {
+  setCustomerDetails(
+      {@required String name,
+      List<String> address,
+      String token,
+      String phone}) {
     this.customerName = name;
-    this.address = address;
+    this.addressList = address;
     this.token = token;
     this.phoneNumber = phone;
+    notifyListeners();
+  }
+
+  addAddress({@required String address}) {
+    addressList.add(address);
+    notifyListeners();
+  }
+
+  setName({@required String name}) {
+    this.customerName = name;
     notifyListeners();
   }
 
   String get getCustomerName => this.customerName;
   String get getCustomerPhone => this.phoneNumber;
   String get getToken => this.token;
-  List<String> get getAddress => this.address;
+  List<String> get getAddress => this.addressList;
 }
 
 String PREFS_LOGIN_KEY = 'BODMOO_LOGIN';

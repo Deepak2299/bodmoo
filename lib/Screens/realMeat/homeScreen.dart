@@ -7,6 +7,7 @@ import 'package:bodmoo/methods/get/getSubCat.dart';
 import 'package:bodmoo/methods/get/getVariants.dart';
 import 'package:bodmoo/methods/get/getVehiclesbyBrand.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
+import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 
 import 'package:bodmoo/widgets/items_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool collapse = true;
   @override
   Widget build(BuildContext context) {
-    print(context.watch<ScreenProvider>().getScreenData.catgName);
+//    print(context.watch<ScreenProvider>().getScreenData.catgName);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(),
@@ -40,9 +41,24 @@ class _HomeScreenState extends State<HomeScreen> {
               ListTile(
                 title: Text("My Orders"),
                 onTap: () {
-                  Navigator.push(context, CupertinoPageRoute(builder: (context) => OrderListScreen()));
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => OrderListScreen()));
                 },
-              )
+              ),
+              ListTile(
+                title: Text("logout"),
+                onTap: () {
+                  savePrefsForLogin(signIn: false);
+                  Provider.of<CustomerDetailsProvider>(context, listen: false)
+                      .setCustomerDetails();
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      CupertinoPageRoute(builder: (context) => HomeScreen()),
+                      (route) => false);
+                },
+              ),
             ],
           ),
         ),
@@ -67,8 +83,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? ItemView(
                       context: context,
                       title: "Sub Categories",
-                      futureFunction:
-                          getSubCategories(catgName: Provider.of<ScreenProvider>(context).getScreenData.catgName),
+                      futureFunction: getSubCategories(
+                          catgName: Provider.of<ScreenProvider>(context)
+                              .getScreenData
+                              .catgName),
                       i: 1,
                     )
                   : Container(),
@@ -90,7 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? ItemView(
                       context: context,
                       title: "Vehicles",
-                      futureFunction: getVehiclesByBrand(brandName: screenProvider.getScreenData.brandName),
+                      futureFunction: getVehiclesByBrand(
+                          brandName: screenProvider.getScreenData.brandName),
                       i: 3,
                     )
                   : Container(),
@@ -101,7 +120,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? ItemView(
                       context: context,
                       title: "Variants",
-                      futureFunction: getVariants(Vehiclename: screenProvider.getScreenData.vehicleName),
+                      futureFunction: getVariants(
+                          Vehiclename:
+                              screenProvider.getScreenData.vehicleName),
                       i: 4,
                     )
                   : Container(),
@@ -115,11 +136,15 @@ class _HomeScreenState extends State<HomeScreen> {
           child: GestureDetector(
             onTap: Provider.of<ScreenProvider>(context).getScreenData.vm != null
                 ? () {
-                    Navigator.push(context, CupertinoPageRoute(builder: (_) => PartScreen()));
+                    Navigator.push(context,
+                        CupertinoPageRoute(builder: (_) => PartScreen()));
                   }
                 : null,
             child: Container(
-              color: Provider.of<ScreenProvider>(context).getScreenData.vm != null ? Colors.blue : Colors.grey,
+              color:
+                  Provider.of<ScreenProvider>(context).getScreenData.vm != null
+                      ? Colors.blue
+                      : Colors.grey,
               height: MediaQuery.of(context).size.height * 0.07,
               width: MediaQuery.of(context).size.width,
               child: Column(
@@ -138,24 +163,36 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Text(
-                        textWidget(Provider.of<ScreenProvider>(context).getScreenData.catgName),
+                        textWidget(Provider.of<ScreenProvider>(context)
+                            .getScreenData
+                            .catgName),
                         style: TextStyle(color: Colors.white),
                       ),
                       Text(
-                        textWidget(Provider.of<ScreenProvider>(context).getScreenData.subCatgName),
+                        textWidget(Provider.of<ScreenProvider>(context)
+                            .getScreenData
+                            .subCatgName),
                         style: TextStyle(color: Colors.white),
                       ),
                       Text(
-                        textWidget(Provider.of<ScreenProvider>(context).getScreenData.brandName),
+                        textWidget(Provider.of<ScreenProvider>(context)
+                            .getScreenData
+                            .brandName),
                         style: TextStyle(color: Colors.white),
                       ),
                       Text(
-                        textWidget(Provider.of<ScreenProvider>(context).getScreenData.vehicleName),
+                        textWidget(Provider.of<ScreenProvider>(context)
+                            .getScreenData
+                            .vehicleName),
                         style: TextStyle(color: Colors.white),
                       ),
                       Text(
-                        Provider.of<ScreenProvider>(context).getScreenData.vm != null
-                            ? Provider.of<ScreenProvider>(context).getScreenData.vm.modelName
+                        Provider.of<ScreenProvider>(context).getScreenData.vm !=
+                                null
+                            ? Provider.of<ScreenProvider>(context)
+                                .getScreenData
+                                .vm
+                                .modelName
                             : '',
                         style: TextStyle(color: Colors.white),
                       ),

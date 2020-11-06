@@ -8,10 +8,15 @@ import 'package:flutter/services.dart';
 
 FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-Future<bool> authFunction({String verificationId, String phoneNumber, String code, String sms}) async {
+Future<bool> authFunction(
+    {String verificationId,
+    String phoneNumber,
+    String code,
+    String sms}) async {
   AuthCredential _credentials;
 
-  _credentials = PhoneAuthProvider.getCredential(verificationId: verificationId, smsCode: sms);
+  _credentials = PhoneAuthProvider.getCredential(
+      verificationId: verificationId, smsCode: sms);
   try {
     AuthResult result = await _firebaseAuth.signInWithCredential(_credentials);
     if (result.user != null) {
@@ -27,7 +32,11 @@ Future<bool> authFunction({String verificationId, String phoneNumber, String cod
   }
 }
 
-sendCodeToPhoneNumber({@required String phonenumber, @required String code, BuildContext context}) {
+sendCodeToPhoneNumber(
+    {@required String phonenumber,
+    @required String code,
+    BuildContext context,
+    bool stored}) {
   String PHONE_NO = phonenumber;
   _firebaseAuth.verifyPhoneNumber(
       phoneNumber: code + phonenumber,
@@ -61,6 +70,7 @@ sendCodeToPhoneNumber({@required String phonenumber, @required String code, Buil
                     verificationId: verificationId,
                     phoneNumber: PHONE_NO,
                     code: code,
+                    stored: stored,
                   )),
         ); //         TextEditingController smsController = TextEditingController();
 //         GlobalKey<FormState> _formKey = GlobalKey<FormState>();

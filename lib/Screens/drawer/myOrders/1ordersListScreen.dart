@@ -3,6 +3,7 @@ import 'package:bodmoo/methods/get/getOrdersList.dart';
 import 'package:bodmoo/models/cartModel.dart';
 import 'package:bodmoo/models/orderModel.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
+import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,8 +21,8 @@ class _OrderListScreen1State extends State<OrderListScreen> {
         appBar: AppBar(title: Text("My Orders")),
         body: FutureBuilder(
           future: getOrdersList(
-              PhNo: Provider.of<ScreenProvider>(context, listen: false)
-                  .getPhoneNumber),
+              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false)
+                  .getCustomerPhone),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               List<OrderModel> ordersList = snapshot.data;

@@ -3,6 +3,7 @@ import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:bodmoo/methods/firebaseMethds/firebaseMethods.dart';
 import 'package:bodmoo/methods/login/getUserDetails.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
+import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,12 @@ import 'package:provider/provider.dart';
 
 class OTPScreen extends StatefulWidget {
   String verificationId, phoneNumber, code;
-  OTPScreen({@required this.verificationId, this.phoneNumber, this.code});
+  bool stored;
+  OTPScreen(
+      {@required this.verificationId,
+      this.phoneNumber,
+      this.code,
+      this.stored = false});
 //  FocusNode Node = FocusNode();
   TextEditingController otpController = TextEditingController();
   @override
@@ -35,15 +41,22 @@ class _OTPScreenState extends State<OTPScreen> {
               children: <Widget>[
                 Text(
                   "Verify your phone number here",
-                  style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500, wordSpacing: 1.5),
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                      wordSpacing: 1.5),
                 ),
                 SizedBox(
                   height: 15,
                 ),
                 Text(
                   "Paste OTP here",
-                  style:
-                      TextStyle(color: Color(0xff888888), fontSize: 12, fontWeight: FontWeight.w500, wordSpacing: 1.5),
+                  style: TextStyle(
+                      color: Color(0xff888888),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      wordSpacing: 1.5),
                 ),
                 SizedBox(
                   height: 20,
@@ -90,10 +103,22 @@ class _OTPScreenState extends State<OTPScreen> {
                     phoneNumber: widget.code + widget.phoneNumber,
                     sms: otpController.text);
                 if (verified) {
-                  bool userexist = await getUserDetailsOrLogin(PhNo: widget.phoneNumber);
-                  if (userexist)
-                    Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeScreen()));
-                  else
+                  bool userexist = await getUserDetailsOrLogin(
+                      PhNo: widget.phoneNumber, context: context);
+                  if (userexist) {
+                    savePrefsForLogin(signIn: true);
+                    if (widget.stored) {
+                      int count = 0;
+                      Navigator.of(context).popUntil((_) => count++ >= 2);
+//                      var nav = Navigator.of(context);
+//                      nav.pop();
+//                      nav.pop();
+                    } else
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => HomeScreen()));
+                  } else
                     Navigator.push(
                         context,
                         CupertinoPageRoute(

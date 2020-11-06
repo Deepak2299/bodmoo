@@ -1,5 +1,8 @@
 import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/Screens/login/signUpScreen.dart';
+import 'package:bodmoo/Screens/realMeat/PartDetailsScreen.dart';
+import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
+import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:bodmoo/Screens/splashScreen.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
@@ -29,13 +32,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Bodmoo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: SplashScreen(),
+      routes: {
+        "homeScreen": (context) => HomeScreen(),
+        "partDetail": (context) => PartDetailsScren(),
+        "cartScreen": (context) => CartItemsScreen(),
+        "phoneSignUp": (context) => SignInWithPhoneNO(),
+        "userSignUp": (context) => SignUpScreen(),
+      },
     );
   }
 }

@@ -1,8 +1,10 @@
+import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
 import 'package:bodmoo/methods/prepareOrder.dart';
 import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:bodmoo/models/partsModel.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
+import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/urls.dart';
 import 'package:bodmoo/widgets/cartIcon.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,7 +43,9 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
             children: [
               Container(
                 height: MediaQuery.of(context).size.height * 0.5,
-                child: Hero(tag: "images_${widget.partIndex}", child: Image.asset(IMAGE)),
+                child: Hero(
+                    tag: "images_${widget.partIndex}",
+                    child: Image.asset(IMAGE)),
               ),
               Text(
                 widget.partModel.details[widget.partIndex].partName.toString(),
@@ -53,15 +57,22 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                 child: FlatButton(
                   padding: EdgeInsets.all(0),
                   // height: 20,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                  color:
-                      widget.partModel.details[widget.partIndex].outOfStock ? Colors.red.shade50 : Colors.green.shade50,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                  color: widget.partModel.details[widget.partIndex].outOfStock
+                      ? Colors.red.shade50
+                      : Colors.green.shade50,
                   onPressed: () {},
                   child: Text(
-                    widget.partModel.details[widget.partIndex].outOfStock ? "OutOfStock" : "Instock",
+                    widget.partModel.details[widget.partIndex].outOfStock
+                        ? "OutOfStock"
+                        : "Instock",
 //                textAlign: TextAlign.,
                     style: TextStyle(
-                      color: widget.partModel.details[widget.partIndex].outOfStock ? Colors.red : Colors.green,
+                      color:
+                          widget.partModel.details[widget.partIndex].outOfStock
+                              ? Colors.red
+                              : Colors.green,
                     ),
                   ),
                 ),
@@ -70,7 +81,9 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
 //            height: 10,
 //          ),
               Text(
-                "Rs " + widget.partModel.details[widget.partIndex].itemPrice.toString(),
+                "Rs " +
+                    widget.partModel.details[widget.partIndex].itemPrice
+                        .toString(),
                 style: TextStyle(fontSize: 30),
               ),
             ],
@@ -99,16 +112,25 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                         color: Colors.white,
                         onPressed: () {
                           OrderItemModel item = new OrderItemModel(
-                              partId: widget.partModel.details[widget.partIndex].id,
+                              partId:
+                                  widget.partModel.details[widget.partIndex].id,
                               brandName: widget.partModel.carBrand,
                               vehicleName: widget.partModel.carName,
                               vehicleModel: widget.partModel.carModel,
-                              vehicleYear: widget.partModel.modelYear.toString(),
-                              partName: widget.partModel.details[widget.partIndex].partName,
-                              partPrice: widget.partModel.details[widget.partIndex].itemPrice.toString(),
+                              vehicleYear:
+                                  widget.partModel.modelYear.toString(),
+                              partName: widget
+                                  .partModel.details[widget.partIndex].partName,
+                              partPrice: widget
+                                  .partModel.details[widget.partIndex].itemPrice
+                                  .toString(),
                               orderQty: 1);
-                          Provider.of<ScreenProvider>(context, listen: false).itemAdd(item);
-                          Navigator.push(context, CupertinoPageRoute(builder: (context) => CartItemsScreen()));
+                          Provider.of<ScreenProvider>(context, listen: false)
+                              .itemAdd(item);
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => CartItemsScreen()));
                         },
                         child: Center(
                           child: Text(
@@ -126,7 +148,10 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                       child: RaisedButton(
                         color: Colors.white,
                         onPressed: () {
-                          Navigator.push(context, CupertinoPageRoute(builder: (context) => CartItemsScreen()));
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => CartItemsScreen()));
                         },
                         child: Center(
                           child: Text(
@@ -188,14 +213,31 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                         vehicleName: widget.partModel.carName,
                         vehicleModel: widget.partModel.carModel,
                         vehicleYear: widget.partModel.modelYear.toString(),
-                        partName: widget.partModel.details[widget.partIndex].partName,
-                        partPrice: widget.partModel.details[widget.partIndex].itemPrice.toString(),
+                        partName:
+                            widget.partModel.details[widget.partIndex].partName,
+                        partPrice: widget
+                            .partModel.details[widget.partIndex].itemPrice
+                            .toString(),
                         orderQty: 1));
-                    bool b = await prepareOrder(items: item, context: context);
-                    if (b) {
-                      //TODO:SHOW ORDER PLACED SUCCEFULLY
+                    if (Provider.of<CustomerDetailsProvider>(context,
+                                listen: false)
+                            .getCustomerPhone !=
+                        null) {
+                      bool b =
+                          await prepareOrder(items: item, context: context);
+                      if (b) {
+                        //TODO:SHOW ORDER PLACED SUCCEFULLY
+                      } else {
+                        //TODO: ERROR WHILE PLACING ORDER
+                      }
                     } else {
-                      //TODO: ERROR WHILE PLACING ORDER
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              fullscreenDialog: true,
+                              builder: (context) => SignInWithPhoneNO(
+                                    stored: true,
+                                  )));
                     }
                   },
                   color: Colors.red,
