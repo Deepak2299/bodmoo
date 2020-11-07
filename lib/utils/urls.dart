@@ -24,10 +24,10 @@ String GET_CAR_PART_URL = BASE_URL + 'store/products/carParts/';
 
 //ORDERS
 String GET_ORDERS_LIST = BASE_URL + 'store/orders/getOrders/';
-String POST_ADD_ORDER = BASE_URL + 'store/products/newOrder/';
+String POST_ADD_ORDER = BASE_URL + 'store/orders/newOrder/';
 
 // Part By Id
-String GET_PART_BY_ID = BASE_URL + "store/products/getProduct/";
+String GET_PART_BY_ID = BASE_URL + "store/orders/getProducts/";
 
 //USER LOGIN
 String LOGIN_URL = BASE_URL + 'store/users/login';
