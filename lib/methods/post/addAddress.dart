@@ -19,6 +19,7 @@ Future<bool> addAddress({
     headers: {'Content-type': 'application/json'},
     body: jsonEncode(body),
   );
+  print(body);
   if (req.statusCode == 200) {
     return true;
     //TODO: DECODE USER MODEL

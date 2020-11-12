@@ -15,6 +15,6 @@ Future<List<dynamic>> getAddress({
   } else
 //    ScreenErrorData.subCatgError = '';
     addresses = json.decode(req.body)["output"];
-
+  print(req.body);
   return addresses;
 }

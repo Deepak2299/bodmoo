@@ -1,4 +1,5 @@
 import 'package:bodmoo/Screens/drawer/myOrders/1ordersListScreen.dart';
+import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/Screens/realMeat/PartScreen.dart';
 
 import 'package:bodmoo/methods/get/getBrands.dart';
@@ -47,18 +48,33 @@ class _HomeScreenState extends State<HomeScreen> {
                           builder: (context) => OrderListScreen()));
                 },
               ),
-              ListTile(
-                title: Text("logout"),
-                onTap: () {
-                  savePrefsForLogin(signIn: false);
-                  Provider.of<CustomerDetailsProvider>(context, listen: false)
-                      .setCustomerDetails();
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      CupertinoPageRoute(builder: (context) => HomeScreen()),
-                      (route) => false);
-                },
-              ),
+              Provider.of<CustomerDetailsProvider>(context, listen: false)
+                          .phoneNumber !=
+                      ""
+                  ? ListTile(
+                      title: Text("logout"),
+                      onTap: () {
+                        savePrefsForLogin(signIn: false);
+                        Provider.of<CustomerDetailsProvider>(context,
+                                listen: false)
+                            .setCustomerDetails(phone: "");
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => HomeScreen()),
+                            (route) => false);
+                      },
+                    )
+                  : ListTile(
+                      title: Text("login"),
+                      onTap: () {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => SignInWithPhoneNO()),
+                            (route) => false);
+                      },
+                    ),
             ],
           ),
         ),
