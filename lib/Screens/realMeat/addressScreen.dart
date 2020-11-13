@@ -1,9 +1,11 @@
+import 'package:bodmoo/Screens/drawer/myOrders/1ordersListScreen.dart';
 import 'package:bodmoo/methods/get/getAddress.dart';
 import 'package:bodmoo/methods/post/addAddress.dart';
 import 'package:bodmoo/methods/prepareOrder.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -154,28 +156,37 @@ class _AddressScreenState extends State<AddressScreen> {
               return Container();
           }),
       bottomNavigationBar: BottomAppBar(
-        child: RaisedButton(
-          color: Colors.green,
-          child: Center(
-              child: Text('Confirm Order',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold))),
-          onPressed: () async {
-
-              bool b = await prepareOrder(
-                  items: Provider.of<ScreenProvider>(context,
-                      listen: false)
-                      .cartItems,
-                  context: context);
-              if (b) {
-                //TODO:SHOW ORDER PLACED SUCCEFULLY
-
-              } else {
-                //TODO: ERROR WHILE PLACING ORDER
-              }
-
-          },
+        child: Container(
+          height: 50,
+          child: RaisedButton(
+            color: Colors.green,
+            child: Center(
+                child: Text('Confirm Order',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold))),
+            onPressed:
+                Provider.of<CustomerDetailsProvider>(context, listen: false)
+                            .deliveryAddress !=
+                        null
+                    ? () async {
+                        bool b = await prepareOrder(
+                            address: Provider.of<CustomerDetailsProvider>(
+                                    context,
+                                    listen: false)
+                                .deliveryAddress,
+                            context: context);
+                        if (b) {
+                          //TODO:SHOW ORDER PLACED SUCCEFULLY
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => OrderListScreen()));
+                        } else {
+                          //TODO: ERROR WHILE PLACING ORDER
+                        }
+                      }
+                    : null,
+          ),
         ),
       ),
     );

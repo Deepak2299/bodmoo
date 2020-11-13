@@ -211,18 +211,18 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                                         listen: false)
                                     .getCustomerPhone !=
                                 null) {
-
                               Provider.of<CustomerDetailsProvider>(context,
-                                  listen: false)
-                                  .addOrder(orderItemModel: Provider.of<ScreenProvider>(context,
-                                  listen: false)
-                                  .cartItems);
-                                //TODO:SHOW ORDER PLACED SUCCEFULLY
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => AddressScreen()));
-
+                                      listen: false)
+                                  .addOrder(
+                                      orderItemModel:
+                                          Provider.of<ScreenProvider>(context,
+                                                  listen: false)
+                                              .cartItems);
+                              //TODO:SHOW ORDER PLACED SUCCEFULLY
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AddressScreen()));
                             } else {
                               Navigator.push(
                                   context,

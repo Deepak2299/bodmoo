@@ -11,13 +11,14 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 Future<bool> prepareOrder(
-    {@required List<OrderItemModel> items, BuildContext context}) async {
+    {@required String address, @required BuildContext context}) async {
   var rng = new Random();
   OrderModel order = OrderModel(
 //    orderDate: DateTime.now(),
     user: UserModel(
-      address: 'a99',
-      customerName: 'prayant',
+      address: address,
+      customerName: Provider.of<CustomerDetailsProvider>(context, listen: false)
+          .customerName,
       customerMobile:
           Provider.of<CustomerDetailsProvider>(context, listen: false)
               .phoneNumber,
@@ -25,7 +26,8 @@ Future<bool> prepareOrder(
     ),
     paymentTransactionId: "152522" + rng.nextInt(1000).toString(),
     paymentType: "COD",
-    orderItems: items,
+    orderItems:
+        Provider.of<CustomerDetailsProvider>(context, listen: false).items,
   );
   return await postPlaceOrder(order: order);
 }
