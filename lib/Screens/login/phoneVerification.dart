@@ -151,28 +151,6 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
                     ),
                     focusNode: phoneNode,
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  InkWell(
-                    onTap: () {
-//                      Navigator.pushAndRemoveUntil(
-//                          context,
-//                          MaterialPageRoute(
-//                              builder: (context) => SignInWithEmail()),
-//                          ModalRoute.withName(""));
-                    },
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        "Use Email ID",
-                        style: TextStyle(
-                            color: flipkartBlue,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),

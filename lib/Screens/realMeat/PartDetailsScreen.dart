@@ -224,17 +224,14 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                                 listen: false)
                             .getCustomerPhone !=
                         null) {
-                      bool b =
-                          await prepareOrder(items: item, context: context);
-                      if (b) {
-                        //TODO:SHOW ORDER PLACED SUCCEFULLY
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AddressScreen()));
-                      } else {
-                        //TODO: ERROR WHILE PLACING ORDER
-                      }
+                      Provider.of<CustomerDetailsProvider>(context,
+                              listen: false)
+                          .addOrder(orderItemModel: item);
+                      //TODO:SHOW ORDER PLACED SUCCEFULLY
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AddressScreen()));
                     } else {
                       Navigator.push(
                           context,

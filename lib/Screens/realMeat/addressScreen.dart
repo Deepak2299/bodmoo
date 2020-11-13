@@ -1,5 +1,7 @@
 import 'package:bodmoo/methods/get/getAddress.dart';
 import 'package:bodmoo/methods/post/addAddress.dart';
+import 'package:bodmoo/methods/prepareOrder.dart';
+import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -151,6 +153,31 @@ class _AddressScreenState extends State<AddressScreen> {
             } else
               return Container();
           }),
+      bottomNavigationBar: BottomAppBar(
+        child: RaisedButton(
+          color: Colors.green,
+          child: Center(
+              child: Text('Confirm Order',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold))),
+          onPressed: () async {
+
+              bool b = await prepareOrder(
+                  items: Provider.of<ScreenProvider>(context,
+                      listen: false)
+                      .cartItems,
+                  context: context);
+              if (b) {
+                //TODO:SHOW ORDER PLACED SUCCEFULLY
+
+              } else {
+                //TODO: ERROR WHILE PLACING ORDER
+              }
+
+          },
+        ),
+      ),
     );
   }
 }
