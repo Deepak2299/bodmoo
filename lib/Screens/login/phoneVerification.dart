@@ -43,11 +43,7 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
                 MaterialPageRoute(builder: (context) => HomeScreen()),
                 ModalRoute.withName(""));
           },
-          icon: Icon(
-            IconData(
-              0x2715,
-            ),
-          ),
+          icon: Icon(Icons.clear),
         ),
       ),
       body: Column(
