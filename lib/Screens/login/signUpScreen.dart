@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 class SignUpScreen extends StatefulWidget {
   String phoneNumber;
   bool stored;
-  SignUpScreen({@required this.phoneNumber, this.stored});
+  SignUpScreen({@required this.phoneNumber, this.stored = false});
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -33,13 +33,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
         elevation: 0,
         title: Text(
           "Welcome to new user, ${widget.phoneNumber}",
-          style: TextStyle(color: Colors.white, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Colors.white,
+              fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           padding: EdgeInsets.only(bottom: 15),
           onPressed: () {
             Navigator.pushAndRemoveUntil(
-                context, MaterialPageRoute(builder: (context) => HomeScreen()), ModalRoute.withName(""));
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+                ModalRoute.withName(""));
           },
           icon: Icon(Icons.close),
         ),
@@ -186,7 +191,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         int count = 0;
                         Navigator.of(context).popUntil((_) => count++ >= 2);
                       } else
-                        Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeScreen()));
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => HomeScreen()));
                     } else
                       showToast(msg: "Already exists");
                   }

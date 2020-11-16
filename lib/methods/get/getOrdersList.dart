@@ -7,7 +7,11 @@ import 'package:http/http.dart' as http;
 
 Future<List<OrderModel>> getOrdersList({@required String PhNo}) async {
   print(GET_ORDERS_LIST + PhNo);
-  var req = await http.get(GET_ORDERS_LIST + PhNo);
+  var req = await http.get(
+    GET_ORDERS_LIST + PhNo,
+    headers: {'Content-type': 'application/json'},
+  );
+//  x-auth-token
   print(req.statusCode.toString());
   List<OrderModel> ordersList = List<OrderModel>();
   if (req.statusCode == 200) {
