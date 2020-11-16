@@ -1,27 +1,30 @@
 import 'dart:convert';
 
 class UserModel {
-  UserModel({this.customerName, this.customerMobile, this.address, this.pinCode});
+  UserModel({
+    this.customerName,
+    this.customerMobile,
+    this.token,
+    this.address,
+  });
 
   String customerName;
   String customerMobile;
+  String token;
   String address;
-  String pinCode;
   factory UserModel.fromJson(String str) => UserModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
   factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
-        customerName: json["customerName"] == null ? null : json["customerName"],
-        customerMobile: json["customerMobile"] == null ? null : json["customerMobile"],
-        address: json["address"] == null ? null : json["address"],
-        pinCode: json["pin_code"] == null ? null : json["pin_code"],
+        customerName: json["username"] == null ? null : json["username"],
+        customerMobile: json["mobile"] == null ? null : json["mobile"],
+        token: json["token"] == null ? null : json["token"],
       );
 
   Map<String, dynamic> toMap() => {
-        "customerName": customerName == null ? null : customerName,
-        "customerMobile": customerMobile == null ? null : customerMobile,
+        "user_name": customerName == null ? null : customerName,
+        "mobile": customerMobile == null ? null : customerMobile,
         "address": address == null ? null : address,
-        "pin_code": pinCode == null ? null : pinCode,
       };
 }

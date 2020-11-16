@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     Future.delayed(Duration(seconds: 1), () async {
-      bool b = await checkPrefsForLogin();
+      bool b = await checkPrefsForLogin(context: context);
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
