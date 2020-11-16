@@ -19,6 +19,13 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
   TextEditingController codeController = TextEditingController();
   FocusNode phoneNode = FocusNode();
   FocusNode codeNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    codeController = TextEditingController(text: "+91");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,18 +86,12 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
                   ),
                   TextFormField(
                     autofocus: true,
-                    controller: codeController,
-                    focusNode: codeNode,
-                    validator: (String code) => codeValidation(code),
+                    initialValue: "+91",
                     cursorColor: flipkartBlue,
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (value) {
-                      FocusScope.of(context).requestFocus(phoneNode);
-                    },
-//                    style: labelStyle,
+                    enabled: false,
                     decoration: InputDecoration(
-                      hintText: "91",
                       labelText: "Country Code",
                       focusColor: flipkartBlue,
                       focusedBorder: fieldBorder,
@@ -100,7 +101,6 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
                       errorStyle: TextStyle(color: Colors.redAccent),
                       filled: true,
                       fillColor: Colors.transparent,
-//                        fillColor: Colors.white12
                     ),
                   ),
                   SizedBox(
@@ -124,6 +124,7 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
                       val = val.trim();
                       if (val.length > 10 || val.length < 10)
                         return "Invalid mobile number";
+                      return null;
                     },
                     showCursor: true,
                     keyboardAppearance: Brightness.light,
@@ -161,7 +162,6 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
                   if (_key.currentState.validate()) {
                     sendCodeToPhoneNumber(
                         phonenumber: phoneController.text,
-                        code: "+" + codeController.text,
                         context: context,
                         stored: widget.stored);
                   }

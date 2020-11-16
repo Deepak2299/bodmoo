@@ -33,12 +33,11 @@ Future<bool> authFunction(
 
 sendCodeToPhoneNumber(
     {@required String phonenumber,
-    @required String code,
     BuildContext context,
     bool stored}) {
   String PHONE_NO = phonenumber;
   _firebaseAuth.verifyPhoneNumber(
-      phoneNumber: code + phonenumber,
+      phoneNumber: "+91" + phonenumber,
       timeout: Duration(seconds: 5),
 //       verificationCompleted: (AuthCredential authCredentials) {
 //         function(credential: authCredentials, PHONE_NO: PHONE_NO);
@@ -68,7 +67,7 @@ sendCodeToPhoneNumber(
               builder: (context) => OTPScreen(
                     verificationId: verificationId,
                     phoneNumber: PHONE_NO,
-                    code: code,
+                    code: "+91",
                     stored: stored,
                   )),
         ); //         TextEditingController smsController = TextEditingController();
