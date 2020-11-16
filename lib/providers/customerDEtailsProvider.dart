@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:bodmoo/models/orderItemModel.dart';
+import 'package:bodmoo/models/userModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,20 +9,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CustomerDetailsProvider extends ChangeNotifier {
   String phoneNumber;
   String customerName;
-  List<String> addressList;
   String token;
+
   String deliveryAddress;
   List<OrderItemModel> items;
+  List<String> addressList;
 
-  setCustomerDetails(
-      {@required String name,
-      List<String> address,
-      String token,
-      String phone}) {
-    this.customerName = name;
-    this.addressList = address;
-    this.token = token;
-    this.phoneNumber = phone;
+  setCustomerDetails({@required UserModel userModel}) {
+    this.customerName = userModel.customerName;
+    // this.addressList = userModel.;
+    this.token = userModel.token;
+    this.phoneNumber = userModel.customerMobile;
     notifyListeners();
   }
 
@@ -39,8 +39,8 @@ class CustomerDetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  addOrder({@required List<OrderItemModel> orderItemModel}) {
-    items = orderItemModel;
+  addOrder({@required List<OrderItemModel> orderItems}) {
+    items = orderItems;
     notifyListeners();
   }
 
@@ -52,20 +52,24 @@ class CustomerDetailsProvider extends ChangeNotifier {
 }
 
 String PREFS_LOGIN_KEY = 'BODMOO_LOGIN';
-Future<bool> checkPrefsForLogin() async {
+Future<bool> checkPrefsForLogin({@required BuildContext context}) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  bool loginIn = await prefs.getBool(PREFS_LOGIN_KEY);
-  if (loginIn != null)
-    return loginIn;
-  //NOT FOUND THEN FALSE
-  else
-    return false;
+  String user = await prefs.getString(PREFS_LOGIN_KEY);
+  if (user != null) {
+    UserModel userModel = UserModel.fromJson(user);
+    Provider.of<CustomerDetailsProvider>(context, listen: false).setCustomerDetails(userModel: userModel);
+    return true;
+  }
+  return false;
 }
 
-savePrefsForLogin({@required bool signIn}) async {
+savePrefsForLogin({@required bool signIn, @required String user}) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setBool(PREFS_LOGIN_KEY, signIn);
+  await prefs.setString(PREFS_LOGIN_KEY, user);
+}
 
-  print(prefs.getBool(PREFS_LOGIN_KEY).toString());
+clearPrefsForLogin() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.remove(PREFS_LOGIN_KEY);
 }
