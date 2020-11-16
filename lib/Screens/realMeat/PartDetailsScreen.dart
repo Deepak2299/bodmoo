@@ -1,7 +1,6 @@
 import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/Screens/realMeat/addressScreen.dart';
 import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
-import 'package:bodmoo/methods/prepareOrder.dart';
 import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:bodmoo/models/partsModel.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';

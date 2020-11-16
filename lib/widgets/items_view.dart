@@ -1,5 +1,4 @@
-import 'package:bodmoo/methods/get/getCategories.dart';
-import 'package:bodmoo/methods/get/getSubCat.dart';
+
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+// ignore: must_be_immutable
 class ItemView extends StatefulWidget {
   BuildContext context;
   String title;
