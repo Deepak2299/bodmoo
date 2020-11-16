@@ -32,7 +32,8 @@ class _AddressScreenState extends State<AddressScreen> {
               context: context),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print(addController.text);
+              print(Provider.of<CustomerDetailsProvider>(context, listen: false)
+                  .deliveryAddress);
               return ListView.builder(
                 shrinkWrap: true,
                 physics: ScrollPhysics(),
@@ -149,6 +150,7 @@ class _AddressScreenState extends State<AddressScreen> {
                       Provider.of<CustomerDetailsProvider>(context,
                               listen: false)
                           .setAddress(address: value);
+                      setState(() {});
                     },
                   );
                 },
