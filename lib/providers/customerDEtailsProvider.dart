@@ -1,4 +1,3 @@
-
 import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:bodmoo/models/userModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -43,6 +42,11 @@ class CustomerDetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  clearToken() {
+    this.token = "";
+    notifyListeners();
+  }
+
   String get getCustomerName => this.customerName;
   String get getCustomerPhone => this.phoneNumber;
   String get getToken => this.token;
@@ -57,7 +61,8 @@ Future<bool> checkPrefsForLogin({@required BuildContext context}) async {
   String user = await prefs.getString(PREFS_LOGIN_KEY);
   if (user != null) {
     UserModel userModel = UserModel.fromJson(user);
-    Provider.of<CustomerDetailsProvider>(context, listen: false).setCustomerDetails(userModel: userModel);
+    Provider.of<CustomerDetailsProvider>(context, listen: false)
+        .setCustomerDetails(userModel: userModel);
     return true;
   }
   return false;

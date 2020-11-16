@@ -28,9 +28,11 @@ class _AddressScreenState extends State<AddressScreen> {
       body: FutureBuilder(
           future: getAddress(
               PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false)
-                  .phoneNumber),
+                  .phoneNumber,
+              context: context),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              print(addController.text);
               return ListView.builder(
                 shrinkWrap: true,
                 physics: ScrollPhysics(),
@@ -104,7 +106,8 @@ class _AddressScreenState extends State<AddressScreen> {
                                                         listen: false)
                                                     .phoneNumber,
                                                 Addrees:
-                                                    addController.text.trim());
+                                                    addController.text.trim(),
+                                                context: context);
 
                                             setState(() {
                                               addController.clear();

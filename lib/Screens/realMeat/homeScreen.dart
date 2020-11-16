@@ -49,18 +49,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               Provider.of<CustomerDetailsProvider>(context, listen: false)
-                          .phoneNumber !=
+                          .token !=
                       ""
                   ? ListTile(
                       title: Text("logout"),
                       onTap: () {
                         clearPrefsForLogin();
+                        Provider.of<CustomerDetailsProvider>(context,
+                                listen: false)
+                            .clearToken();
                         Navigator.pushAndRemoveUntil(
                             context,
                             CupertinoPageRoute(
-                                builder: (context) => HomeScreen()),
-                            (route) => false);
-                        setState(() {});
+                                builder: (context) => SignInWithPhoneNO()),
+                            (route) => true);
                       },
                     )
                   : ListTile(

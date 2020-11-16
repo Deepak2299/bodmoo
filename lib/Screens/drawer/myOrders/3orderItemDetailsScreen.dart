@@ -18,7 +18,8 @@ class _OrderItemDetailsScreenState extends State<OrderItemDetailsScreen> {
       child: Scaffold(
         appBar: AppBar(),
         body: FutureBuilder(
-          future: getPartById(partId: widget.orderItem.partId),
+          future:
+              getPartById(partId: widget.orderItem.partId, context: context),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView(
@@ -33,7 +34,9 @@ class _OrderItemDetailsScreenState extends State<OrderItemDetailsScreen> {
                     children: [
                       Container(
                         height: MediaQuery.of(context).size.height * 0.5,
-                        child: Hero(tag: "images_${widget.orderItem.partId}", child: Image.asset(IMAGE)),
+                        child: Hero(
+                            tag: "images_${widget.orderItem.partId}",
+                            child: Image.asset(IMAGE)),
                       ),
                       Text(
                         widget.orderItem.partName.toString(),
@@ -44,14 +47,21 @@ class _OrderItemDetailsScreenState extends State<OrderItemDetailsScreen> {
                         child: FlatButton(
                           padding: EdgeInsets.all(0),
                           // height: 20,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                          color: snapshot.data.details[0].outOfStock ? Colors.red.shade50 : Colors.green.shade50,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          color: snapshot.data.details[0].outOfStock
+                              ? Colors.red.shade50
+                              : Colors.green.shade50,
                           onPressed: () {},
                           child: Text(
-                            snapshot.data.details[0].outOfStock ? "OutOfStock" : "Instock",
+                            snapshot.data.details[0].outOfStock
+                                ? "OutOfStock"
+                                : "Instock",
 //                textAlign: TextAlign.,
                             style: TextStyle(
-                              color: snapshot.data.details[0].outOfStock ? Colors.red : Colors.green,
+                              color: snapshot.data.details[0].outOfStock
+                                  ? Colors.red
+                                  : Colors.green,
                             ),
                           ),
                         ),

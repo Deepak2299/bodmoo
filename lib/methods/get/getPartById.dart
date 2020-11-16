@@ -1,15 +1,22 @@
 import 'dart:convert';
 
 import 'package:bodmoo/models/partsModel.dart';
+import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/urls.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
-Future<PartsModel> getPartById({@required String partId}) async {
+Future<PartsModel> getPartById(
+    {@required String partId, @required BuildContext context}) async {
   PartsModel partsModel;
   String url = GET_PART_BY_ID + partId;
 //  print(url);
-  var req = await http.get(url, headers: {'Content-type': 'application/json'});
+  var req = await http.get(url, headers: {
+    'Content-type': 'application/json',
+    'x-auth-token':
+        Provider.of<CustomerDetailsProvider>(context, listen: false).token
+  });
   print(req.body);
   if (req.statusCode != 200) {
 //    ScreenErrorData.partsError = jsonDecode(req.body)['message'];
