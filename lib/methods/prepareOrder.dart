@@ -1,13 +1,9 @@
 import 'package:bodmoo/methods/post/postPlaceOrder.dart';
-import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:bodmoo/models/orderModel.dart';
 import 'package:bodmoo/models/userModel.dart';
-import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
-import 'package:bodmoo/utils/urls.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:math';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 Future<bool> prepareOrder({@required String address, @required BuildContext context}) async {

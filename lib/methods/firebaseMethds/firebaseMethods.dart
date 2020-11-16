@@ -1,5 +1,4 @@
 import 'package:bodmoo/Screens/login/otpScreen.dart';
-import 'package:bodmoo/utils/utils.dart';
 import 'package:bodmoo/widgets/toastWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,3 @@
-import 'package:bodmoo/Screens/login/otpScreen.dart';
 import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:bodmoo/methods/firebaseMethds/firebaseMethods.dart';
 import 'package:bodmoo/utils/utils.dart';

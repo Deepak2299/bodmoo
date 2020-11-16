@@ -2,7 +2,6 @@ import 'package:bodmoo/Screens/drawer/myOrders/1ordersListScreen.dart';
 import 'package:bodmoo/methods/get/getAddress.dart';
 import 'package:bodmoo/methods/post/addAddress.dart';
 import 'package:bodmoo/methods/prepareOrder.dart';
-import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
