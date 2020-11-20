@@ -1,5 +1,5 @@
 import 'package:bodmoo/Screens/login/phoneVerification.dart';
-import 'package:bodmoo/Screens/realMeat/addressScreen.dart';
+import 'package:bodmoo/Screens/realMeat/addressListScreen.dart';
 import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
 import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:bodmoo/models/partsModel.dart';
@@ -142,44 +142,6 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                         ),
                       ),
                     ),
-//              Expanded(
-//                      child: Padding(
-//                        padding: const EdgeInsets.symmetric(horizontal: 20),
-//                        child: Row(
-//                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                          children: [
-//                            IconButton(
-//                                icon: Icon(Icons.remove),
-//                                onPressed: () {
-//                                  Provider.of<ScreenProvider>(context,
-//                                          listen: false)
-//                                      .updateQtyById(
-//                                          Id: widget.partModel
-//                                              .details[widget.partIndex].id,
-//                                          qty: -1);
-////                                  setState(() {});
-//                                }),
-//                            Text(Provider.of<ScreenProvider>(context)
-//                                .getQty(
-//                                  Id: widget
-//                                      .partModel.details[widget.partIndex].id,
-//                                )
-//                                .toString()),
-//                            IconButton(
-//                                icon: Icon(Icons.add),
-//                                onPressed: () {
-//                                  Provider.of<ScreenProvider>(context,
-//                                          listen: false)
-//                                      .updateQtyById(
-//                                          Id: widget.partModel
-//                                              .details[widget.partIndex].id,
-//                                          qty: 1);
-////                                  setState(() {});
-//                                }),
-//                          ],
-//                        ),
-//                      ),
-//                    ),
               Expanded(
                 child: RaisedButton(
                   onPressed: () async {
@@ -193,7 +155,8 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                         partName: widget.partModel.details[widget.partIndex].partName,
                         partPrice: widget.partModel.details[widget.partIndex].itemPrice.toString(),
                         orderQty: 1));
-                    if (Provider.of<CustomerDetailsProvider>(context, listen: false).getCustomerPhone != null) {
+
+                    if (Provider.of<CustomerDetailsProvider>(context, listen: false).token != null) {
                       Provider.of<CustomerDetailsProvider>(context, listen: false).addOrder(orderItems: item);
                       //TODO:SHOW ORDER PLACED SUCCEFULLY
                       Navigator.push(context, MaterialPageRoute(builder: (context) => AddressScreen()));

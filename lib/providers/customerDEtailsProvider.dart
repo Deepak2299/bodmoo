@@ -21,18 +21,17 @@ class CustomerDetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  addAddress({@required String address}) {
-    addressList.add(address);
-    notifyListeners();
-  }
-
-  setName({@required String name}) {
-    this.customerName = name;
-    notifyListeners();
-  }
+  // addAddress({@required String address}) {
+  //   addressList.add(address);
+  //   notifyListeners();
+  // }
+  //
+  // setName({@required String name}) {
+  //   this.customerName = name;
+  //   notifyListeners();
+  // }
 
   setAddress({@required String address}) {
-    print(address);
     this.deliveryAddress = address;
     notifyListeners();
   }
@@ -42,8 +41,13 @@ class CustomerDetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  clearToken() {
-    this.token = "";
+  clearCustomerDetails() {
+    phoneNumber = null;
+    addressList = [];
+    deliveryAddress = null;
+    items = [];
+    addressList = [];
+    this.token = null;
     notifyListeners();
   }
 
@@ -61,8 +65,7 @@ Future<bool> checkPrefsForLogin({@required BuildContext context}) async {
   String user = await prefs.getString(PREFS_LOGIN_KEY);
   if (user != null) {
     UserModel userModel = UserModel.fromJson(user);
-    Provider.of<CustomerDetailsProvider>(context, listen: false)
-        .setCustomerDetails(userModel: userModel);
+    Provider.of<CustomerDetailsProvider>(context, listen: false).setCustomerDetails(userModel: userModel);
     return true;
   }
   return false;

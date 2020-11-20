@@ -1,5 +1,5 @@
 import 'package:bodmoo/Screens/login/phoneVerification.dart';
-import 'package:bodmoo/Screens/realMeat/addressScreen.dart';
+import 'package:bodmoo/Screens/realMeat/addressListScreen.dart';
 import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
@@ -179,7 +179,7 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                     onPressed: Provider.of<ScreenProvider>(context, listen: false).getTotalPriceOfCart() == 0
                         ? null
                         : () async {
-                            if (Provider.of<CustomerDetailsProvider>(context, listen: false).getCustomerPhone != null) {
+                            if (Provider.of<CustomerDetailsProvider>(context, listen: false).token != null) {
                               Provider.of<CustomerDetailsProvider>(context, listen: false)
                                   .addOrder(orderItems: Provider.of<ScreenProvider>(context, listen: false).cartItems);
                               //TODO:SHOW ORDER PLACED SUCCEFULLY

@@ -24,7 +24,7 @@ class _OTPScreenState extends State<OTPScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: Text("OTP Verifications")),
+        appBar: AppBar(title: Text("OTP Verification")),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Form(
@@ -100,10 +100,10 @@ class _OTPScreenState extends State<OTPScreen> {
 //                      nav.pop();
                     } else
                       // Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeScreen()));
-                    Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => HomeScreen()), (route)=> route!='/'
-                    );
+                      Navigator.pushAndRemoveUntil(
+                          context, CupertinoPageRoute(builder: (context) => HomeScreen()), (route) => route != '/');
                   } else
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         CupertinoPageRoute(
                             builder: (context) => SignUpScreen(

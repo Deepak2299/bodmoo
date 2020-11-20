@@ -5,7 +5,7 @@ import 'package:bodmoo/models/userModel.dart';
 
 class OrderModel {
   OrderModel({
-    this.id,
+    // this.id,
     this.orderNumber,
     this.user,
     this.paymentType,
@@ -15,7 +15,7 @@ class OrderModel {
     this.orderDate,
   });
 
-  String id;
+  // String id;
   String orderNumber;
   UserModel user;
   String paymentType;
@@ -29,9 +29,9 @@ class OrderModel {
   String toJson() => json.encode(toMap());
 
   factory OrderModel.fromMap(Map<String, dynamic> json) => OrderModel(
-        id: json["_id"] == null ? null : json["_id"],
+        // id: json["_id"] == null ? null : json["_id"],
         orderNumber: json["orderNumber"] == null ? null : json["orderNumber"],
-        user: json["user"] == null ? null : UserModel.fromMap(json["user"]),
+        user: json["userDetails"] == null ? null : UserModel.fromMap(json["userDetails"]),
         paymentType: json["paymentType"] == null ? null : json["paymentType"],
         paymentTransactionId: json["paymentTransactionId"] == null ? null : json["paymentTransactionId"],
         orderStatus: json["orderStatus"] == null ? null : json["orderStatus"],
@@ -42,7 +42,7 @@ class OrderModel {
       );
 
   Map<String, dynamic> toMap() => {
-        "user": user == null ? null : user.toMap(),
+        "userDetails": user == null ? null : user.toMap(),
         "paymentType": paymentType == null ? null : paymentType,
         "paymentTransactionId": paymentTransactionId == null ? null : paymentTransactionId,
         "items": orderItems == null ? null : List<dynamic>.from(orderItems.map((x) => x.toMap())),

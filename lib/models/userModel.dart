@@ -14,8 +14,6 @@ class UserModel {
   String address;
   factory UserModel.fromJson(String str) => UserModel.fromMap(json.decode(str));
 
-  String get pinCode => null;
-
   String toJson() => json.encode(toMap());
 
   factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
@@ -25,7 +23,7 @@ class UserModel {
       );
 
   Map<String, dynamic> toMap() => {
-        "user_name": customerName == null ? null : customerName,
+        "username": customerName == null ? null : customerName,
         "mobile": customerMobile == null ? null : customerMobile,
         "address": address == null ? null : address,
       };
