@@ -51,11 +51,6 @@ class CustomerDetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  String get getCustomerName => this.customerName;
-  String get getCustomerPhone => this.phoneNumber;
-  String get getToken => this.token;
-  // List<String> get getAddress => this.addressList;
-  // String get getDeliveryAddress => this.deliveryAddress;
 }
 
 String PREFS_LOGIN_KEY = 'BODMOO_LOGIN';

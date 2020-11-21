@@ -22,7 +22,7 @@ class _OrderListScreen1State extends State<OrderListScreen> {
         body: FutureBuilder(
           future: getOrdersList(
               PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false)
-                  .getCustomerPhone,
+                  .phoneNumber,
               context: context),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
