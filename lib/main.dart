@@ -38,10 +38,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: AddAddressScreen(),
-      // SplashScreen(),
+      home:
+          // AddAddressScreen(),
+          SplashScreen(),
+      initialRoute: '/home',
       routes: {
-        "homeScreen": (context) => HomeScreen(),
+        "/home": (context) => HomeScreen(),
         "partDetail": (context) => PartDetailsScren(),
         "cartScreen": (context) => CartItemsScreen(),
         "phoneSignUp": (context) => SignInWithPhoneNO(),

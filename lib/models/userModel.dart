@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:bodmoo/models/addressModel.dart';
+
 class UserModel {
   UserModel({
     this.customerName,
@@ -11,7 +13,7 @@ class UserModel {
   String customerName;
   String customerMobile;
   String token;
-  String address;
+  List<AddressModel> address;
   factory UserModel.fromJson(String str) => UserModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
@@ -20,11 +22,13 @@ class UserModel {
         customerName: json["username"] == null ? null : json["username"],
         customerMobile: json["mobile"] == null ? null : json["mobile"],
         token: json["token"] == null ? null : json["token"],
+        address: json["address"] == null
+            ? null
+            : List<AddressModel>.from(json["address"].map((x) => AddressModel.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
         "username": customerName == null ? null : customerName,
         "mobile": customerMobile == null ? null : customerMobile,
-        "address": address == null ? null : address,
       };
 }

@@ -13,11 +13,13 @@ Future<bool> addUser({
   @required String Addrees,
   @required BuildContext context,
 }) async {
-  Map<String, dynamic> body = UserModel(
-    customerName: Name,
-    customerMobile: PhNo,
-    address: Addrees,
-  ).toMap();
+  Map<String, dynamic> body = UserModel(customerName: Name, customerMobile: PhNo).toMap();
+  // = UserModel(
+  //   customerName: Name,
+  //   customerMobile: PhNo,
+  //   address: Addrees,
+  // ).toMap();
+
   var req = await http.post(
     SIGNUP_URL,
     headers: {'Content-type': 'application/json'},

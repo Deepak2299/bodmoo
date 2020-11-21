@@ -9,9 +9,9 @@ class CustomerDetailsProvider extends ChangeNotifier {
   String customerName;
   String token;
 
-  String deliveryAddress;
+  // String deliveryAddress;
   List<OrderItemModel> items;
-  List<String> addressList;
+  // List<String> addressList;
 
   setCustomerDetails({@required UserModel userModel}) {
     this.customerName = userModel.customerName;
@@ -31,10 +31,10 @@ class CustomerDetailsProvider extends ChangeNotifier {
   //   notifyListeners();
   // }
 
-  setAddress({@required String address}) {
-    this.deliveryAddress = address;
-    notifyListeners();
-  }
+  // setAddress({@required String address}) {
+  //   this.deliveryAddress = address;
+  //   notifyListeners();
+  // }
 
   addOrder({@required List<OrderItemModel> orderItems}) {
     items = orderItems;
@@ -43,10 +43,10 @@ class CustomerDetailsProvider extends ChangeNotifier {
 
   clearCustomerDetails() {
     phoneNumber = null;
-    addressList = [];
-    deliveryAddress = null;
+    // addressList = [];
+    // deliveryAddress = null;
     items = [];
-    addressList = [];
+    // addressList = [];
     this.token = null;
     notifyListeners();
   }
@@ -54,8 +54,8 @@ class CustomerDetailsProvider extends ChangeNotifier {
   String get getCustomerName => this.customerName;
   String get getCustomerPhone => this.phoneNumber;
   String get getToken => this.token;
-  List<String> get getAddress => this.addressList;
-  String get getDeliveryAddress => this.deliveryAddress;
+  // List<String> get getAddress => this.addressList;
+  // String get getDeliveryAddress => this.deliveryAddress;
 }
 
 String PREFS_LOGIN_KEY = 'BODMOO_LOGIN';

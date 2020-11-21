@@ -1,3 +1,4 @@
+import 'package:bodmoo/models/addressModel.dart';
 import 'package:flutter/material.dart';
 
 String IMAGE = 'assets/bike.png';
@@ -42,4 +43,17 @@ codeValidation(String code) {
   else {
     if (code.length > 2 || code.length < 1) return "Check Country Code";
   }
+}
+
+
+prepareAddress({@required AddressModel addressModel}) {
+  return addressModel.houseno +
+      "," +
+      addressModel.roadname +
+      "," +
+      addressModel.city +
+      "," +
+      addressModel.state +
+      "," +
+      addressModel.pincode;
 }

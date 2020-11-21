@@ -2,7 +2,7 @@ import 'package:bodmoo/Screens/drawer/myOrders/3orderItemDetailsScreen.dart';
 import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
 import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:bodmoo/models/orderModel.dart';
-import 'package:bodmoo/utils/urls.dart';
+import 'package:bodmoo/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,14 +21,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         appBar: AppBar(),
         body: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-//            Text(widget.orderModel.id),
-//            Text(widget.orderModel.orderDate.toIso8601String()),
-//            Text(widget.orderModel.orderNumber),
-//            Text(widget.orderModel.orderStatus),
-//            Text(widget.orderModel.paymentType),
-//            Text(widget.orderModel.paymentTransactionId),
-//            Text(widget.orderModel.pinCode),
+            Text(widget.orderModel.addressModel.customerName.toString()),
+            Text(widget.orderModel.addressModel.customerMobile.toString()),
+            Text(prepareAddress(addressModel: widget.orderModel.addressModel)),
             Expanded(
               child: ListView.separated(
                 shrinkWrap: true,
@@ -59,10 +56,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         Flexible(
                           child: Row(
                             children: <Widget>[
-                              tagStyle(
-                                  str: orderItem[orderItemIndex].brandName),
-                              tagStyle(
-                                  str: orderItem[orderItemIndex].vehicleName),
+                              tagStyle(str: orderItem[orderItemIndex].brandName),
+                              tagStyle(str: orderItem[orderItemIndex].vehicleName),
                               tagStyle(
                                   str: orderItem[orderItemIndex].vehicleModel +
                                       " " +
@@ -70,14 +65,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             ],
                           ),
                         ),
-                        Text("Price: Rs. " +
-                            orderItem[orderItemIndex].partPrice),
+                        Text("Price: Rs. " + orderItem[orderItemIndex].partPrice),
 //                        Text("Total Price: Rs. " +
 //                            (double.parse(orderItem[orderItemIndex].partPrice) *
 //                                    orderItem[orderItemIndex].orderQty)
 //                                .toString()),
-                        Text("Qty: " +
-                            orderItem[orderItemIndex].orderQty.toString()),
+                        Text("Qty: " + orderItem[orderItemIndex].orderQty.toString()),
                         Text(
                           "Free shipping",
                           style: TextStyle(color: Colors.green),
