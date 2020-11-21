@@ -19,7 +19,6 @@ class CustomerDetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   addOrder({@required List<OrderItemModel> orderItems}) {
     items = orderItems;
     notifyListeners();

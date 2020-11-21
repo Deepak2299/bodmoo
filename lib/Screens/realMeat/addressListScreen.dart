@@ -95,9 +95,10 @@ class _AddressScreenState extends State<AddressScreen> {
                     bool b = true;
                     if (b) {
                       //TODO:SHOW ORDER PLACED SUCCEFULLY
-                      Navigator.pushReplacement(
-                        context, CupertinoPageRoute(builder: (context) => OrderListScreen()),
-                        // (Route<dynamic> route) => route.
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        CupertinoPageRoute(builder: (context) => OrderListScreen()),
+                        ModalRoute.withName('/parts'),
                       );
                     } else {
                       showToast(msg: 'Error in Order');

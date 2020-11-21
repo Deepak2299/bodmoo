@@ -1,12 +1,14 @@
 import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/Screens/login/signUpScreen.dart';
 import 'package:bodmoo/Screens/realMeat/PartDetailsScreen.dart';
+import 'package:bodmoo/Screens/realMeat/PartScreen.dart';
 import 'package:bodmoo/Screens/realMeat/addAddressScreen.dart';
 import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
 import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:bodmoo/Screens/splashScreen.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -44,6 +46,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/home',
       routes: {
         "/home": (context) => HomeScreen(),
+        '/parts': (context) => PartScreen(),
         "partDetail": (context) => PartDetailsScren(),
         "cartScreen": (context) => CartItemsScreen(),
         "phoneSignUp": (context) => SignInWithPhoneNO(),

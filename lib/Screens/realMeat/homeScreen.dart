@@ -144,7 +144,11 @@ class _HomeScreenState extends State<HomeScreen> {
           child: GestureDetector(
             onTap: Provider.of<ScreenProvider>(context).getScreenData.vm != null
                 ? () {
-                    Navigator.push(context, CupertinoPageRoute(builder: (_) => PartScreen()));
+                    Navigator.pushNamed(
+                      context,
+                      // CupertinoPageRoute(builder: (_) => PartScreen())
+                      '/parts',
+                    );
                   }
                 : null,
             child: Container(
