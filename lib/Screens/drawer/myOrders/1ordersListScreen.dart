@@ -21,9 +21,7 @@ class _OrderListScreen1State extends State<OrderListScreen> {
         appBar: AppBar(title: Text("My Orders")),
         body: FutureBuilder(
           future: getOrdersList(
-              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false)
-                  .phoneNumber,
-              context: context),
+              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false).phoneNumber, context: context),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               List<OrderModel> ordersList = snapshot.data;
@@ -63,8 +61,7 @@ class _OrderListScreen1State extends State<OrderListScreen> {
                       Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) =>
-                                OrderDetailsScreen(orderModel: orderModel),
+                            builder: (context) => OrderDetailsScreen(orderModel: orderModel),
                           ));
                     },
                   );
