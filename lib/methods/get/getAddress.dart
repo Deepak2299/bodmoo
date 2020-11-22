@@ -13,9 +13,10 @@ Future<List<AddressModel>> getAddress({
   @required String token,
 }) async {
   List<dynamic> addresses = [];
-  var req =
-      await http.get(GET_ADDRESS_URL + PhNo, headers: {'Content-type': 'application/json', 'x-auth-token': token});
-  UserModel userModel = UserModel(address: []);
+  var req = await http.get(GET_ADDRESS_URL + PhNo,
+      headers: {'Content-type': 'application/json', 'x-auth-token': token});
+  UserModel userModel = new UserModel(address: []);
+//  = UserModel(address: []);
   if (req.statusCode == 200) {
     userModel = UserModel.fromMap(jsonDecode(req.body)['output']);
   }

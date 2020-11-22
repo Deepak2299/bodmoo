@@ -80,7 +80,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       if (str.length < 1)
                         return 'Pls provide the necessary details';
                       else {
-                        if (str[0] != '9' && str[0] != '8' && str[0] != '7' && str[0] != '6')
+                        if (str[0] != '9' &&
+                            str[0] != '8' &&
+                            str[0] != '7' &&
+                            str[0] != '6')
                           return 'Enter valid Phone Number';
                         else if (str.length != 10)
                           return 'Enter 10digit Phone Number';
@@ -108,8 +111,14 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       )
                     ],
                   ),
-                  tff(controller: hno, labelText: 'House No./Building Name', validator: null),
-                  tff(controller: colony, labelText: 'Road Name/Area/Colony', validator: null),
+                  tff(
+                      controller: hno,
+                      labelText: 'House No./Building Name',
+                      validator: null),
+                  tff(
+                      controller: colony,
+                      labelText: 'Road Name/Area/Colony',
+                      validator: null),
                 ],
               ),
             ),
@@ -139,7 +148,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         city: city.text,
                         roadname: colony.text);
                     bool t = await addAddress(
-                        token: Provider.of<CustomerDetailsProvider>(context, listen: false).token, addressModel: ad);
+                        token: Provider.of<CustomerDetailsProvider>(context,
+                                listen: false)
+                            .token,
+                        addressModel: ad,
+                        mobile: Provider.of<CustomerDetailsProvider>(context,
+                                listen: false)
+                            .phoneNumber);
                     if (t)
                       Navigator.pop(context);
                     else
