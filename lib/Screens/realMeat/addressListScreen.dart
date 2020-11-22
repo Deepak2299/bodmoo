@@ -1,8 +1,10 @@
 import 'package:bodmoo/Screens/drawer/myOrders/1ordersListScreen.dart';
 import 'package:bodmoo/Screens/realMeat/addAddressScreen.dart';
 import 'package:bodmoo/methods/get/getAddress.dart';
+import 'package:bodmoo/methods/prepareOrder.dart';
 
 import 'package:bodmoo/models/addressModel.dart';
+import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
 //import 'package:bodmoo/utils/utils.dart';
@@ -73,6 +75,7 @@ class _AddressScreenState extends State<AddressScreen> {
                         onChanged: (int value) {
                           // Provider.of<CustomerDetailsProvider>(context, listen: false).setAddress(address: value);
                           setState(() {});
+
                           addressIndex = value;
                           print(value.toString());
                         },
@@ -103,13 +106,15 @@ class _AddressScreenState extends State<AddressScreen> {
                         color: Colors.white, fontWeight: FontWeight.bold))),
             onPressed: addressIndex != -1
                 ? () async {
-                    // bool b = await prepareOrder(
-                    //   address: addresses[addressIndex],
-                    //   context: context,
-                    // );
-                    bool b = true;
+                    bool b = await prepareOrder(
+                      address: addresses[addressIndex],
+                      context: context,
+                    );
+//                    bool b = true;
                     if (b) {
                       //TODO:SHOW ORDER PLACED SUCCEFULLY
+                      Provider.of<ScreenProvider>(context, listen: false)
+                          .clearCart();
                       Navigator.pushAndRemoveUntil(
                         context,
                         CupertinoPageRoute(
