@@ -5,6 +5,7 @@ import 'package:bodmoo/methods/get/getAddress.dart';
 import 'package:bodmoo/models/addressModel.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
+//import 'package:bodmoo/utils/utils.dart';
 
 import 'package:bodmoo/widgets/toastWidget.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,6 +20,7 @@ class AddressScreen extends StatefulWidget {
 class _AddressScreenState extends State<AddressScreen> {
   int addressIndex = -1;
   List<AddressModel> addresses = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +55,10 @@ class _AddressScreenState extends State<AddressScreen> {
                     shrinkWrap: true,
                     physics: ScrollPhysics(),
                     itemBuilder: (context, i) {
-                      
+                      print(addresses[i].customerName);
+//                      print(prepareAddress(addressModel: addresses[i])
+//                          .runtimeType);
+                      print(addresses[i].customerMobile);
                       return RadioListTile(
                         value: i,
                         // groupValue: Provider.of<CustomerDetailsProvider>(context).deliveryAddress,

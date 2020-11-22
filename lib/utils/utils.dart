@@ -45,15 +45,12 @@ codeValidation(String code) {
   }
 }
 
-
-prepareAddress({@required AddressModel addressModel}) {
+String prepareAddress({@required AddressModel addressModel}) {
   return addressModel.houseno +
       "," +
       addressModel.roadname +
       "," +
       addressModel.city +
       "," +
-      addressModel.state +
-      "," +
-      addressModel.pincode;
+      addressModel.state;
 }
