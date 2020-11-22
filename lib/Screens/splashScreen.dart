@@ -21,9 +21,10 @@ class _SplashScreenState extends State<SplashScreen> {
           MaterialPageRoute(
               fullscreenDialog: true,
               builder: (context) {
-                if (b)
+                if (b) {
+                  fetchPrefsForCarts(context: context);
                   return HomeScreen();
-                else
+                } else
                   return SignInWithPhoneNO();
               }));
     });

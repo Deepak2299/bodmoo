@@ -115,6 +115,7 @@ class _AddressScreenState extends State<AddressScreen> {
                       //TODO:SHOW ORDER PLACED SUCCEFULLY
                       Provider.of<ScreenProvider>(context, listen: false)
                           .clearCart();
+
                       Navigator.pushAndRemoveUntil(
                         context,
                         CupertinoPageRoute(
@@ -133,5 +134,12 @@ class _AddressScreenState extends State<AddressScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    savePrefsForCarts(context: context);
   }
 }
