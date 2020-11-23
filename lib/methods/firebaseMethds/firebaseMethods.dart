@@ -7,15 +7,10 @@ import 'package:flutter/services.dart';
 
 FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-Future<bool> authFunction(
-    {String verificationId,
-    String phoneNumber,
-    String code,
-    String sms}) async {
+Future<bool> authFunction({String verificationId, String phoneNumber, String code, String sms}) async {
   AuthCredential _credentials;
 
-  _credentials = PhoneAuthProvider.getCredential(
-      verificationId: verificationId, smsCode: sms);
+  _credentials = PhoneAuthProvider.getCredential(verificationId: verificationId, smsCode: sms);
   try {
     AuthResult result = await _firebaseAuth.signInWithCredential(_credentials);
     if (result.user != null) {
@@ -31,10 +26,7 @@ Future<bool> authFunction(
   }
 }
 
-sendCodeToPhoneNumber(
-    {@required String phonenumber,
-    BuildContext context,
-    bool stored}) {
+sendCodeToPhoneNumber({@required String phonenumber, BuildContext context, bool stored}) {
   String PHONE_NO = phonenumber;
   _firebaseAuth.verifyPhoneNumber(
       phoneNumber: "+91" + phonenumber,

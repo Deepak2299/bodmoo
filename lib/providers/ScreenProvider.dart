@@ -1,6 +1,7 @@
 import 'package:bodmoo/Screens/realMeat/screenData.dart';
 import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:flutter/foundation.dart';
+import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 
 class ScreenProvider extends ChangeNotifier {
 //  ScreenProvider(value) : super(value);
@@ -62,17 +63,19 @@ class ScreenProvider extends ChangeNotifier {
   List<OrderItemModel> get getCartItems => cartItems;
 
   int get cartItemsLength => cartItems.length;
-  void itemAdd(OrderItemModel itemOrderModel) {
+  void itemAdd(OrderItemModel itemOrderModel) async {
     cartItems.add(itemOrderModel);
-    print(cartItems.length);
+    await savePrefsForCarts(orderItems: cartItems);
     notifyListeners();
   }
 
-  void itemRemove({@required String Id}) {
+  void itemRemove({@required String Id}) async {
     int index = findItemById(partId: Id);
     if (index != -1) {
       cartItems.removeAt(index);
     }
+    await savePrefsForCarts(orderItems: cartItems);
+
     notifyListeners();
   }
 
@@ -110,7 +113,7 @@ class ScreenProvider extends ChangeNotifier {
 //    }
 //  }
 
-  void updateQtyById({@required String partId, @required int qty}) {
+  void updateQtyById({@required String partId, @required int qty}) async {
     int index = findItemById(partId: partId);
     if (index != -1) {
       if (cartItems[index].orderQty + qty > 0) {
@@ -118,6 +121,7 @@ class ScreenProvider extends ChangeNotifier {
       } else
         cartItems.removeAt(index);
     }
+    await savePrefsForCarts(orderItems: cartItems);
     notifyListeners();
   }
 

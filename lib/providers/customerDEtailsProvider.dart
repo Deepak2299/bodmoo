@@ -44,8 +44,7 @@ Future<bool> checkPrefsForLogin({@required BuildContext context}) async {
   String user = await prefs.getString(PREFS_LOGIN_KEY);
   if (user != null) {
     UserModel userModel = UserModel.fromJson(user);
-    Provider.of<CustomerDetailsProvider>(context, listen: false)
-        .setCustomerDetails(userModel: userModel);
+    Provider.of<CustomerDetailsProvider>(context, listen: false).setCustomerDetails(userModel: userModel);
     return true;
   }
   return false;
@@ -59,29 +58,27 @@ savePrefsForLogin({@required bool signIn, @required String user}) async {
 clearPrefsForLogin() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.remove(PREFS_LOGIN_KEY);
+  await prefs.remove(PREFS_CARTS_KEY);
 }
 
-savePrefsForCarts({@required BuildContext context}) async {
+savePrefsForCarts({@required List<OrderItemModel> orderItems}) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  List<OrderItemModel> orderItems =
-      Provider.of<ScreenProvider>(context, listen: false).cartItems;
-  String carts = jsonEncode({
-    "items": orderItems == null
-        ? null
-        : List<dynamic>.from(orderItems.map((x) => x.toMap()))
-  });
-//  print(carts);
+  // List<OrderItemModel> orderItems = Provider.of<ScreenProvider>(context, listen: false).cartItems;
+  String carts =
+      jsonEncode({"items": orderItems == null ? null : List<dynamic>.from(orderItems.map((x) => x.toMap()))});
+  // print(carts);
   await prefs.setString(PREFS_CARTS_KEY, carts);
+  String cartStr = await prefs.getString(PREFS_CARTS_KEY);
+  print(cartStr);
 }
 
 fetchPrefsForCarts({@required BuildContext context}) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String cartStr = await prefs.getString(PREFS_CARTS_KEY);
-//  print(cartStr);
-  var carts = json.decode(cartStr);
-  Provider.of<ScreenProvider>(context, listen: false).cartItems =
-      carts["items"] == null
-          ? null
-          : List<OrderItemModel>.from(
-              carts["items"].map((x) => OrderItemModel.fromMap(x)));
+  print(cartStr);
+  if (cartStr != null) {
+    var carts = json.decode(cartStr);
+    Provider.of<ScreenProvider>(context, listen: false).cartItems =
+        carts["items"] == null ? null : List<OrderItemModel>.from(carts["items"].map((x) => OrderItemModel.fromMap(x)));
+  }
 }

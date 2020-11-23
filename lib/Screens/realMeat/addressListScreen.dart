@@ -31,11 +31,8 @@ class _AddressScreenState extends State<AddressScreen> {
       ),
       body: FutureBuilder(
           future: getAddress(
-              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false)
-                  .phoneNumber,
-              token:
-                  Provider.of<CustomerDetailsProvider>(context, listen: false)
-                      .token),
+              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false).phoneNumber,
+              token: Provider.of<CustomerDetailsProvider>(context, listen: false).token),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               addresses = snapshot.data;
@@ -46,10 +43,7 @@ class _AddressScreenState extends State<AddressScreen> {
                     leading: Icon(Icons.add),
                     title: Text("Add Address"),
                     onTap: () async {
-                      await Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => AddAddressScreen()));
+                      await Navigator.push(context, CupertinoPageRoute(builder: (context) => AddAddressScreen()));
                       setState(() {});
                     },
                   ),
@@ -101,9 +95,7 @@ class _AddressScreenState extends State<AddressScreen> {
           child: RaisedButton(
             color: Colors.green,
             child: Center(
-                child: Text('Confirm Order',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold))),
+                child: Text('Confirm Order', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
             onPressed: addressIndex != -1
                 ? () async {
                     bool b = await prepareOrder(
@@ -113,33 +105,28 @@ class _AddressScreenState extends State<AddressScreen> {
 //                    bool b = true;
                     if (b) {
                       //TODO:SHOW ORDER PLACED SUCCEFULLY
-                      Provider.of<ScreenProvider>(context, listen: false)
-                          .clearCart();
+                      Provider.of<ScreenProvider>(context, listen: false).clearCart();
 
                       Navigator.pushAndRemoveUntil(
                         context,
-                        CupertinoPageRoute(
-                            builder: (context) => OrderListScreen()),
+                        CupertinoPageRoute(builder: (context) => OrderListScreen()),
                         ModalRoute.withName('/parts'),
                       );
                     } else {
                       showToast(msg: 'Error in Order');
                     }
                   }
-                : showToast(
-                    msg: addresses.length > 0
-                        ? 'Choose Delivery address'
-                        : 'Add Address'),
+                : showToast(msg: addresses.length > 0 ? 'Choose Delivery address' : 'Add Address'),
           ),
         ),
       ),
     );
   }
 
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    savePrefsForCarts(context: context);
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   // TODO: implement didChangeDependencies
+  //   super.didChangeDependencies();
+  //   savePrefsForCarts(context: context);
+  // }
 }
