@@ -5,6 +5,7 @@ import 'package:bodmoo/methods/prepareOrder.dart';
 
 import 'package:bodmoo/models/addressModel.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
+import 'package:bodmoo/providers/cartProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
 
@@ -112,7 +113,7 @@ class _AddressScreenState extends State<AddressScreen> {
 //                    bool b = true;
                     if (b) {
                       //TODO:SHOW ORDER PLACED SUCCEFULLY
-                      Provider.of<ScreenProvider>(context, listen: false)
+                      Provider.of<CartProvider>(context, listen: false)
                           .clearCart();
 
                       Navigator.pushAndRemoveUntil(

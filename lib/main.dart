@@ -7,6 +7,7 @@ import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
 import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:bodmoo/Screens/splashScreen.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
+import 'package:bodmoo/providers/cartProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ void main() {
         ChangeNotifierProvider<CustomerDetailsProvider>(
           create: (_) => CustomerDetailsProvider(),
         ),
+        ChangeNotifierProvider<CartProvider>(create: (_) => CartProvider()),
       ],
       // create: (context) => ScreenProvider(),
       child: MyApp(),
