@@ -33,13 +33,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
         elevation: 0,
         title: Text(
           "Welcome to new user, ${widget.phoneNumber}",
-          style: TextStyle(color: Colors.white, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Colors.white,
+              fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           padding: EdgeInsets.only(bottom: 15),
           onPressed: () {
-            Navigator.pushAndRemoveUntil(
-                context, MaterialPageRoute(builder: (context) => HomeScreen()), ModalRoute.withName(""));
+            Navigator.pushReplacementNamed(context, "/home");
+//                context, MaterialPageRoute(builder: (context) => HomeScreen()), ModalRoute.withName(""));
           },
           icon: Icon(Icons.close),
         ),
@@ -187,7 +190,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Navigator.of(context).popUntil((_) => count++ >= 2);
                       } else
                         Navigator.pushAndRemoveUntil(
-                            context, CupertinoPageRoute(builder: (context) => HomeScreen()), (route) => route != '/');
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => HomeScreen()),
+                            (route) => route != '/');
                       // Navigator.push(
                       // context,
                       // CupertinoPageRoute(
