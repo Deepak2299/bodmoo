@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             Padding(
               padding: const EdgeInsets.only(top: 8.0, right: 18),
-              child: AddToCart(),
+              child: CartIcon(),
             )
           ],
         ),

@@ -1,10 +1,11 @@
 import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/cartProvider.dart';
+import 'package:bodmoo/widgets/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:badges/badges.dart';
+//import 'package:badges/badges.dart';
 
 class CartIcon extends StatelessWidget {
   @override
