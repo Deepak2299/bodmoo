@@ -2,11 +2,10 @@ import 'dart:convert';
 
 import 'package:bodmoo/models/addressModel.dart';
 import 'package:bodmoo/models/userModel.dart';
-import 'package:bodmoo/providers/customerDEtailsProvider.dart';
+
 import 'package:bodmoo/utils/urls.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
 Future<List<AddressModel>> getAddress({
   @required String PhNo,
