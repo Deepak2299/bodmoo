@@ -33,10 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         elevation: 0,
         title: Text(
           "Welcome to new user, ${widget.phoneNumber}",
-          style: TextStyle(
-              color: Colors.white,
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.white, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           padding: EdgeInsets.only(bottom: 15),
@@ -192,7 +189,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Navigator.pushAndRemoveUntil(
                             context,
                             CupertinoPageRoute(
-                                builder: (context) => HomeScreen()),
+                              builder: (context) => HomeScreen(),
+                            ),
                             (route) => route != '/');
                       // Navigator.push(
                       // context,

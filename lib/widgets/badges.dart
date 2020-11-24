@@ -114,13 +114,11 @@ class BadgeState extends State<Badge> with SingleTickerProviderStateMixin {
     );
 
     if (widget.animationType == BadgeAnimationType.slide) {
-      _animation = CurvedAnimation(
-          parent: _animationController, curve: Curves.elasticOut);
+      _animation = CurvedAnimation(parent: _animationController, curve: Curves.elasticOut);
     } else if (widget.animationType == BadgeAnimationType.scale) {
       _animation = _scaleTween.animate(_animationController);
     } else if (widget.animationType == BadgeAnimationType.fade) {
-      _animation =
-          CurvedAnimation(parent: _animationController, curve: Curves.easeIn);
+      _animation = CurvedAnimation(parent: _animationController, curve: Curves.easeIn);
     }
 
     _animationController.forward();
@@ -133,14 +131,12 @@ class BadgeState extends State<Badge> with SingleTickerProviderStateMixin {
     } else {
       return Stack(
         alignment: widget.alignment,
-        clipBehavior: Clip.none,
+        // clipBehavior: Clip.none,
         children: [
           widget.child,
           BadgePositioned(
             position: widget.position,
-            child: widget.ignorePointer
-                ? IgnorePointer(child: _getBadge())
-                : _getBadge(),
+            child: widget.ignorePointer ? IgnorePointer(child: _getBadge()) : _getBadge(),
           ),
         ],
       );
@@ -157,9 +153,7 @@ class BadgeState extends State<Badge> with SingleTickerProviderStateMixin {
       print('Unknown material type for badge. Used Card');
       type = MaterialType.card;
     }
-    final border = type == MaterialType.circle
-        ? null
-        : RoundedRectangleBorder(borderRadius: widget.borderRadius);
+    final border = type == MaterialType.circle ? null : RoundedRectangleBorder(borderRadius: widget.borderRadius);
 
     Widget badgeView() {
       return AnimatedOpacity(
