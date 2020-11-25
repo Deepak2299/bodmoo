@@ -99,7 +99,7 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
             color: Colors.green,
             child: Center(
                 child: Text('Confirm Order', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
-            onPressed: Provider.of<CustomerDetailsProvider>(context).addressIndex > 0
+            onPressed: Provider.of<CustomerDetailsProvider>(context).addressIndex > -1
                 ? () async {
                     // bool b = await prepareOrder(
                     //   address: addresses[Provider.of<CustomerDetailsProvider>(context, listen: false).addressIndex],
