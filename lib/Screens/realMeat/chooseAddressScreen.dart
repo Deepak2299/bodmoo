@@ -15,13 +15,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ChooseAddressScreen extends StatefulWidget {
+  bool cartOrder = false;
+  ChooseAddressScreen({@required this.cartOrder});
   @override
   _ChooseAddressScreenState createState() => _ChooseAddressScreenState();
 }
 
 class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
-  int addressIndex = -1;
   List<AddressModel> addresses = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,21 +99,21 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
             color: Colors.green,
             child: Center(
                 child: Text('Confirm Order', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
-            onPressed: addressIndex != -1
+            onPressed: Provider.of<CustomerDetailsProvider>(context).addressIndex > 0
                 ? () async {
-                    bool b = await prepareOrder(
-                      address: addresses[addressIndex],
-                      context: context,
-                    );
-//                    bool b = true;
+                    // bool b = await prepareOrder(
+                    //   address: addresses[Provider.of<CustomerDetailsProvider>(context, listen: false).addressIndex],
+                    //   context: context,
+                    // );
+                    bool b = true;
                     if (b) {
-                      //TODO:SHOW ORDER PLACED SUCCEFULLY
-                      Provider.of<CartProvider>(context, listen: false).clearCart();
-
-                      Navigator.pushAndRemoveUntil(
+                      // TODO:SHOW ORDER PLACED SUCCEFULLY
+                      widget.cartOrder ? Provider.of<CartProvider>(context, listen: false).clearCart() : null;
+                      ;
+                      Navigator.pushReplacement(
                         context,
                         CupertinoPageRoute(builder: (context) => OrderListScreen()),
-                        ModalRoute.withName('/parts'),
+                        // ModalRoute.withName('/parts'),
                       );
                     } else {
                       showToast(msg: 'Error in Order');

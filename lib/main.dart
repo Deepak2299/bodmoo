@@ -45,15 +45,21 @@ class MyApp extends StatelessWidget {
       home:
           // AddAddressScreen(),
           SplashScreen(),
-      initialRoute: '/home',
+      // initialRoute: '/home',
       routes: {
-        "/home": (context) => HomeScreen(),
-        '/parts': (context) => PartScreen(),
-        "partDetail": (context) => PartDetailsScren(),
-        "cartScreen": (context) => CartItemsScreen(),
-        "phoneSignUp": (context) => SignInWithPhoneNO(),
-        "userSignUp": (context) => SignUpScreen(),
+        // "/home": (context) => HomeScreen(),
+        // '/parts': (context) => PartScreen(),
+        // "partDetail": (context) => PartDetailsScren(),
+        // "cartScreen": (context) => CartItemsScreen(),
+        // "phoneSignUp": (context) => SignInWithPhoneNO(),
+        // "userSignUp": (context) => SignUpScreen(),
       },
+      // onGenerateRoute: (route) {
+      //   if (route.name == '/parts')
+      //     return CupertinoPageRoute(builder: (context) => PartScreen(), maintainState: true);
+      //   else
+      //     return null;
+      // },
     );
   }
 }

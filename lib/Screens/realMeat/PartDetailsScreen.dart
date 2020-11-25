@@ -155,7 +155,12 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                     if (Provider.of<CustomerDetailsProvider>(context, listen: false).token != null) {
                       Provider.of<CustomerDetailsProvider>(context, listen: false).addOrder(orderItems: item);
                       //TODO:SHOW ORDER PLACED SUCCEFULLY
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChooseAddressScreen()));
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => ChooseAddressScreen(
+                                    cartOrder: false,
+                                  )));
                     } else {
                       Navigator.push(
                           context,

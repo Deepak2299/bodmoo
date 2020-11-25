@@ -183,8 +183,12 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                             if (Provider.of<CustomerDetailsProvider>(context, listen: false).token != null) {
                               Provider.of<CustomerDetailsProvider>(context, listen: false)
                                   .addOrder(orderItems: Provider.of<CartProvider>(context, listen: false).cartItems);
-                              //TODO:SHOW ORDER PLACED SUCCEFULLY
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => ChooseAddressScreen()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ChooseAddressScreen(
+                                            cartOrder: true,
+                                          )));
                             } else {
                               Navigator.push(
                                   context,
