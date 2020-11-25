@@ -22,7 +22,9 @@ class _OrderListScreen1State extends State<OrderListScreen> {
         appBar: AppBar(title: Text("My Orders")),
         body: FutureBuilder(
           future: getOrdersList(
-              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false).phoneNumber, context: context),
+              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false)
+                  .phoneNumber,
+              context: context),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               List<OrderModel> ordersList = snapshot.data;
@@ -30,39 +32,50 @@ class _OrderListScreen1State extends State<OrderListScreen> {
                 itemBuilder: (context, orderIndex) {
                   OrderModel orderModel = ordersList[orderIndex];
                   return ListTile(
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text(
-                          "Order No: " + orderModel.orderNumber,
-                          style: TextStyle(fontSize: 15),
-                        ),
-                        Text(
-                          "Order at " + orderModel.orderDate.toIso8601String(),
-                          style: TextStyle(fontSize: 15),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Status: " + orderModel.orderStatus,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                            Text(
-                              "Payment Mode: " + orderModel.paymentType,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
+                    title: Card(
+                      margin: EdgeInsets.zero,
+//                      elevation: 10,
+//                      shape: RoundedRectangleBorder(
+//                          borderRadius: BorderRadius.circular(20)),
+                      child: Container(
+                        width: double.maxFinite,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+
+//                          mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              Text(
+                                "Order No: " + orderModel.orderNumber,
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              Text(
+                                "Order at " +
+                                    orderModel.orderDate.toIso8601String(),
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              Text(
+                                "Status: " + orderModel.orderStatus,
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              Text(
+                                "Payment Mode: " + orderModel.paymentType,
+                                style: TextStyle(fontSize: 12),
+                              ),
 //                        Text(orderModel.paymentTransactionId),
-                      ],
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                     onTap: () {
                       Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => OrderDetailsScreen(orderModel: orderModel),
+                            builder: (context) =>
+                                OrderDetailsScreen(orderModel: orderModel),
                           ));
                     },
                   );

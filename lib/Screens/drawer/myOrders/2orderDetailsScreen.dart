@@ -18,14 +18,38 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text("Order Details"),
+        ),
         body: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(widget.orderModel.addressModel.customerName.toString()),
-            Text(widget.orderModel.addressModel.customerMobile.toString()),
-            Text(prepareAddress(addressModel: widget.orderModel.addressModel)),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Name - " +
+                        widget.orderModel.addressModel.customerName.toString(),
+                    style: TextStyle(color: Colors.black54),
+                  ),
+                  Text(
+                      "Phone - " +
+                          widget.orderModel.addressModel.customerMobile
+                              .toString(),
+                      style: TextStyle(color: Colors.black54)),
+                  Text(
+                      "Address - " +
+                          prepareAddress(
+                              addressModel: widget.orderModel.addressModel),
+                      style: TextStyle(color: Colors.black54)),
+                ],
+              ),
+            ),
+            Divider(),
             Expanded(
               child: ListView.separated(
                 shrinkWrap: true,
@@ -56,8 +80,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         Flexible(
                           child: Row(
                             children: <Widget>[
-                              tagStyle(str: orderItem[orderItemIndex].brandName),
-                              tagStyle(str: orderItem[orderItemIndex].vehicleName),
+                              tagStyle(
+                                  str: orderItem[orderItemIndex].brandName),
+                              tagStyle(
+                                  str: orderItem[orderItemIndex].vehicleName),
                               tagStyle(
                                   str: orderItem[orderItemIndex].vehicleModel +
                                       " " +
@@ -65,12 +91,14 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             ],
                           ),
                         ),
-                        Text("Price: Rs. " + orderItem[orderItemIndex].partPrice),
+                        Text("Price: Rs. " +
+                            orderItem[orderItemIndex].partPrice),
 //                        Text("Total Price: Rs. " +
 //                            (double.parse(orderItem[orderItemIndex].partPrice) *
 //                                    orderItem[orderItemIndex].orderQty)
 //                                .toString()),
-                        Text("Qty: " + orderItem[orderItemIndex].orderQty.toString()),
+                        Text("Qty: " +
+                            orderItem[orderItemIndex].orderQty.toString()),
                         Text(
                           "Free shipping",
                           style: TextStyle(color: Colors.green),
