@@ -25,7 +25,12 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [CartIcon()],
+        actions: [
+          CartIcon(),
+          SizedBox(
+            width: 10,
+          )
+        ],
       ),
       body: ListView(
         shrinkWrap: true,
@@ -39,7 +44,9 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
             children: [
               Container(
                 height: MediaQuery.of(context).size.height * 0.5,
-                child: Hero(tag: "images_${widget.partIndex}", child: Image.asset(IMAGE)),
+                child: Hero(
+                    tag: "images_${widget.partIndex}",
+                    child: Image.asset(IMAGE)),
               ),
               Text(
                 widget.partModel.details[widget.partIndex].partName.toString(),
@@ -51,15 +58,22 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                 child: FlatButton(
                   padding: EdgeInsets.all(0),
                   // height: 20,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                  color:
-                      widget.partModel.details[widget.partIndex].outOfStock ? Colors.red.shade50 : Colors.green.shade50,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                  color: widget.partModel.details[widget.partIndex].outOfStock
+                      ? Colors.red.shade50
+                      : Colors.green.shade50,
                   onPressed: () {},
                   child: Text(
-                    widget.partModel.details[widget.partIndex].outOfStock ? "OutOfStock" : "Instock",
+                    widget.partModel.details[widget.partIndex].outOfStock
+                        ? "OutOfStock"
+                        : "Instock",
 //                textAlign: TextAlign.,
                     style: TextStyle(
-                      color: widget.partModel.details[widget.partIndex].outOfStock ? Colors.red : Colors.green,
+                      color:
+                          widget.partModel.details[widget.partIndex].outOfStock
+                              ? Colors.red
+                              : Colors.green,
                     ),
                   ),
                 ),
@@ -68,7 +82,9 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
 //            height: 10,
 //          ),
               Text(
-                "Rs " + widget.partModel.details[widget.partIndex].itemPrice.toString(),
+                "Rs " +
+                    widget.partModel.details[widget.partIndex].itemPrice
+                        .toString(),
                 style: TextStyle(fontSize: 30),
               ),
             ],
@@ -97,16 +113,25 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                         color: Colors.white,
                         onPressed: () {
                           OrderItemModel item = new OrderItemModel(
-                              partId: widget.partModel.details[widget.partIndex].id,
+                              partId:
+                                  widget.partModel.details[widget.partIndex].id,
                               brandName: widget.partModel.carBrand,
                               vehicleName: widget.partModel.carName,
                               vehicleModel: widget.partModel.carModel,
-                              vehicleYear: widget.partModel.modelYear.toString(),
-                              partName: widget.partModel.details[widget.partIndex].partName,
-                              partPrice: widget.partModel.details[widget.partIndex].itemPrice.toString(),
+                              vehicleYear:
+                                  widget.partModel.modelYear.toString(),
+                              partName: widget
+                                  .partModel.details[widget.partIndex].partName,
+                              partPrice: widget
+                                  .partModel.details[widget.partIndex].itemPrice
+                                  .toString(),
                               orderQty: 1);
-                          Provider.of<CartProvider>(context, listen: false).itemAdd(item);
-                          Navigator.push(context, CupertinoPageRoute(builder: (context) => CartItemsScreen()));
+                          Provider.of<CartProvider>(context, listen: false)
+                              .itemAdd(item);
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => CartItemsScreen()));
                         },
                         child: Center(
                           child: Text(
@@ -124,7 +149,10 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                       child: RaisedButton(
                         color: Colors.white,
                         onPressed: () {
-                          Navigator.push(context, CupertinoPageRoute(builder: (context) => CartItemsScreen()));
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => CartItemsScreen()));
                         },
                         child: Center(
                           child: Text(
@@ -148,12 +176,20 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                         vehicleName: widget.partModel.carName,
                         vehicleModel: widget.partModel.carModel,
                         vehicleYear: widget.partModel.modelYear.toString(),
-                        partName: widget.partModel.details[widget.partIndex].partName,
-                        partPrice: widget.partModel.details[widget.partIndex].itemPrice.toString(),
+                        partName:
+                            widget.partModel.details[widget.partIndex].partName,
+                        partPrice: widget
+                            .partModel.details[widget.partIndex].itemPrice
+                            .toString(),
                         orderQty: 1));
 
-                    if (Provider.of<CustomerDetailsProvider>(context, listen: false).token != null) {
-                      Provider.of<CustomerDetailsProvider>(context, listen: false).addOrder(orderItems: item);
+                    if (Provider.of<CustomerDetailsProvider>(context,
+                                listen: false)
+                            .token !=
+                        null) {
+                      Provider.of<CustomerDetailsProvider>(context,
+                              listen: false)
+                          .addOrder(orderItems: item);
                       //TODO:SHOW ORDER PLACED SUCCEFULLY
                       Navigator.push(
                           context,

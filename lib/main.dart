@@ -2,7 +2,7 @@ import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/Screens/login/signUpScreen.dart';
 import 'package:bodmoo/Screens/realMeat/PartDetailsScreen.dart';
 import 'package:bodmoo/Screens/realMeat/PartScreen.dart';
-import 'file:///D:/FLUTTERAPPS/bodmoo/lib/Screens/drawer/myAddresses/addAddressScreen.dart';
+//import 'file:///D:/FLUTTERAPPS/bodmoo/lib/Screens/drawer/myAddresses/addAddressScreen.dart';
 import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
 import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:bodmoo/Screens/splashScreen.dart';

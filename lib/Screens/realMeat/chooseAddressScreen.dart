@@ -1,5 +1,6 @@
+import 'package:bodmoo/Screens/drawer/myAddresses/addAddressScreen.dart';
 import 'package:bodmoo/Screens/drawer/myOrders/1ordersListScreen.dart';
-import 'file:///D:/FLUTTERAPPS/bodmoo/lib/Screens/drawer/myAddresses/addAddressScreen.dart';
+
 import 'package:bodmoo/methods/get/getAddress.dart';
 import 'package:bodmoo/methods/prepareOrder.dart';
 
@@ -38,8 +39,11 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
       ),
       body: FutureBuilder(
           future: getAddress(
-              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false).phoneNumber,
-              token: Provider.of<CustomerDetailsProvider>(context, listen: false).token),
+              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false)
+                  .phoneNumber,
+              token:
+                  Provider.of<CustomerDetailsProvider>(context, listen: false)
+                      .token),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               addresses = snapshot.data;
@@ -50,7 +54,10 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                     leading: Icon(Icons.add),
                     title: Text("Add Address"),
                     onTap: () async {
-                      await Navigator.push(context, CupertinoPageRoute(builder: (context) => AddAddressScreen()));
+                      await Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => AddAddressScreen()));
                       setState(() {});
                     },
                   ),
@@ -62,7 +69,10 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                       return RadioListTile(
                         value: i,
                         // groupValue: Provider.of<CustomerDetailsProvider>(context).deliveryAddress,
-                        groupValue: Provider.of<CustomerDetailsProvider>(context, listen: true).addressIndex,
+                        groupValue: Provider.of<CustomerDetailsProvider>(
+                                context,
+                                listen: true)
+                            .addressIndex,
                         title: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -72,7 +82,9 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                           ],
                         ),
                         onChanged: (int value) {
-                          Provider.of<CustomerDetailsProvider>(context, listen: false).setAddressINdex(value);
+                          Provider.of<CustomerDetailsProvider>(context,
+                                  listen: false)
+                              .setAddressINdex(value);
                           // setState(() {});
                           // addressIndex = value;
                         },
@@ -98,7 +110,9 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ))),
-            onPressed: Provider.of<CustomerDetailsProvider>(context).addressIndex > -1
+            onPressed: Provider.of<CustomerDetailsProvider>(context)
+                        .addressIndex >
+                    -1
                 ? () async {
                     // bool b = await prepareOrder(
                     //   address: addresses[Provider.of<CustomerDetailsProvider>(context, listen: false).addressIndex],
@@ -107,17 +121,24 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                     bool b = true;
                     if (b) {
                       // TODO:SHOW ORDER PLACED SUCCEFULLY
-                      widget.cartOrder ? Provider.of<CartProvider>(context, listen: false).clearCart() : null;
+                      widget.cartOrder
+                          ? Provider.of<CartProvider>(context, listen: false)
+                              .clearCart()
+                          : null;
                       Navigator.pushReplacement(
                         context,
-                        CupertinoPageRoute(builder: (context) => OrderListScreen()),
+                        CupertinoPageRoute(
+                            builder: (context) => OrderListScreen()),
                         // ModalRoute.withName('/parts'),
                       );
                     } else {
                       showToast(msg: 'Error in Order');
                     }
                   }
-                : showToast(msg: addresses.length > 0 ? 'Choose Delivery address' : 'Add Address'),
+                : showToast(
+                    msg: addresses.length > 0
+                        ? 'Choose Delivery address'
+                        : 'Add Address'),
           ),
         ),
       ),

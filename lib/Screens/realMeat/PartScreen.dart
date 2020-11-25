@@ -19,7 +19,12 @@ class _PartScreenState extends State<PartScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Parts"),
-        actions: [CartIcon()],
+        actions: [
+          CartIcon(),
+          SizedBox(
+            width: 10,
+          )
+        ],
       ),
       body: Stack(
         children: <Widget>[
@@ -29,12 +34,26 @@ class _PartScreenState extends State<PartScreen> {
               SizedBox(height: 20),
               FutureBuilder(
                 future: getParts(
-                  category: Provider.of<ScreenProvider>(context).getScreenData.catgName,
-                  subCategory: Provider.of<ScreenProvider>(context).getScreenData.subCatgName,
-                  brandName: Provider.of<ScreenProvider>(context).getScreenData.brandName,
-                  vehicleName: Provider.of<ScreenProvider>(context).getScreenData.vehicleName,
-                  modelName: Provider.of<ScreenProvider>(context).getScreenData.vm.modelName,
-                  year: Provider.of<ScreenProvider>(context).getScreenData.vm.manufactureYear,
+                  category: Provider.of<ScreenProvider>(context)
+                      .getScreenData
+                      .catgName,
+                  subCategory: Provider.of<ScreenProvider>(context)
+                      .getScreenData
+                      .subCatgName,
+                  brandName: Provider.of<ScreenProvider>(context)
+                      .getScreenData
+                      .brandName,
+                  vehicleName: Provider.of<ScreenProvider>(context)
+                      .getScreenData
+                      .vehicleName,
+                  modelName: Provider.of<ScreenProvider>(context)
+                      .getScreenData
+                      .vm
+                      .modelName,
+                  year: Provider.of<ScreenProvider>(context)
+                      .getScreenData
+                      .vm
+                      .manufactureYear,
                 ),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -47,7 +66,9 @@ class _PartScreenState extends State<PartScreen> {
                       itemCount: partsList.length,
                       itemBuilder: (context, index) {
                         return ListTile(
-                          leading: Hero(tag: "images_${index}", child: Image.asset(IMAGE)),
+                          leading: Hero(
+                              tag: "images_${index}",
+                              child: Image.asset(IMAGE)),
                           title: Text(
                             partsList[index].partName,
                             style: TextStyle(fontWeight: FontWeight.bold),
@@ -65,9 +86,13 @@ class _PartScreenState extends State<PartScreen> {
 //                                    style: textStyle,
                               ),
                               Text(
-                                partsList[index].outOfStock ? "OutOfStock" : "Instock",
+                                partsList[index].outOfStock
+                                    ? "OutOfStock"
+                                    : "Instock",
                                 style: TextStyle(
-                                  color: partsList[index].outOfStock ? Colors.red : Colors.green,
+                                  color: partsList[index].outOfStock
+                                      ? Colors.red
+                                      : Colors.green,
                                 ),
                               ),
                             ],
@@ -76,7 +101,8 @@ class _PartScreenState extends State<PartScreen> {
                           trailing: Text(
                             "View\nDetails",
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
+                            style: TextStyle(
+                                color: Colors.red, fontWeight: FontWeight.w500),
                           ),
                           onTap: () {
                             Navigator.push(
