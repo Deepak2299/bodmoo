@@ -115,37 +115,9 @@ class _AddressListScreenState extends State<AddressListScreen> {
                       ],
                     );
                   } else
-                    return Center(
-                      child: Container(
-                        color: Colors.black38,
-                        padding: EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Text('Fetching saved Addresses', style: TextStyle(color: Colors.white)),
-                            SizedBox(width: 20),
-                            CircularProgressIndicator(),
-                          ],
-                        ),
-                      ),
-                    );
+                    return LoadingWidget(msg: 'Loading your addresses');
                 }),
-            deleteLoad
-                ? Center(
-                    child: Container(
-                      color: Colors.black38,
-                      padding: EdgeInsets.all(10),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text('Deleting address', style: TextStyle(color: Colors.white)),
-                          SizedBox(width: 20),
-                          CircularProgressIndicator(),
-                        ],
-                      ),
-                    ),
-                  )
-                : Container(),
+            deleteLoad ? LoadingWidget(msg: 'Deleting address') : Container(),
           ],
         ),
       ),

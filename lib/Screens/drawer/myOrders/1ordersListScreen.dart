@@ -4,6 +4,7 @@ import 'package:bodmoo/models/cartModel.dart';
 import 'package:bodmoo/models/orderModel.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
+import 'package:bodmoo/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -70,7 +71,7 @@ class _OrderListScreen1State extends State<OrderListScreen> {
                 itemCount: ordersList.length,
               );
             } else
-              return Center(child: CircularProgressIndicator());
+              return LoadingWidget(msg: 'Loading Orders');
           },
         ),
       ),

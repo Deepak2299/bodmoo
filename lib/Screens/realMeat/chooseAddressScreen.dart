@@ -83,13 +83,8 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                 ],
               );
             } else
-              return Container(
-                child: Row(
-                  children: <Widget>[
-                    Text('Fetching saved Addresses'),
-                    CircularProgressIndicator(),
-                  ],
-                ),
+              return LoadingWidget(
+                msg: 'Fetching saved Addresses',
               );
           }),
       bottomNavigationBar: BottomAppBar(
@@ -98,7 +93,11 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
           child: RaisedButton(
             color: Colors.green,
             child: Center(
-                child: Text('Confirm Order', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                child: Text('Confirm Order',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ))),
             onPressed: Provider.of<CustomerDetailsProvider>(context).addressIndex > -1
                 ? () async {
                     // bool b = await prepareOrder(
@@ -109,7 +108,6 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                     if (b) {
                       // TODO:SHOW ORDER PLACED SUCCEFULLY
                       widget.cartOrder ? Provider.of<CartProvider>(context, listen: false).clearCart() : null;
-                      ;
                       Navigator.pushReplacement(
                         context,
                         CupertinoPageRoute(builder: (context) => OrderListScreen()),
