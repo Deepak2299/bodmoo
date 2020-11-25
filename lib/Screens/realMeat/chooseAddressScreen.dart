@@ -1,5 +1,5 @@
 import 'package:bodmoo/Screens/drawer/myOrders/1ordersListScreen.dart';
-import 'package:bodmoo/Screens/realMeat/addAddressScreen.dart';
+import 'file:///D:/FLUTTERAPPS/bodmoo/lib/Screens/drawer/myAddresses/addAddressScreen.dart';
 import 'package:bodmoo/methods/get/getAddress.dart';
 import 'package:bodmoo/methods/prepareOrder.dart';
 
@@ -14,12 +14,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddressScreen extends StatefulWidget {
+class ChooseAddressScreen extends StatefulWidget {
   @override
-  _AddressScreenState createState() => _AddressScreenState();
+  _ChooseAddressScreenState createState() => _ChooseAddressScreenState();
 }
 
-class _AddressScreenState extends State<AddressScreen> {
+class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
   int addressIndex = -1;
   List<AddressModel> addresses = [];
 
@@ -31,11 +31,8 @@ class _AddressScreenState extends State<AddressScreen> {
       ),
       body: FutureBuilder(
           future: getAddress(
-              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false)
-                  .phoneNumber,
-              token:
-                  Provider.of<CustomerDetailsProvider>(context, listen: false)
-                      .token),
+              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false).phoneNumber,
+              token: Provider.of<CustomerDetailsProvider>(context, listen: false).token),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               addresses = snapshot.data;
@@ -46,26 +43,21 @@ class _AddressScreenState extends State<AddressScreen> {
                     leading: Icon(Icons.add),
                     title: Text("Add Address"),
                     onTap: () async {
-                      await Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => AddAddressScreen()));
+                      await Navigator.push(context, CupertinoPageRoute(builder: (context) => AddAddressScreen()));
                       setState(() {});
                     },
                   ),
-                  ListView.builder(
+                  ListView.separated(
+                    separatorBuilder: (context, i) => Divider(),
                     shrinkWrap: true,
                     physics: ScrollPhysics(),
                     itemBuilder: (context, i) {
-                      print(addresses[i].customerName);
-//                      print(prepareAddress(addressModel: addresses[i])
-//                          .runtimeType);
-                      print(addresses[i].customerMobile);
                       return RadioListTile(
                         value: i,
                         // groupValue: Provider.of<CustomerDetailsProvider>(context).deliveryAddress,
-                        groupValue: addressIndex,
+                        groupValue: Provider.of<CustomerDetailsProvider>(context, listen: true).addressIndex,
                         title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(addresses[i].customerName),
                             Text(prepareAddress(addressModel: addresses[i])),
@@ -73,11 +65,9 @@ class _AddressScreenState extends State<AddressScreen> {
                           ],
                         ),
                         onChanged: (int value) {
-                          // Provider.of<CustomerDetailsProvider>(context, listen: false).setAddress(address: value);
-                          setState(() {});
-
-                          addressIndex = value;
-                          print(value.toString());
+                          Provider.of<CustomerDetailsProvider>(context, listen: false).setAddressINdex(value);
+                          // setState(() {});
+                          // addressIndex = value;
                         },
                       );
                     },
@@ -101,9 +91,7 @@ class _AddressScreenState extends State<AddressScreen> {
           child: RaisedButton(
             color: Colors.green,
             child: Center(
-                child: Text('Confirm Order',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold))),
+                child: Text('Confirm Order', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
             onPressed: addressIndex != -1
                 ? () async {
                     bool b = await prepareOrder(
@@ -113,23 +101,18 @@ class _AddressScreenState extends State<AddressScreen> {
 //                    bool b = true;
                     if (b) {
                       //TODO:SHOW ORDER PLACED SUCCEFULLY
-                      Provider.of<CartProvider>(context, listen: false)
-                          .clearCart();
+                      Provider.of<CartProvider>(context, listen: false).clearCart();
 
                       Navigator.pushAndRemoveUntil(
                         context,
-                        CupertinoPageRoute(
-                            builder: (context) => OrderListScreen()),
+                        CupertinoPageRoute(builder: (context) => OrderListScreen()),
                         ModalRoute.withName('/parts'),
                       );
                     } else {
                       showToast(msg: 'Error in Order');
                     }
                   }
-                : showToast(
-                    msg: addresses.length > 0
-                        ? 'Choose Delivery address'
-                        : 'Add Address'),
+                : showToast(msg: addresses.length > 0 ? 'Choose Delivery address' : 'Add Address'),
           ),
         ),
       ),

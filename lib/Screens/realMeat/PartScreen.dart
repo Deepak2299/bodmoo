@@ -19,12 +19,7 @@ class _PartScreenState extends State<PartScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Parts"),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0, right: 18),
-            child: CartIcon(),
-          )
-        ],
+        actions: [CartIcon()],
       ),
       body: Stack(
         children: <Widget>[

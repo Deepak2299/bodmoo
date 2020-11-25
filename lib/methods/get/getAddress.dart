@@ -11,9 +11,10 @@ Future<List<AddressModel>> getAddress({
   @required String PhNo,
   @required String token,
 }) async {
+  print('getAddress Function/');
   List<dynamic> addresses = [];
-  var req = await http.get(GET_ADDRESS_URL + PhNo,
-      headers: {'Content-type': 'application/json', 'x-auth-token': token});
+  var req =
+      await http.get(GET_ADDRESS_URL + PhNo, headers: {'Content-type': 'application/json', 'x-auth-token': token});
   UserModel userModel = new UserModel(address: []);
 //  = UserModel(address: []);
   if (req.statusCode == 200) {
