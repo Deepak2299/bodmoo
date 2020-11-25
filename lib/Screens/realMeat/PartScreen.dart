@@ -73,22 +73,20 @@ class _PartScreenState extends State<PartScreen> {
                             ],
                           ),
 //                              isThreeLine: true,
-                          trailing: FlatButton(
-                            child: Text(
-                              "View\nDetails",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.red),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                      builder: (context) => PartDetailsScren(
-                                            partModel: pm,
-                                            partIndex: index,
-                                          )));
-                            },
+                          trailing: Text(
+                            "View\nDetails",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
                           ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) => PartDetailsScren(
+                                          partModel: pm,
+                                          partIndex: index,
+                                        )));
+                          },
                         );
                       },
                       separatorBuilder: (context, i) => Divider(
