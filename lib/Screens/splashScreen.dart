@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
               fullscreenDialog: true,
               builder: (context) {
                 // if (b) {
-                fetchPrefsForCarts(context: context);
+
                 return HomeScreen();
                 // } else
                 //   return SignInWithPhoneNO();
@@ -37,5 +37,12 @@ class _SplashScreenState extends State<SplashScreen> {
         body: Center(child: Text("Loading")),
       ),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    fetchPrefsForCarts(context: context);
+    super.didChangeDependencies();
   }
 }

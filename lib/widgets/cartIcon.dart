@@ -12,12 +12,16 @@ class CartIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, CupertinoPageRoute(builder: (context) => CartItemsScreen()));
+        Navigator.push(context,
+            CupertinoPageRoute(builder: (context) => CartItemsScreen()));
       },
       child: Badge(
         animationType: BadgeAnimationType.fade,
         badgeContent: Text(
-          Provider.of<CartProvider>(context).cartItemsLength.toString(),
+          Provider.of<CartProvider>(context, listen: false)
+              .cartItems
+              .length
+              .toString(),
         ),
         child: Icon(
           Icons.shopping_cart,
@@ -37,7 +41,8 @@ class AddToCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, CupertinoPageRoute(builder: (context) => CartItemsScreen()));
+        Navigator.push(context,
+            CupertinoPageRoute(builder: (context) => CartItemsScreen()));
       },
       child: Stack(
         children: [
