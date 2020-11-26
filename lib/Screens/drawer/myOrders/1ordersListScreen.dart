@@ -32,13 +32,7 @@ class _OrderListScreen1State extends State<OrderListScreen> {
                 padding: const EdgeInsets.symmetric(
                     horizontal: 10.0, vertical: 10.0),
                 child: Card(
-//                elevation: 3,
-//                shape: RoundedRectangleBorder(
-//                    borderRadius: BorderRadius.only(
-//                        topLeft: Radius.circular(15),
-//                        topRight: Radius.circular(15),
-//                        bottomLeft: Radius.circular(5),
-//                        bottomRight: Radius.circular(5))),
+
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
