@@ -13,6 +13,25 @@ class OrderDetailsScreen extends StatefulWidget {
   _OrderDetailsScreenState createState() => _OrderDetailsScreenState();
 }
 
+orderWidget({@required List<Widget> children}) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+    child: Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomLeft: Radius.circular(5),
+                bottomRight: Radius.circular(5))),
+        elevation: 3,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: children,
+        )),
+  );
+}
+
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   @override
   Widget build(BuildContext context) {
@@ -21,19 +40,126 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         appBar: AppBar(
           title: Text("Order Details"),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15))),
-                elevation: 3,
-                child: Container(
+        body: ListView(
+          shrinkWrap: true,
+          children: [
+            orderWidget(
+              children: [
+                Container(
+                  width: double.maxFinite,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15.0, vertical: 10.0),
+                    child: Text(
+                      "Order ID - " + widget.orderModel.orderNumber.toString(),
+                      style: TextStyle(color: Colors.black54),
+                    ),
+                  ),
+                ),
+                Divider(
+                  height: 2,
+                  thickness: 1.2,
+                ),
+                ListView.separated(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  itemBuilder: (context, orderItemIndex) {
+                    List<OrderItemModel> orderItem =
+                        widget.orderModel.orderItems;
+                    return ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => OrderItemDetailsScreen(
+                                orderItem: orderItem[orderItemIndex],
+                              ),
+                            ));
+                      },
+                      leading: Hero(
+                        tag: "images_${orderItem[orderItemIndex].partId}",
+                        child: Image.asset(
+                          IMAGE,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      title: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            orderItem[orderItemIndex].partName,
+                            style: TextStyle(fontSize: 17),
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Flexible(
+                            child: Row(
+                              children: <Widget>[
+                                tagStyle(
+                                    str: orderItem[orderItemIndex].brandName),
+                                tagStyle(
+                                    str: orderItem[orderItemIndex].vehicleName),
+                                tagStyle(
+                                    str: orderItem[orderItemIndex]
+                                            .vehicleModel +
+                                        " " +
+                                        orderItem[orderItemIndex].vehicleYear),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                              "Price: Rs. " +
+                                  orderItem[orderItemIndex].partPrice,
+                              style: TextStyle(fontSize: 14)),
+//                        Text("Total Price: Rs. " +
+//                            (double.parse(orderItem[orderItemIndex].partPrice) *
+//                                    orderItem[orderItemIndex].orderQty)
+//                                .toString()),
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                            "Qty: " +
+                                orderItem[orderItemIndex].orderQty.toString(),
+                            style: TextStyle(fontSize: 14),
+                          ),
+//                            Text(
+//                              "Free shipping",
+//                              style:
+//                                  TextStyle(color: Colors.green, fontSize: 14),
+//                            ),
+                        ],
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, i) => Divider(),
+                  itemCount: widget.orderModel.orderItems.length,
+                )
+              ],
+            ),
+            orderWidget(
+              children: [
+                Container(
+                  width: double.maxFinite,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15.0, vertical: 10.0),
+                    child: Text(
+                      "Shipping Details",
+                      style: TextStyle(color: Colors.black54),
+                    ),
+                  ),
+                ),
+                Divider(
+                  height: 2,
+                  thickness: 1.2,
+                ),
+                Container(
                   width: double.maxFinite,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -42,116 +168,164 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Name - " +
-                              widget.orderModel.addressModel.customerName
-                                  .toString(),
-                          style: TextStyle(color: Colors.black54),
+                          widget.orderModel.addressModel.customerName
+                              .toString(),
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.w700),
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                         Text(
-                            "Phone - " +
+                          widget.orderModel.addressModel.houseno,
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        Text(
+                          widget.orderModel.addressModel.roadname,
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        Text(
+                          widget.orderModel.addressModel.city,
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        Text(
+                          widget.orderModel.addressModel.state,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Phone number : ",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500)),
+                            Text(
                                 widget.orderModel.addressModel.customerMobile
                                     .toString(),
-                            style: TextStyle(color: Colors.black54)),
-                        Text(
-                            "Address - " +
-                                prepareAddress(
-                                    addressModel:
-                                        widget.orderModel.addressModel),
-                            style: TextStyle(color: Colors.black54)),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                )),
+                          ],
+                        ),
                       ],
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  itemBuilder: (context, orderItemIndex) {
-                    List<OrderItemModel> orderItem =
-                        widget.orderModel.orderItems;
-                    return Card(
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(),
-                      child: ListTile(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => OrderItemDetailsScreen(
-                                  orderItem: orderItem[orderItemIndex],
-                                ),
-                              ));
-                        },
-                        leading: Hero(
-                          tag: "images_${orderItem[orderItemIndex].partId}",
-                          child: Image.asset(
-                            IMAGE,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        title: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
+              ],
+            ),
+            orderWidget(
+              children: [
+                Container(
+                  width: double.maxFinite,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15.0, vertical: 10.0),
+                    child: Text(
+                      "Price Details",
+                      style: TextStyle(color: Colors.black54),
+                    ),
+                  ),
+                ),
+                Divider(
+                  height: 2,
+                  thickness: 1.2,
+                ),
+                Container(
+                  width: double.maxFinite,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15.0, vertical: 10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
                             Text(
-                              orderItem[orderItemIndex].partName,
-                              style: TextStyle(fontSize: 17),
+                              "List price",
                             ),
-                            SizedBox(
-                              height: 2,
-                            ),
-                            Flexible(
-                              child: Row(
-                                children: <Widget>[
-                                  tagStyle(
-                                      str: orderItem[orderItemIndex].brandName),
-                                  tagStyle(
-                                      str: orderItem[orderItemIndex]
-                                          .vehicleName),
-                                  tagStyle(
-                                      str: orderItem[orderItemIndex]
-                                              .vehicleModel +
-                                          " " +
-                                          orderItem[orderItemIndex]
-                                              .vehicleYear),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 2,
-                            ),
+                            Spacer(),
                             Text(
-                                "Price: Rs. " +
-                                    orderItem[orderItemIndex].partPrice,
-                                style: TextStyle(fontSize: 14)),
-//                        Text("Total Price: Rs. " +
-//                            (double.parse(orderItem[orderItemIndex].partPrice) *
-//                                    orderItem[orderItemIndex].orderQty)
-//                                .toString()),
-                            SizedBox(
-                              height: 2,
-                            ),
-                            Text(
-                              "Qty: " +
-                                  orderItem[orderItemIndex].orderQty.toString(),
-                              style: TextStyle(fontSize: 14),
-                            ),
-//                            Text(
-//                              "Free shipping",
-//                              style:
-//                                  TextStyle(color: Colors.green, fontSize: 14),
-//                            ),
+                              "Rs. 0",
+                            )
                           ],
                         ),
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, i) => Divider(),
-                  itemCount: widget.orderModel.orderItems.length,
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Selling price",
+                            ),
+                            Spacer(),
+                            Text(
+                              "Rs. 0",
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Shipping price",
+                            ),
+                            Spacer(),
+                            Text(
+                              "Rs. 0",
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              )
-            ],
-          ),
+                Divider(
+                  height: 2,
+                  thickness: 1,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 15.0, vertical: 8.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Total Amount",
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                      Spacer(),
+                      Text(
+                        "Rs. 0",
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      )
+                    ],
+                  ),
+                ),
+                Divider(
+                  height: 2,
+                  thickness: 1.2,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 15.0, vertical: 10.0),
+                  child: Text("Credit Card:"),
+                )
+              ],
+            ),
+          ],
         ),
       ),
     );

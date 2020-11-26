@@ -29,68 +29,88 @@ class _OrderListScreen1State extends State<OrderListScreen> {
             if (snapshot.hasData) {
               List<OrderModel> ordersList = snapshot.data;
               return Padding(
-                padding: const EdgeInsets.only(
-                  top: 8,
-                  left: 8,
-                  right: 8,
-                ),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0, vertical: 10.0),
                 child: Card(
-                  elevation: 3,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15),
-                          bottomLeft: Radius.circular(5),
-                          bottomRight: Radius.circular(5))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListView.separated(
-                      itemBuilder: (context, orderIndex) {
-                        OrderModel orderModel = ordersList[orderIndex];
+//                elevation: 3,
+//                shape: RoundedRectangleBorder(
+//                    borderRadius: BorderRadius.only(
+//                        topLeft: Radius.circular(15),
+//                        topRight: Radius.circular(15),
+//                        bottomLeft: Radius.circular(5),
+//                        bottomRight: Radius.circular(5))),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context, orderIndex) {
+                          OrderModel orderModel = ordersList[orderIndex];
 
-                        return ListTile(
-                          title: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
+                          return ListTile(
+                            title: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
 
 //                          mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Text(
-                                "Order No: " + orderModel.orderNumber,
-                                style: TextStyle(fontSize: 15),
-                              ),
-                              Text(
-                                "Order at " +
-                                    orderModel.orderDate.toIso8601String(),
-                                style: TextStyle(fontSize: 15),
-                              ),
-                              Text(
-                                "Status: " + orderModel.orderStatus,
-                                style: TextStyle(fontSize: 12),
-                              ),
-                              Text(
-                                "Payment Mode: " + orderModel.paymentType,
-                                style: TextStyle(fontSize: 12),
-                              ),
+                                children: <Widget>[
+                                  Text(
+                                    "Order No: " + orderModel.orderNumber,
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                  Text(
+                                    "Order at " +
+                                        orderModel.orderDate.toIso8601String(),
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                  Text(
+                                    "Status: " + orderModel.orderStatus,
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  Text(
+                                    "Payment Mode: " + orderModel.paymentType,
+                                    style: TextStyle(fontSize: 12),
+                                  ),
 //                        Text(orderModel.paymentTransactionId),
-                            ],
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (context) => OrderDetailsScreen(
-                                      orderModel: orderModel),
-                                ));
-                          },
-                        );
-                      },
-                      separatorBuilder: (context, index) => Divider(
-                        thickness: 1,
-                        height: 2,
+                                ],
+                              ),
+                            ),
+                            trailing: Container(
+                              padding: EdgeInsets.only(top: 12),
+                              child: Icon(Icons.keyboard_arrow_right),
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => OrderDetailsScreen(
+                                        orderModel: orderModel),
+                                  ));
+                            },
+                          );
+                        },
+                        separatorBuilder: (context, index) => Divider(
+                          thickness: 1,
+                          height: 2,
+                        ),
+                        itemCount: ordersList.length,
                       ),
-                      itemCount: ordersList.length,
-                    ),
+                      Divider(
+                        height: 2,
+                        thickness: 1,
+                      ),
+                      Center(
+                          heightFactor: 3,
+                          child: Text(
+                            "No more orders",
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w500),
+                          ))
+                    ],
                   ),
                 ),
               );
