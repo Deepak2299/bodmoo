@@ -114,11 +114,14 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                         .addressIndex >
                     -1
                 ? () async {
-                    // bool b = await prepareOrder(
-                    //   address: addresses[Provider.of<CustomerDetailsProvider>(context, listen: false).addressIndex],
-                    //   context: context,
-                    // );
-                    bool b = true;
+                    bool b = await prepareOrder(
+                      address: addresses[Provider.of<CustomerDetailsProvider>(
+                              context,
+                              listen: false)
+                          .addressIndex],
+                      context: context,
+                    );
+//                    bool b = true;
                     if (b) {
                       // TODO:SHOW ORDER PLACED SUCCEFULLY
                       widget.cartOrder

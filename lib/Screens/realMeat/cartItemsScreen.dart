@@ -21,7 +21,7 @@ tagStyle({@required String str}) {
     ),
     margin: EdgeInsets.symmetric(horizontal: 5),
     padding: EdgeInsets.all(5),
-    child: Text(str, style: TextStyle(color: Colors.white)),
+    child: Text(str, style: TextStyle(color: Colors.white, fontSize: 10)),
   );
 }
 
@@ -52,7 +52,8 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                   ),
                   RaisedButton(
                     color: Colors.blue,
-                    child: Text("Continue Shopping", style: TextStyle(color: Colors.white)),
+                    child: Text("Continue Shopping",
+                        style: TextStyle(color: Colors.white)),
                     onPressed: () {
                       //TODO:ROUTE TO MAINSCREEN.DART
                       Navigator.pop(context);
@@ -62,7 +63,8 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
               ))
             : ListView.separated(
                 itemBuilder: (context, index) {
-                  OrderItemModel itemModel = Provider.of<CartProvider>(context).getCartItems[index];
+                  OrderItemModel itemModel =
+                      Provider.of<CartProvider>(context).getCartItems[index];
                   return ListTile(
                     leading: Container(
 //                      width: 100,
@@ -82,7 +84,10 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                             children: <Widget>[
                               tagStyle(str: itemModel.brandName),
                               tagStyle(str: itemModel.vehicleName),
-                              tagStyle(str: itemModel.vehicleModel + " " + itemModel.vehicleYear),
+                              tagStyle(
+                                  str: itemModel.vehicleModel +
+                                      " " +
+                                      itemModel.vehicleYear),
                             ],
                           ),
                         ),
@@ -92,7 +97,10 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                             children: <Widget>[
                               Text("Rs. " + itemModel.partPrice),
                               Spacer(),
-                              Text("Rs. " + (double.parse(itemModel.partPrice) * itemModel.orderQty).toString()),
+                              Text("Rs. " +
+                                  (double.parse(itemModel.partPrice) *
+                                          itemModel.orderQty)
+                                      .toString()),
                             ],
                           ),
                         ),
@@ -107,21 +115,28 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                               Spacer(),
                               Row(
 //                                crossAxisAlignment: CrossAxisAlignment.baseline,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   IconButton(
                                       icon: Icon(Icons.remove_circle_outline),
                                       onPressed: () {
-                                        Provider.of<CartProvider>(context, listen: false)
-                                            .updateQtyById(partId: itemModel.partId, qty: -1);
+                                        Provider.of<CartProvider>(context,
+                                                listen: false)
+                                            .updateQtyById(
+                                                partId: itemModel.partId,
+                                                qty: -1);
 //                                  setState(() {});
                                       }),
                                   Text(itemModel.orderQty.toString()),
                                   IconButton(
                                       icon: Icon(Icons.add_circle_outline),
                                       onPressed: () {
-                                        Provider.of<CartProvider>(context, listen: false)
-                                            .updateQtyById(partId: itemModel.partId, qty: 1);
+                                        Provider.of<CartProvider>(context,
+                                                listen: false)
+                                            .updateQtyById(
+                                                partId: itemModel.partId,
+                                                qty: 1);
 //                                  setState(() {});
                                       }),
                                 ],
@@ -134,9 +149,12 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                             children: [
                               Spacer(),
                               FlatButton(
-                                shape: RoundedRectangleBorder(side: BorderSide(width: 0.5)),
+                                shape: RoundedRectangleBorder(
+                                    side: BorderSide(width: 0.5)),
                                 onPressed: () {
-                                  Provider.of<CartProvider>(context, listen: false).itemRemove(Id: itemModel.partId);
+                                  Provider.of<CartProvider>(context,
+                                          listen: false)
+                                      .itemRemove(Id: itemModel.partId);
                                 },
                                 child: Text("Remove"),
                               ),
@@ -163,10 +181,14 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          "Rs " + Provider.of<CartProvider>(context).getTotalPriceOfCart().toString(),
+                          "Rs " +
+                              Provider.of<CartProvider>(context)
+                                  .getTotalPriceOfCart()
+                                  .toString(),
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text("Total Cart", style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text("Total Cart",
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                       ],
                     ),
                   ),
@@ -175,14 +197,26 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                   child: RaisedButton(
                     color: Colors.green,
                     child: Center(
-                        child:
-                            Text('Confirm Order', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
-                    onPressed: Provider.of<CartProvider>(context, listen: false).getTotalPriceOfCart() == 0
+                        child: Text('Confirm Order',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold))),
+                    onPressed: Provider.of<CartProvider>(context, listen: false)
+                                .getTotalPriceOfCart() ==
+                            0
                         ? null
                         : () async {
-                            if (Provider.of<CustomerDetailsProvider>(context, listen: false).token != null) {
-                              Provider.of<CustomerDetailsProvider>(context, listen: false)
-                                  .addOrder(orderItems: Provider.of<CartProvider>(context, listen: false).cartItems);
+                            if (Provider.of<CustomerDetailsProvider>(context,
+                                        listen: false)
+                                    .token !=
+                                null) {
+                              Provider.of<CustomerDetailsProvider>(context,
+                                      listen: false)
+                                  .addOrder(
+                                      orderItems: Provider.of<CartProvider>(
+                                              context,
+                                              listen: false)
+                                          .cartItems);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

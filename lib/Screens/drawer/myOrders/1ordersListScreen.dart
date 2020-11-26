@@ -28,20 +28,28 @@ class _OrderListScreen1State extends State<OrderListScreen> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               List<OrderModel> ordersList = snapshot.data;
-              return ListView.separated(
-                itemBuilder: (context, orderIndex) {
-                  OrderModel orderModel = ordersList[orderIndex];
-                  return ListTile(
-                    title: Card(
-                      margin: EdgeInsets.zero,
-//                      elevation: 10,
-//                      shape: RoundedRectangleBorder(
-//                          borderRadius: BorderRadius.circular(20)),
-                      child: Container(
-                        width: double.maxFinite,
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
+              return Padding(
+                padding: const EdgeInsets.only(
+                  top: 8,
+                  left: 8,
+                  right: 8,
+                ),
+                child: Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                          bottomLeft: Radius.circular(5),
+                          bottomRight: Radius.circular(5))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView.separated(
+                      itemBuilder: (context, orderIndex) {
+                        OrderModel orderModel = ordersList[orderIndex];
+
+                        return ListTile(
+                          title: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
 
@@ -67,21 +75,24 @@ class _OrderListScreen1State extends State<OrderListScreen> {
 //                        Text(orderModel.paymentTransactionId),
                             ],
                           ),
-                        ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => OrderDetailsScreen(
+                                      orderModel: orderModel),
+                                ));
+                          },
+                        );
+                      },
+                      separatorBuilder: (context, index) => Divider(
+                        thickness: 1,
+                        height: 2,
                       ),
+                      itemCount: ordersList.length,
                     ),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) =>
-                                OrderDetailsScreen(orderModel: orderModel),
-                          ));
-                    },
-                  );
-                },
-                separatorBuilder: (context, index) => Divider(),
-                itemCount: ordersList.length,
+                  ),
+                ),
               );
             } else
               return LoadingWidget(msg: 'Loading Orders');
