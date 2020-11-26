@@ -32,7 +32,6 @@ class _OrderListScreen1State extends State<OrderListScreen> {
                 padding: const EdgeInsets.symmetric(
                     horizontal: 10.0, vertical: 10.0),
                 child: Card(
-
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,

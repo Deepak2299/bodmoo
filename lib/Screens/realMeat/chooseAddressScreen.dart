@@ -50,47 +50,80 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
               return ListView(
                 shrinkWrap: true,
                 children: <Widget>[
-                  ListTile(
-                    leading: Icon(Icons.add),
-                    title: Text("Add Address"),
-                    onTap: () async {
-                      await Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => AddAddressScreen()));
-                      setState(() {});
-                    },
+                  Card(
+                    elevation: 5,
+                    child: ListTile(
+                      leading: Icon(Icons.add),
+                      title: Text("Add Address"),
+                      onTap: () async {
+                        await Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => AddAddressScreen()));
+                        setState(() {});
+                      },
+                    ),
                   ),
-                  ListView.separated(
-                    separatorBuilder: (context, i) => Divider(),
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                    itemBuilder: (context, i) {
-                      return RadioListTile(
-                        value: i,
-                        // groupValue: Provider.of<CustomerDetailsProvider>(context).deliveryAddress,
-                        groupValue: Provider.of<CustomerDetailsProvider>(
-                                context,
-                                listen: true)
-                            .addressIndex,
-                        title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(addresses[i].customerName),
-                            Text(prepareAddress(addressModel: addresses[i])),
-                            Text(addresses[i].customerMobile),
-                          ],
-                        ),
-                        onChanged: (int value) {
-                          Provider.of<CustomerDetailsProvider>(context,
-                                  listen: false)
-                              .setAddressINdex(value);
-                          // setState(() {});
-                          // addressIndex = value;
-                        },
-                      );
-                    },
-                    itemCount: snapshot.data.length,
+                  Card(
+                    elevation: 3,
+                    child: ListView.separated(
+                      separatorBuilder: (context, i) => Divider(
+                        height: 4,
+                        thickness: 1.5,
+                      ),
+                      shrinkWrap: true,
+                      physics: ScrollPhysics(),
+                      itemBuilder: (context, i) {
+                        return RadioListTile(
+                          value: i,
+                          // groupValue: Provider.of<CustomerDetailsProvider>(context).deliveryAddress,
+                          groupValue: Provider.of<CustomerDetailsProvider>(
+                                  context,
+                                  listen: true)
+                              .addressIndex,
+
+                          secondary: Provider.of<CustomerDetailsProvider>(
+                                          context,
+                                          listen: true)
+                                      .addressIndex ==
+                                  i
+                              ? Card(
+                                  elevation: 3,
+                                  borderOnForeground: true,
+                                  child: Container(
+                                    padding: EdgeInsets.all(7),
+//                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "Edit",
+                                      style: TextStyle(color: flipkartBlue),
+                                    ),
+                                  ))
+                              : null,
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(addresses[i].customerName),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(prepareAddress(addressModel: addresses[i])),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(addresses[i].customerMobile),
+                            ],
+                          ),
+                          onChanged: (int value) {
+                            Provider.of<CustomerDetailsProvider>(context,
+                                    listen: false)
+                                .setAddressINdex(value);
+                            // setState(() {});
+                            // addressIndex = value;
+                          },
+                        );
+                      },
+                      itemCount: snapshot.data.length,
+                    ),
                   ),
                 ],
               );
@@ -114,14 +147,14 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                         .addressIndex >
                     -1
                 ? () async {
-                    bool b = await prepareOrder(
-                      address: addresses[Provider.of<CustomerDetailsProvider>(
-                              context,
-                              listen: false)
-                          .addressIndex],
-                      context: context,
-                    );
-//                    bool b = true;
+//                    bool b = await prepareOrder(
+//                      address: addresses[Provider.of<CustomerDetailsProvider>(
+//                              context,
+//                              listen: false)
+//                          .addressIndex],
+//                      context: context,
+//                    );
+                    bool b = true;
                     if (b) {
                       // TODO:SHOW ORDER PLACED SUCCEFULLY
                       widget.cartOrder
