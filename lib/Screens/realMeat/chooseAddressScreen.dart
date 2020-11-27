@@ -1,4 +1,5 @@
 import 'package:bodmoo/Screens/drawer/myAddresses/addAddressScreen.dart';
+import 'package:bodmoo/Screens/drawer/myAddresses/editAddressScreen.dart';
 import 'package:bodmoo/Screens/drawer/myOrders/1ordersListScreen.dart';
 
 import 'package:bodmoo/methods/get/getAddress.dart';
@@ -39,11 +40,8 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
       ),
       body: FutureBuilder(
           future: getAddress(
-              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false)
-                  .phoneNumber,
-              token:
-                  Provider.of<CustomerDetailsProvider>(context, listen: false)
-                      .token),
+              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false).phoneNumber,
+              token: Provider.of<CustomerDetailsProvider>(context, listen: false).token),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               addresses = snapshot.data;
@@ -56,74 +54,50 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                       leading: Icon(Icons.add),
                       title: Text("Add Address"),
                       onTap: () async {
-                        await Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => AddAddressScreen()));
+                        await Navigator.push(context, CupertinoPageRoute(builder: (context) => AddAddressScreen()));
                         setState(() {});
                       },
                     ),
                   ),
-                  Card(
-                    elevation: 3,
-                    child: ListView.separated(
-                      separatorBuilder: (context, i) => Divider(
-                        height: 4,
-                        thickness: 1.5,
-                      ),
-                      shrinkWrap: true,
-                      physics: ScrollPhysics(),
-                      itemBuilder: (context, i) {
-                        return RadioListTile(
+                  ListView.builder(
+                    // separatorBuilder: (context, i) => Divider(
+                    //   height: 4,
+                    //   thickness: 1.5,
+                    // ),
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    itemBuilder: (context, i) {
+                      return Card(
+                        child: RadioListTile(
                           value: i,
                           // groupValue: Provider.of<CustomerDetailsProvider>(context).deliveryAddress,
-                          groupValue: Provider.of<CustomerDetailsProvider>(
-                                  context,
-                                  listen: true)
-                              .addressIndex,
-
-                          secondary: Provider.of<CustomerDetailsProvider>(
-                                          context,
-                                          listen: true)
-                                      .addressIndex ==
-                                  i
-                              ? Card(
-                                  elevation: 3,
-                                  borderOnForeground: true,
-                                  child: Container(
-                                    padding: EdgeInsets.all(7),
-//                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "Edit",
-                                      style: TextStyle(color: flipkartBlue),
-                                    ),
-                                  ))
+                          groupValue: Provider.of<CustomerDetailsProvider>(context, listen: true).addressIndex,
+                          secondary: Provider.of<CustomerDetailsProvider>(context, listen: true).addressIndex == i
+                              ? EditAddressButton(
+                                  i: i,
+                                  addressModel: addresses[i],
+                                )
                               : null,
-                          title: Column(
+                          title: Text(addresses[i].customerName),
+
+                          subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(addresses[i].customerName),
-                              SizedBox(
-                                height: 10,
-                              ),
+                              SizedBox(height: 10),
                               Text(prepareAddress(addressModel: addresses[i])),
-                              SizedBox(
-                                height: 10,
-                              ),
+                              SizedBox(height: 10),
                               Text(addresses[i].customerMobile),
                             ],
                           ),
                           onChanged: (int value) {
-                            Provider.of<CustomerDetailsProvider>(context,
-                                    listen: false)
-                                .setAddressINdex(value);
+                            Provider.of<CustomerDetailsProvider>(context, listen: false).setAddressINdex(value);
                             // setState(() {});
                             // addressIndex = value;
                           },
-                        );
-                      },
-                      itemCount: snapshot.data.length,
-                    ),
+                        ),
+                      );
+                    },
+                    itemCount: snapshot.data.length,
                   ),
                 ],
               );
@@ -143,9 +117,7 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ))),
-            onPressed: Provider.of<CustomerDetailsProvider>(context)
-                        .addressIndex >
-                    -1
+            onPressed: Provider.of<CustomerDetailsProvider>(context).addressIndex > -1
                 ? () async {
 //                    bool b = await prepareOrder(
 //                      address: addresses[Provider.of<CustomerDetailsProvider>(
@@ -157,24 +129,17 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                     bool b = true;
                     if (b) {
                       // TODO:SHOW ORDER PLACED SUCCEFULLY
-                      widget.cartOrder
-                          ? Provider.of<CartProvider>(context, listen: false)
-                              .clearCart()
-                          : null;
+                      widget.cartOrder ? Provider.of<CartProvider>(context, listen: false).clearCart() : null;
                       Navigator.pushReplacement(
                         context,
-                        CupertinoPageRoute(
-                            builder: (context) => OrderListScreen()),
+                        CupertinoPageRoute(builder: (context) => OrderListScreen()),
                         // ModalRoute.withName('/parts'),
                       );
                     } else {
                       showToast(msg: 'Error in Order');
                     }
                   }
-                : showToast(
-                    msg: addresses.length > 0
-                        ? 'Choose Delivery address'
-                        : 'Add Address'),
+                : showToast(msg: addresses.length > 0 ? 'Choose Delivery address' : 'Add Address'),
           ),
         ),
       ),

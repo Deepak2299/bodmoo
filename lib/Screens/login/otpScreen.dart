@@ -20,79 +20,100 @@ class OTPScreen extends StatefulWidget {
 class _OTPScreenState extends State<OTPScreen> {
   GlobalKey<FormState> _key = GlobalKey();
   TextEditingController otpController = TextEditingController();
+  bool loading = false, isEnable = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(title: Text("OTP Verification")),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Form(
-            key: _key,
-            child: ListView(
-              shrinkWrap: true,
+        body: Stack(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Form(
+                key: _key,
+                child: ListView(
+                  shrinkWrap: true,
 //                crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Verify your phone number here",
-                  style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500, wordSpacing: 1.5),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Text(
-                  "Paste OTP here",
-                  style:
-                      TextStyle(color: Color(0xff888888), fontSize: 12, fontWeight: FontWeight.w500, wordSpacing: 1.5),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  autofocus: true,
-                  controller: otpController,
+                  children: <Widget>[
+                    Text(
+                      "Verify your phone number here",
+                      style:
+                          TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500, wordSpacing: 1.5),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      "Paste OTP here",
+                      style: TextStyle(
+                          color: Color(0xff888888), fontSize: 12, fontWeight: FontWeight.w500, wordSpacing: 1.5),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      autofocus: true,
+                      controller: otpController,
 //                  focusNode: codeNode,
-                  validator: (String code) {
-                    if (code.isEmpty) return "Enter SMS Code";
-                    return null;
-                  },
-                  cursorColor: flipkartBlue,
-                  keyboardType: TextInputType.number,
-                  textInputAction: TextInputAction.done,
-                  onFieldSubmitted: (value) {
-                    FocusScope.of(context).unfocus();
-                  },
+                      validator: (String code) {
+                        if (code.isEmpty) return "Enter SMS Code";
+                        return null;
+                      },
+                      onChanged: (str) {
+                        str = str.trim();
+                        if (str.length > 0)
+                          isEnable = true;
+                        else
+                          isEnable = false;
+                        setState(() {});
+                      },
+                      cursorColor: flipkartBlue,
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.done,
+                      onFieldSubmitted: (value) {
+                        FocusScope.of(context).unfocus();
+                      },
 
 //                    style: labelStyle,
-                  decoration: InputDecoration(
+                      decoration: InputDecoration(
 //                    hintText: "91",
-                    labelText: "OTP Code",
-                    focusColor: flipkartBlue,
-                    focusedBorder: fieldBorder,
-                    border: fieldBorder,
-                    enabledBorder: fieldBorder,
-                    errorBorder: errorBorder,
-                    errorStyle: TextStyle(color: Colors.redAccent),
-                    filled: true,
-                    fillColor: Colors.transparent,
+                        labelText: "OTP Code",
+                        focusColor: flipkartBlue,
+                        focusedBorder: fieldBorder,
+                        border: fieldBorder,
+                        enabledBorder: fieldBorder,
+                        errorBorder: errorBorder,
+                        errorStyle: TextStyle(color: Colors.redAccent),
+                        filled: true,
+                        fillColor: Colors.transparent,
 //                        fillColor: Colors.white12
-                  ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
+              ),
             ),
-          ),
+            loading ? LoadingWidget(msg: 'Verifying') : Container()
+          ],
         ),
         bottomNavigationBar: BottomAppBar(
           child: GestureDetector(
               onTap: () async {
+                setState(() {
+                  loading = true;
+                });
                 bool verified = await authFunction(
                     verificationId: widget.verificationId,
                     phoneNumber: widget.code + widget.phoneNumber,
                     sms: otpController.text);
                 if (verified) {
+                  setState(() {
+                    loading = false;
+                  });
                   bool userexist = await getUserDetailsOrLogin(PhNo: widget.phoneNumber, context: context);
                   if (userexist) {
                     if (widget.stored) {
@@ -118,13 +139,17 @@ class _OTPScreenState extends State<OTPScreen> {
                 }
               },
               child: Container(
-                color: Colors.deepOrangeAccent,
-                height: 43,
+                color: isEnable ? Colors.deepOrangeAccent : Colors.grey,
+                height: MediaQuery.of(context).size.height * 0.065,
                 width: double.infinity,
                 child: Center(
                   child: Text(
                     "Verify",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               )),

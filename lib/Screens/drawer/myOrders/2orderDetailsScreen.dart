@@ -13,26 +13,15 @@ class OrderDetailsScreen extends StatefulWidget {
   _OrderDetailsScreenState createState() => _OrderDetailsScreenState();
 }
 
-orderWidget({@required List<Widget> children}) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-    child: Card(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15),
-                topRight: Radius.circular(15),
-                bottomLeft: Radius.circular(5),
-                bottomRight: Radius.circular(5))),
-        elevation: 3,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: children,
-        )),
-  );
-}
-
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
+  double getOrderTotal() {
+    double sum = 0;
+    widget.orderModel.orderItems.forEach((element) {
+      sum += double.parse(element.partPrice) * element.orderQty;
+    });
+    return sum;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -43,13 +32,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         body: ListView(
           shrinkWrap: true,
           children: [
-            orderWidget(
+            cardWidget(
               children: [
                 Container(
                   width: double.maxFinite,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0, vertical: 10.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
                     child: Text(
                       "Order ID - " + widget.orderModel.orderNumber.toString(),
                       style: TextStyle(color: Colors.black54),
@@ -64,8 +52,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   shrinkWrap: true,
                   padding: EdgeInsets.symmetric(vertical: 5),
                   itemBuilder: (context, orderItemIndex) {
-                    List<OrderItemModel> orderItem =
-                        widget.orderModel.orderItems;
+                    List<OrderItemModel> orderItem = widget.orderModel.orderItems;
                     return ListTile(
                       onTap: () {
                         Navigator.push(
@@ -97,13 +84,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           Flexible(
                             child: Row(
                               children: <Widget>[
+                                tagStyle(str: orderItem[orderItemIndex].brandName),
+                                tagStyle(str: orderItem[orderItemIndex].vehicleName),
                                 tagStyle(
-                                    str: orderItem[orderItemIndex].brandName),
-                                tagStyle(
-                                    str: orderItem[orderItemIndex].vehicleName),
-                                tagStyle(
-                                    str: orderItem[orderItemIndex]
-                                            .vehicleModel +
+                                    str: orderItem[orderItemIndex].vehicleModel +
                                         " " +
                                         orderItem[orderItemIndex].vehicleYear),
                               ],
@@ -112,27 +96,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           SizedBox(
                             height: 2,
                           ),
+                          Text("Price: Rs. " + orderItem[orderItemIndex].partPrice, style: TextStyle(fontSize: 14)),
+                          SizedBox(height: 2),
                           Text(
-                              "Price: Rs. " +
-                                  orderItem[orderItemIndex].partPrice,
-                              style: TextStyle(fontSize: 14)),
-//                        Text("Total Price: Rs. " +
-//                            (double.parse(orderItem[orderItemIndex].partPrice) *
-//                                    orderItem[orderItemIndex].orderQty)
-//                                .toString()),
-                          SizedBox(
-                            height: 2,
-                          ),
-                          Text(
-                            "Qty: " +
-                                orderItem[orderItemIndex].orderQty.toString(),
+                            "Qty: " + orderItem[orderItemIndex].orderQty.toString(),
                             style: TextStyle(fontSize: 14),
                           ),
-//                            Text(
-//                              "Free shipping",
-//                              style:
-//                                  TextStyle(color: Colors.green, fontSize: 14),
-//                            ),
                         ],
                       ),
                     );
@@ -142,13 +111,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 )
               ],
             ),
-            orderWidget(
+            cardWidget(
               children: [
                 Container(
                   width: double.maxFinite,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0, vertical: 10.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
                     child: Text(
                       "Shipping Details",
                       style: TextStyle(color: Colors.black54),
@@ -161,74 +129,17 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 ),
                 Container(
                   width: double.maxFinite,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0, vertical: 10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.orderModel.addressModel.customerName
-                              .toString(),
-                          style: TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.w700),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          widget.orderModel.addressModel.houseno,
-                        ),
-                        SizedBox(
-                          height: 3,
-                        ),
-                        Text(
-                          widget.orderModel.addressModel.roadname,
-                        ),
-                        SizedBox(
-                          height: 3,
-                        ),
-                        Text(
-                          widget.orderModel.addressModel.city,
-                        ),
-                        SizedBox(
-                          height: 3,
-                        ),
-                        Text(
-                          widget.orderModel.addressModel.state,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Phone number : ",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500)),
-                            Text(
-                                widget.orderModel.addressModel.customerMobile
-                                    .toString(),
-                                style: TextStyle(
-                                  color: Colors.black,
-                                )),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                  child: addressWidget(addressModel: widget.orderModel.addressModel),
                 ),
               ],
             ),
-            orderWidget(
+            cardWidget(
               children: [
                 Container(
                   width: double.maxFinite,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0, vertical: 10.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
                     child: Text(
                       "Price Details",
                       style: TextStyle(color: Colors.black54),
@@ -239,67 +150,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   height: 2,
                   thickness: 1.2,
                 ),
-                Container(
-                  width: double.maxFinite,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0, vertical: 10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              "List price",
-                            ),
-                            Spacer(),
-                            Text(
-                              "Rs. 0",
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Selling price",
-                            ),
-                            Spacer(),
-                            Text(
-                              "Rs. 0",
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 3,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Shipping price",
-                            ),
-                            Spacer(),
-                            Text(
-                              "Rs. 0",
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 3,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Divider(
-                  height: 2,
-                  thickness: 1,
-                ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 15.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
                   child: Row(
                     children: [
                       Text(
@@ -308,7 +160,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       ),
                       Spacer(),
                       Text(
-                        "Rs. 0",
+                        "Rs. " + getOrderTotal().toString(),
                         style: TextStyle(fontWeight: FontWeight.w500),
                       )
                     ],
@@ -318,11 +170,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   height: 2,
                   thickness: 1.2,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 15.0, vertical: 10.0),
-                  child: Text("Credit Card:"),
-                )
               ],
             ),
           ],

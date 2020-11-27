@@ -26,6 +26,7 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
     codeController = TextEditingController(text: "+91");
   }
 
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,97 +51,103 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
           icon: Icon(Icons.clear),
         ),
       ),
-      body: Column(
+      body: Stack(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Form(
-              key: _key,
-              child: ListView(
-                shrinkWrap: true,
+          Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Form(
+                  key: _key,
+                  child: ListView(
+                    shrinkWrap: true,
 //                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "Log in to get started",
-                    style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500, wordSpacing: 1.5),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    "Experience the all new Bodmoo!",
-                    style: TextStyle(
-                        color: Color(0xff888888), fontSize: 12, fontWeight: FontWeight.w500, wordSpacing: 1.5),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    autofocus: true,
-                    initialValue: "+91",
-                    cursorColor: flipkartBlue,
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.next,
-                    enabled: false,
-                    decoration: InputDecoration(
-                      labelText: "Country Code",
-                      focusColor: flipkartBlue,
-                      focusedBorder: fieldBorder,
-                      border: fieldBorder,
-                      enabledBorder: fieldBorder,
-                      errorBorder: errorBorder,
-                      errorStyle: TextStyle(color: Colors.redAccent),
-                      filled: true,
-                      fillColor: Colors.transparent,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
+                    children: <Widget>[
+                      Text(
+                        "Log in to get started",
+                        style:
+                            TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500, wordSpacing: 1.5),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        "Experience the all new Bodmoo!",
+                        style: TextStyle(
+                            color: Color(0xff888888), fontSize: 12, fontWeight: FontWeight.w500, wordSpacing: 1.5),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        autofocus: true,
+                        initialValue: "+91",
+                        cursorColor: flipkartBlue,
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
+                        enabled: false,
+                        decoration: InputDecoration(
+                          labelText: "Country Code",
+                          focusColor: flipkartBlue,
+                          focusedBorder: fieldBorder,
+                          border: fieldBorder,
+                          enabledBorder: fieldBorder,
+                          errorBorder: errorBorder,
+                          errorStyle: TextStyle(color: Colors.redAccent),
+                          filled: true,
+                          fillColor: Colors.transparent,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
 //                    autofocus: true,
-                    controller: phoneController,
-                    onChanged: (String val) {
-                      val = val.trim();
-                      if (val.length > 10 || val.length < 10)
-                        setState(() {
-                          isEnabled = false;
-                        });
-                      else
-                        setState(() {
-                          isEnabled = true;
-                        });
-                    },
-                    validator: (String val) {
-                      val = val.trim();
-                      if (val.length > 10 || val.length < 10) return "Invalid mobile number";
-                      return null;
-                    },
-                    showCursor: true,
-                    keyboardAppearance: Brightness.light,
-                    cursorColor: flipkartBlue,
-                    textInputAction: TextInputAction.done,
-                    onFieldSubmitted: (value) {
-                      FocusScope.of(context).unfocus();
-                    },
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
-                      labelText: "Phone Number",
-                      focusColor: flipkartBlue,
-                      focusedBorder: fieldBorder,
-                      border: fieldBorder,
-                      enabledBorder: fieldBorder,
-                      errorBorder: errorBorder,
-                      errorStyle: TextStyle(color: Colors.redAccent),
-                      filled: true,
-                      fillColor: Colors.transparent,
-                    ),
-                    focusNode: phoneNode,
+                        controller: phoneController,
+                        onChanged: (String val) {
+                          val = val.trim();
+                          if (val.length > 10 || val.length < 10)
+                            setState(() {
+                              isEnabled = false;
+                            });
+                          else
+                            setState(() {
+                              isEnabled = true;
+                            });
+                        },
+                        validator: (String val) {
+                          val = val.trim();
+                          if (val.length > 10 || val.length < 10) return "Invalid mobile number";
+                          return null;
+                        },
+                        showCursor: true,
+                        keyboardAppearance: Brightness.light,
+                        cursorColor: flipkartBlue,
+                        textInputAction: TextInputAction.done,
+                        onFieldSubmitted: (value) {
+                          FocusScope.of(context).unfocus();
+                        },
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                          labelText: "Phone Number",
+                          focusColor: flipkartBlue,
+                          focusedBorder: fieldBorder,
+                          border: fieldBorder,
+                          enabledBorder: fieldBorder,
+                          errorBorder: errorBorder,
+                          errorStyle: TextStyle(color: Colors.redAccent),
+                          filled: true,
+                          fillColor: Colors.transparent,
+                        ),
+                        focusNode: phoneNode,
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
+          loading ? LoadingWidget(msg: 'Sending OTP') : Container()
         ],
       ),
       bottomNavigationBar: BottomAppBar(
@@ -150,17 +157,23 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
               : () {
                   FocusScope.of(context).unfocus();
                   if (_key.currentState.validate()) {
+                    setState(() {
+                      loading = true;
+                    });
                     sendCodeToPhoneNumber(phonenumber: phoneController.text, context: context, stored: widget.stored);
+                    setState(() {
+                      loading = false;
+                    });
                   }
                 },
           child: Container(
             color: isEnabled ? Colors.deepOrangeAccent : Colors.grey,
-            height: 43,
+            height: MediaQuery.of(context).size.height * 0.065,
             width: double.infinity,
             child: Center(
               child: Text(
                 "Send OTP",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 16),
               ),
             ),
           ),
