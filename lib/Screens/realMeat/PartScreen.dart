@@ -31,15 +31,28 @@ class _PartScreenState extends State<PartScreen> {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              SizedBox(height: 20),
               FutureBuilder(
                 future: getParts(
-                  category: Provider.of<ScreenProvider>(context).getScreenData.catgName,
-                  subCategory: Provider.of<ScreenProvider>(context).getScreenData.subCatgName,
-                  brandName: Provider.of<ScreenProvider>(context).getScreenData.brandName,
-                  vehicleName: Provider.of<ScreenProvider>(context).getScreenData.vehicleName,
-                  modelName: Provider.of<ScreenProvider>(context).getScreenData.vm.modelName,
-                  year: Provider.of<ScreenProvider>(context).getScreenData.vm.manufactureYear,
+                  category: Provider.of<ScreenProvider>(context)
+                      .getScreenData
+                      .catgName,
+                  subCategory: Provider.of<ScreenProvider>(context)
+                      .getScreenData
+                      .subCatgName,
+                  brandName: Provider.of<ScreenProvider>(context)
+                      .getScreenData
+                      .brandName,
+                  vehicleName: Provider.of<ScreenProvider>(context)
+                      .getScreenData
+                      .vehicleName,
+                  modelName: Provider.of<ScreenProvider>(context)
+                      .getScreenData
+                      .vm
+                      .modelName,
+                  year: Provider.of<ScreenProvider>(context)
+                      .getScreenData
+                      .vm
+                      .manufactureYear,
                 ),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -54,49 +67,66 @@ class _PartScreenState extends State<PartScreen> {
                           ))
                         : Expanded(
                             child: ListView.separated(
+                            padding: EdgeInsets.all(8),
                             itemCount: partsList.length,
                             itemBuilder: (context, index) {
-                              return ListTile(
-                                leading: Hero(tag: "images_${index}", child: Image.asset(IMAGE)),
-                                title: Text(
-                                  partsList[index].partName,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                subtitle: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      "Rs " + partsList[index].itemPrice.toString(),
+                              return Card(
+                                child: ListTile(
+                                  leading: Hero(
+                                      tag: "images_${index}",
+                                      child: Image.asset(IMAGE)),
+                                  title: Text(
+                                    partsList[index].partName,
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  subtitle: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        "Rs " +
+                                            partsList[index]
+                                                .itemPrice
+                                                .toString(),
 //                                    style: textStyle,
-                                    ),
-                                    Text(
-                                      partsList[index].quantity.toString(),
-//                                    style: textStyle,
-                                    ),
-                                    Text(
-                                      partsList[index].outOfStock ? "OutOfStock" : "Instock",
-                                      style: TextStyle(
-                                        color: partsList[index].outOfStock ? Colors.red : Colors.green,
                                       ),
-                                    ),
-                                  ],
-                                ),
+                                      Text(
+                                        partsList[index].quantity.toString(),
+//                                    style: textStyle,
+                                      ),
+                                      Text(
+                                        partsList[index].outOfStock
+                                            ? "OutOfStock"
+                                            : "Instock",
+                                        style: TextStyle(
+                                          color: partsList[index].outOfStock
+                                              ? Colors.red
+                                              : Colors.green,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
 //                              isThreeLine: true,
-                                trailing: Text(
-                                  "View\nDetails",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
+                                  trailing: Text(
+                                    "View\nDetails",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                            builder: (context) =>
+                                                PartDetailsScren(
+                                                  partModel: pm,
+                                                  partIndex: index,
+                                                )));
+                                  },
                                 ),
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      CupertinoPageRoute(
-                                          builder: (context) => PartDetailsScren(
-                                                partModel: pm,
-                                                partIndex: index,
-                                              )));
-                                },
                               );
                             },
                             separatorBuilder: (context, i) => Divider(

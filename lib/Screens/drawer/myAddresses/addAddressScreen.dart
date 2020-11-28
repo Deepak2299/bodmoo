@@ -26,6 +26,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     @required TextEditingController controller,
     @required String labelText,
     @required Function validator,
+    @required TextInputType type = TextInputType.text,
   }) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15),
@@ -33,6 +34,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       child: TextFormField(
         autovalidate: autoValid,
         controller: controller,
+        keyboardType: type,
         decoration: InputDecoration(
           labelText: labelText + ' (Required)*',
           labelStyle: TextStyle(color: Colors.grey, fontSize: 14),
@@ -81,7 +83,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       if (str.length < 1)
                         return 'Pls provide the necessary details';
                       else {
-                        if (str[0] != '9' && str[0] != '8' && str[0] != '7' && str[0] != '6')
+                        if (str[0] != '9' &&
+                            str[0] != '8' &&
+                            str[0] != '7' &&
+                            str[0] != '6')
                           return 'Enter valid Phone Number';
                         else if (str.length != 10)
                           return 'Enter 10digit Phone Number';
@@ -89,6 +94,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           return null;
                       }
                     },
+                    type: TextInputType.number,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -109,8 +115,14 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       )
                     ],
                   ),
-                  tff(controller: hno, labelText: 'House No./Building Name', validator: null),
-                  tff(controller: colony, labelText: 'Road Name/Area/Colony', validator: null),
+                  tff(
+                      controller: hno,
+                      labelText: 'House No./Building Name',
+                      validator: null),
+                  tff(
+                      controller: colony,
+                      labelText: 'Road Name/Area/Colony',
+                      validator: null),
                 ],
               ),
             ),
@@ -145,17 +157,21 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         city: city.text,
                         roadname: colony.text);
                     bool t = await addAddress(
-                        token: Provider.of<CustomerDetailsProvider>(context, listen: false).token,
+                        token: Provider.of<CustomerDetailsProvider>(context,
+                                listen: false)
+                            .token,
                         addressModel: ad,
-                        mobile: Provider.of<CustomerDetailsProvider>(context, listen: false).phoneNumber);
+                        mobile: Provider.of<CustomerDetailsProvider>(context,
+                                listen: false)
+                            .phoneNumber);
                     if (t)
                       Navigator.pop(context);
                     else
                       showToast(msg: 'Error while adding');
-                    if (mounted)
-                      setState(() {
-                        loading = false;
-                      });
+//                    if (mounted)
+//                      setState(() {
+//                        loading = false;
+//                      });
                   } else {
                     autoValid = true;
                   }

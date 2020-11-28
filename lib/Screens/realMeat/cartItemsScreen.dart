@@ -52,7 +52,8 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                   ),
                   RaisedButton(
                     color: Colors.blue,
-                    child: Text("Continue Shopping", style: TextStyle(color: Colors.white)),
+                    child: Text("Continue Shopping",
+                        style: TextStyle(color: Colors.white)),
                     onPressed: () {
                       //TODO:ROUTE TO MAINSCREEN.DART
                       Navigator.pop(context);
@@ -60,107 +61,143 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                   )
                 ],
               ))
-            : ListView.separated(
-                itemBuilder: (context, index) {
-                  OrderItemModel itemModel = Provider.of<CartProvider>(context).getCartItems[index];
-                  return Dismissible(
-                    direction: DismissDirection.endToStart,
-                    key: UniqueKey(),
-                    background: Container(
-                      alignment: Alignment.centerRight,
-                      color: Colors.red,
-                      padding: EdgeInsets.all(10),
-                      child: Text("Swipe left to Remove Item", style: TextStyle(color: Colors.white)),
-                    ),
-                    onDismissed: (direction) {
-                      Provider.of<CartProvider>(context, listen: false).itemRemove(Id: itemModel.partId);
-                    },
-                    child: ListTile(
-                      leading: Container(
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.separated(
+                  itemBuilder: (context, index) {
+                    OrderItemModel itemModel =
+                        Provider.of<CartProvider>(context).getCartItems[index];
+                    return Dismissible(
+                      direction: DismissDirection.endToStart,
+                      key: UniqueKey(),
+                      background: Container(
+                        alignment: Alignment.centerRight,
+                        color: Colors.red,
+                        padding: EdgeInsets.all(10),
+                        child: Text("Swipe left to Remove Item",
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                      onDismissed: (direction) {
+                        Provider.of<CartProvider>(context, listen: false)
+                            .itemRemove(Id: itemModel.partId);
+                      },
+                      child: Card(
+                        child: ListTile(
+                          leading: Container(
 //                      width: 100,
 //                      height: 200,
-                        child: Image.asset(
-                          IMAGE,
+                            child: Image.asset(
+                              IMAGE,
 //                        fit: BoxFit.fill,
+                            ),
+                          ),
+                          title: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(itemModel.partName),
+                              Flexible(
+                                child: Row(
+                                  children: <Widget>[
+                                    tagStyle(str: itemModel.brandName),
+                                    tagStyle(str: itemModel.vehicleName),
+                                    tagStyle(
+                                        str: itemModel.vehicleModel +
+                                            " " +
+                                            itemModel.vehicleYear),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Flexible(
+                                child: Row(
+//                            mainAxisAlignment: MainAxisAlignment.sp,
+                                  children: <Widget>[
+                                    Text("Item Price: Rs. " +
+                                        itemModel.partPrice),
+//                                Spacer(),
+//                                Text("Total Price: Rs. " +
+//                                    (double.parse(itemModel.partPrice) *
+//                                            itemModel.orderQty)
+//                                        .toString()),
+                                  ],
+                                ),
+                              ),
+                              Flexible(
+                                  child: Row(
+                                children: [
+                                  Text("Total Price: Rs. " +
+                                      (double.parse(itemModel.partPrice) *
+                                              itemModel.orderQty)
+                                          .toString()),
+                                  Spacer(),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Row(
+//                                crossAxisAlignment: CrossAxisAlignment.baseline,
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        IconButton(
+                                            icon: Icon(
+                                                Icons.remove_circle_outline),
+                                            onPressed: () {
+                                              Provider.of<CartProvider>(context,
+                                                      listen: false)
+                                                  .updateQtyById(
+                                                      partId: itemModel.partId,
+                                                      qty: -1);
+//                                  setState(() {});
+                                            }),
+                                        Text(itemModel.orderQty.toString()),
+                                        IconButton(
+                                            icon:
+                                                Icon(Icons.add_circle_outline),
+                                            onPressed: () {
+                                              Provider.of<CartProvider>(context,
+                                                      listen: false)
+                                                  .updateQtyById(
+                                                      partId: itemModel.partId,
+                                                      qty: 1);
+//                                  setState(() {});
+                                            }),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )),
+                              Flexible(
+                                child: Row(
+                                  children: [
+                                    Spacer(),
+                                    FlatButton(
+                                      shape: RoundedRectangleBorder(
+                                          side: BorderSide(width: 0.5)),
+                                      onPressed: () {
+                                        Provider.of<CartProvider>(context,
+                                                listen: false)
+                                            .itemRemove(Id: itemModel.partId);
+                                      },
+                                      child: Text("Remove"),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                      title: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(itemModel.partName),
-                          Flexible(
-                            child: Row(
-                              children: <Widget>[
-                                tagStyle(str: itemModel.brandName),
-                                tagStyle(str: itemModel.vehicleName),
-                                tagStyle(str: itemModel.vehicleModel + " " + itemModel.vehicleYear),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Flexible(
-                            child: Row(
-//                            mainAxisAlignment: MainAxisAlignment.sp,
-                              children: <Widget>[
-                                Text("Rs. " + itemModel.partPrice),
-                                Spacer(),
-                                Text("Rs. " + (double.parse(itemModel.partPrice) * itemModel.orderQty).toString()),
-                              ],
-                            ),
-                          ),
-                          Flexible(
-                              child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Row(
-//                                crossAxisAlignment: CrossAxisAlignment.baseline,
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                IconButton(
-                                    icon: Icon(Icons.remove_circle_outline),
-                                    onPressed: () {
-                                      Provider.of<CartProvider>(context, listen: false)
-                                          .updateQtyById(partId: itemModel.partId, qty: -1);
-//                                  setState(() {});
-                                    }),
-                                Text(itemModel.orderQty.toString()),
-                                IconButton(
-                                    icon: Icon(Icons.add_circle_outline),
-                                    onPressed: () {
-                                      Provider.of<CartProvider>(context, listen: false)
-                                          .updateQtyById(partId: itemModel.partId, qty: 1);
-//                                  setState(() {});
-                                    }),
-                              ],
-                            ),
-                          )),
-                          Flexible(
-                            child: Row(
-                              children: [
-                                Spacer(),
-                                FlatButton(
-                                  shape: RoundedRectangleBorder(side: BorderSide(width: 0.5)),
-                                  onPressed: () {
-                                    Provider.of<CartProvider>(context, listen: false).itemRemove(Id: itemModel.partId);
-                                  },
-                                  child: Text("Remove"),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                },
-                separatorBuilder: (context, index) => Divider(),
-                itemCount: Provider.of<CartProvider>(context).cartItemsLength,
+                    );
+                  },
+                  separatorBuilder: (context, index) => Divider(),
+                  itemCount: Provider.of<CartProvider>(context).cartItemsLength,
+                ),
               ),
         bottomNavigationBar: BottomAppBar(
           elevation: 18,
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.07,
+            height: MediaQuery.of(context).size.height * 0.06,
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -170,10 +207,14 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          "Rs " + Provider.of<CartProvider>(context).getTotalPriceOfCart().toString(),
+                          "Rs " +
+                              Provider.of<CartProvider>(context)
+                                  .getTotalPriceOfCart()
+                                  .toString(),
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text("Total Cart", style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text("Total Cart",
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                       ],
                     ),
                   ),
@@ -182,14 +223,26 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                   child: RaisedButton(
                     color: Colors.green,
                     child: Center(
-                        child:
-                            Text('Confirm Order', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
-                    onPressed: Provider.of<CartProvider>(context, listen: false).getTotalPriceOfCart() == 0
+                        child: Text('Confirm Order',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold))),
+                    onPressed: Provider.of<CartProvider>(context, listen: false)
+                                .getTotalPriceOfCart() ==
+                            0
                         ? null
                         : () async {
-                            if (Provider.of<CustomerDetailsProvider>(context, listen: false).token != null) {
-                              Provider.of<CustomerDetailsProvider>(context, listen: false)
-                                  .addOrder(orderItems: Provider.of<CartProvider>(context, listen: false).cartItems);
+                            if (Provider.of<CustomerDetailsProvider>(context,
+                                        listen: false)
+                                    .token !=
+                                null) {
+                              Provider.of<CustomerDetailsProvider>(context,
+                                      listen: false)
+                                  .addOrder(
+                                      orderItems: Provider.of<CartProvider>(
+                                              context,
+                                              listen: false)
+                                          .cartItems);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

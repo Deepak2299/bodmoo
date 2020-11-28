@@ -33,7 +33,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         elevation: 0,
         title: Text(
           "Welcome to new user, ${widget.phoneNumber}",
-          style: TextStyle(color: Colors.white, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Colors.white,
+              fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           padding: EdgeInsets.only(bottom: 15),
@@ -202,7 +205,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 },
           child: Container(
             color: isEnabled ? Colors.deepOrangeAccent : Colors.grey,
-            height: 43,
+            height: MediaQuery.of(context).size.height * 0.06,
             width: double.infinity,
             child: Center(
               child: Text(

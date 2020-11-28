@@ -10,7 +10,11 @@ import 'package:flutter/material.dart';
 class OTPScreen extends StatefulWidget {
   String verificationId, phoneNumber, code;
   bool stored;
-  OTPScreen({@required this.verificationId, this.phoneNumber, this.code, this.stored = false});
+  OTPScreen(
+      {@required this.verificationId,
+      this.phoneNumber,
+      this.code,
+      this.stored = false});
 //  FocusNode Node = FocusNode();
   TextEditingController otpController = TextEditingController();
   @override
@@ -38,8 +42,11 @@ class _OTPScreenState extends State<OTPScreen> {
                   children: <Widget>[
                     Text(
                       "Verify your phone number here",
-                      style:
-                          TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500, wordSpacing: 1.5),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          wordSpacing: 1.5),
                     ),
                     SizedBox(
                       height: 15,
@@ -47,7 +54,10 @@ class _OTPScreenState extends State<OTPScreen> {
                     Text(
                       "Paste OTP here",
                       style: TextStyle(
-                          color: Color(0xff888888), fontSize: 12, fontWeight: FontWeight.w500, wordSpacing: 1.5),
+                          color: Color(0xff888888),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          wordSpacing: 1.5),
                     ),
                     SizedBox(
                       height: 20,
@@ -114,7 +124,8 @@ class _OTPScreenState extends State<OTPScreen> {
                   loading = false;
                 });
                 if (verified) {
-                  bool userexist = await getUserDetailsOrLogin(PhNo: widget.phoneNumber, context: context);
+                  bool userexist = await getUserDetailsOrLogin(
+                      PhNo: widget.phoneNumber, context: context);
                   if (userexist) {
                     if (widget.stored) {
                       int count = 0;
@@ -125,9 +136,12 @@ class _OTPScreenState extends State<OTPScreen> {
                     } else
                       // Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeScreen()));
                       Navigator.pushAndRemoveUntil(
-                          context, CupertinoPageRoute(builder: (context) => HomeScreen()), (route) => false);
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => HomeScreen()),
+                          (route) => false);
                   } else {
-                    // Navigator.pop(context);
+                    Navigator.pop(context);
                     Navigator.pushReplacement(
                         context,
                         CupertinoPageRoute(
@@ -140,7 +154,7 @@ class _OTPScreenState extends State<OTPScreen> {
               },
               child: Container(
                 color: isEnable ? Colors.deepOrangeAccent : Colors.grey,
-                height: MediaQuery.of(context).size.height * 0.065,
+                height: MediaQuery.of(context).size.height * 0.06,
                 width: double.infinity,
                 child: Center(
                   child: Text(
