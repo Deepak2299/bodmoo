@@ -40,11 +40,8 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
       ),
       body: FutureBuilder(
           future: getAddress(
-              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false)
-                  .phoneNumber,
-              token:
-                  Provider.of<CustomerDetailsProvider>(context, listen: false)
-                      .token),
+              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false).phoneNumber,
+              token: Provider.of<CustomerDetailsProvider>(context, listen: false).token),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               addresses = snapshot.data;
@@ -57,11 +54,8 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                       leading: Icon(Icons.add),
                       title: Text("Add Address"),
                       onTap: () async {
-                        await Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => AddAddressScreen()));
-                        setState(() {});
+                        await Navigator.push(context, CupertinoPageRoute(builder: (context) => AddAddressScreen()));
+                        // setState(() {});
                       },
                     ),
                   ),
@@ -77,15 +71,8 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                         child: RadioListTile(
                           value: i,
                           // groupValue: Provider.of<CustomerDetailsProvider>(context).deliveryAddress,
-                          groupValue: Provider.of<CustomerDetailsProvider>(
-                                  context,
-                                  listen: true)
-                              .addressIndex,
-                          secondary: Provider.of<CustomerDetailsProvider>(
-                                          context,
-                                          listen: true)
-                                      .addressIndex ==
-                                  i
+                          groupValue: Provider.of<CustomerDetailsProvider>(context, listen: true).addressIndex,
+                          secondary: Provider.of<CustomerDetailsProvider>(context, listen: true).addressIndex == i
                               ? EditAddressButton(
                                   i: i,
                                   addressModel: addresses[i],
@@ -103,9 +90,7 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                             ],
                           ),
                           onChanged: (int value) {
-                            Provider.of<CustomerDetailsProvider>(context,
-                                    listen: false)
-                                .setAddressINdex(value);
+                            Provider.of<CustomerDetailsProvider>(context, listen: false).setAddressINdex(value);
                             // setState(() {});
                             // addressIndex = value;
                           },
@@ -125,44 +110,34 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
         child: Container(
           height: MediaQuery.of(context).size.height * 0.06,
           child: RaisedButton(
-            color: Colors.green,
-            child: Center(
-                child: Text('Confirm Order',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ))),
-            onPressed: Provider.of<CustomerDetailsProvider>(context)
-                        .addressIndex >
-                    -1
-                ? () async {
-                    bool b = await prepareOrder(
-                      address: addresses[Provider.of<CustomerDetailsProvider>(
-                              context,
-                              listen: false)
-                          .addressIndex],
-                      context: context,
-                    );
+              color: Colors.green,
+              child: Center(
+                  child: Text('Confirm Order',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ))),
+              onPressed: () async {
+                bool b = await prepareOrder(
+                  address: addresses[Provider.of<CustomerDetailsProvider>(context, listen: false).addressIndex],
+                  context: context,
+                );
 //                    bool b = true;
-                    if (b) {
-                      // TODO:SHOW ORDER PLACED SUCCEFULLY
-                      widget.cartOrder
-                          ? Provider.of<CartProvider>(context, listen: false)
-                              .clearCart()
-                          : null;
-                      Navigator.pushReplacement(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => OrderListScreen()),
-                        // ModalRoute.withName('/parts'),
-                      );
-                    } else {
-                      showToast(msg: 'Error in Order');
-                    }
-                  }
-                : showToast(msg: 'Choose Delivery address'),
-          ),
+                if (b) {
+                  // TODO:SHOW ORDER PLACED SUCCEFULLY
+                  widget.cartOrder ? Provider.of<CartProvider>(context, listen: false).clearCart() : null;
+                  Navigator.pushReplacement(
+                    context,
+                    CupertinoPageRoute(builder: (context) => OrderListScreen()),
+                    // ModalRoute.withName('/parts'),
+                  );
+                } else {
+                  showToast(msg: 'Error in Order');
+                }
+              }
+              // : showToast(msg: 'Choose Delivery address'),
+              ),
         ),
       ),
     );
