@@ -136,12 +136,16 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
         bottomNavigationBar: BottomAppBar(
           child: Container(
             width: double.maxFinite,
-            height: MediaQuery.of(context).size.height * 0.07,
+            height: MediaQuery.of(context).size.height * 0.065,
             child: RaisedButton(
-                color: Colors.redAccent,
+                color: Colors.green,
                 child: Text(
-                  "Save Address",
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  "Update Address",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 onPressed: () async {
                   if (_key.currentState.validate()) {

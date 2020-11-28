@@ -32,6 +32,8 @@ String GET_PART_BY_ID = BASE_URL + "store/orders/getProducts/";
 //USER LOGIN
 String LOGIN_URL = BASE_URL + 'store/users/login';
 String SIGNUP_URL = BASE_URL + 'store/users/addUser';
+
 String ADD_ADDRESS_URL = BASE_URL + 'store/users/addUser/address';
 String GET_ADDRESS_URL = BASE_URL + 'store/users/getAddress/';
 String EDIT_ADDRESS_URL = BASE_URL + '';
+String DELETE_ADDRESS_URL = BASE_URL + 'store/users/deleteAddress/';

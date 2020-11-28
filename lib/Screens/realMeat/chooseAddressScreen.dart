@@ -108,13 +108,14 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
           }),
       bottomNavigationBar: BottomAppBar(
         child: Container(
-          height: 50,
+          height: MediaQuery.of(context).size.height * 0.06,
           child: RaisedButton(
             color: Colors.green,
             child: Center(
                 child: Text('Confirm Order',
                     style: TextStyle(
                       color: Colors.white,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ))),
             onPressed: Provider.of<CustomerDetailsProvider>(context).addressIndex > -1
@@ -139,7 +140,7 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                       showToast(msg: 'Error in Order');
                     }
                   }
-                : showToast(msg: addresses.length > 0 ? 'Choose Delivery address' : 'Add Address'),
+                : showToast(msg: 'Choose Delivery address'),
           ),
         ),
       ),

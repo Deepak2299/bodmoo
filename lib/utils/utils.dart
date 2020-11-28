@@ -26,15 +26,6 @@ pwdValidator(String pwd) {
   }
 }
 
-codeValidation(String code) {
-  code = code.trim();
-  if (code.isEmpty)
-    return "Enter Country Code";
-  else {
-    if (code.length > 2 || code.length < 1) return "Check Country Code";
-  }
-}
-
 addressWidget({@required AddressModel addressModel}) {
   return Column(
     mainAxisSize: MainAxisSize.min,

@@ -20,7 +20,7 @@ class _PartScreenState extends State<PartScreen> {
       appBar: AppBar(
         title: Text("Parts"),
         actions: [
-          CartIcon(),
+          CartIcon(context: context),
           SizedBox(
             width: 10,
           )
@@ -34,92 +34,76 @@ class _PartScreenState extends State<PartScreen> {
               SizedBox(height: 20),
               FutureBuilder(
                 future: getParts(
-                  category: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .catgName,
-                  subCategory: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .subCatgName,
-                  brandName: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .brandName,
-                  vehicleName: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .vehicleName,
-                  modelName: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .vm
-                      .modelName,
-                  year: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .vm
-                      .manufactureYear,
+                  category: Provider.of<ScreenProvider>(context).getScreenData.catgName,
+                  subCategory: Provider.of<ScreenProvider>(context).getScreenData.subCatgName,
+                  brandName: Provider.of<ScreenProvider>(context).getScreenData.brandName,
+                  vehicleName: Provider.of<ScreenProvider>(context).getScreenData.vehicleName,
+                  modelName: Provider.of<ScreenProvider>(context).getScreenData.vm.modelName,
+                  year: Provider.of<ScreenProvider>(context).getScreenData.vm.manufactureYear,
                 ),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     PartsModel pm = snapshot.data;
                     print(pm.id);
                     List<PartDetail> partsList = pm.details;
-
-                    return Expanded(
-                        child: ListView.separated(
-                      itemCount: partsList.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          leading: Hero(
-                              tag: "images_${index}",
-                              child: Image.asset(IMAGE)),
-                          title: Text(
-                            partsList[index].partName,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "Rs " + partsList[index].itemPrice.toString(),
-//                                    style: textStyle,
-                              ),
-                              Text(
-                                partsList[index].quantity.toString(),
-//                                    style: textStyle,
-                              ),
-                              Text(
-                                partsList[index].outOfStock
-                                    ? "OutOfStock"
-                                    : "Instock",
-                                style: TextStyle(
-                                  color: partsList[index].outOfStock
-                                      ? Colors.red
-                                      : Colors.green,
+                    return partsList.length == 0
+                        ? Center(
+                            child: Text(
+                            "No Parts found",
+                            style: TextStyle(color: Colors.grey),
+                          ))
+                        : Expanded(
+                            child: ListView.separated(
+                            itemCount: partsList.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                leading: Hero(tag: "images_${index}", child: Image.asset(IMAGE)),
+                                title: Text(
+                                  partsList[index].partName,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                            ],
-                          ),
+                                subtitle: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "Rs " + partsList[index].itemPrice.toString(),
+//                                    style: textStyle,
+                                    ),
+                                    Text(
+                                      partsList[index].quantity.toString(),
+//                                    style: textStyle,
+                                    ),
+                                    Text(
+                                      partsList[index].outOfStock ? "OutOfStock" : "Instock",
+                                      style: TextStyle(
+                                        color: partsList[index].outOfStock ? Colors.red : Colors.green,
+                                      ),
+                                    ),
+                                  ],
+                                ),
 //                              isThreeLine: true,
-                          trailing: Text(
-                            "View\nDetails",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.red, fontWeight: FontWeight.w500),
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                    builder: (context) => PartDetailsScren(
-                                          partModel: pm,
-                                          partIndex: index,
-                                        )));
-                          },
-                        );
-                      },
-                      separatorBuilder: (context, i) => Divider(
-                        color: Colors.blue,
-                        thickness: 1,
-                      ),
-                    ));
+                                trailing: Text(
+                                  "View\nDetails",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                          builder: (context) => PartDetailsScren(
+                                                partModel: pm,
+                                                partIndex: index,
+                                              )));
+                                },
+                              );
+                            },
+                            separatorBuilder: (context, i) => Divider(
+                              color: Colors.blue,
+                              thickness: 1,
+                            ),
+                          ));
                   } else
                     return Center(child: CircularProgressIndicator());
                 },

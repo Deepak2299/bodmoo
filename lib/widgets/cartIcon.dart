@@ -7,30 +7,23 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 //import 'package:badges/badges.dart';
 
-class CartIcon extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(context,
-            CupertinoPageRoute(builder: (context) => CartItemsScreen()));
-      },
-      child: Badge(
-        animationType: BadgeAnimationType.fade,
-        badgeContent: Text(
-          Provider.of<CartProvider>(context, listen: false)
-              .cartItems
-              .length
-              .toString(),
-        ),
-        child: Icon(
-          Icons.shopping_cart,
-          size: 30,
-        ),
-        position: BadgePosition(end: 1, top: -2),
+CartIcon({@required BuildContext context}) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(context, CupertinoPageRoute(builder: (context) => CartItemsScreen()));
+    },
+    child: Badge(
+      animationType: BadgeAnimationType.fade,
+      badgeContent: Text(
+        Provider.of<CartProvider>(context, listen: true).cartItems.length.toString(),
       ),
-    );
-  }
+      child: Icon(
+        Icons.shopping_cart,
+        size: 30,
+      ),
+      position: BadgePosition(end: 1, top: -2),
+    ),
+  );
 }
 
 class AddToCart extends StatelessWidget {
@@ -41,8 +34,7 @@ class AddToCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            CupertinoPageRoute(builder: (context) => CartItemsScreen()));
+        Navigator.push(context, CupertinoPageRoute(builder: (context) => CartItemsScreen()));
       },
       child: Stack(
         children: [

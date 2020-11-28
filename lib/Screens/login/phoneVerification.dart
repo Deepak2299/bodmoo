@@ -154,13 +154,15 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
         child: GestureDetector(
           onTap: !isEnabled
               ? () {}
-              : () {
+              : () async {
                   FocusScope.of(context).unfocus();
                   if (_key.currentState.validate()) {
                     setState(() {
                       loading = true;
                     });
-                    sendCodeToPhoneNumber(phonenumber: phoneController.text, context: context, stored: widget.stored);
+                    await sendCodeToPhoneNumber(
+                        phonenumber: phoneController.text, context: context, stored: widget.stored);
+                    await Future.delayed(Duration(seconds: 1), () {});
                     setState(() {
                       loading = false;
                     });

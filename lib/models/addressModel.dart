@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class AddressModel {
   AddressModel({
-//    this.id,
+    this.id,
     this.customerName,
     this.customerMobile,
     this.pincode,
@@ -12,7 +12,7 @@ class AddressModel {
     this.roadname,
   });
 
-//  String id;
+  String id;
   String customerName;
   String customerMobile;
   String pincode;
@@ -21,17 +21,14 @@ class AddressModel {
   String houseno;
   String roadname;
 
-  factory AddressModel.fromJson(String str) =>
-      AddressModel.fromMap(json.decode(str));
+  factory AddressModel.fromJson(String str) => AddressModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
   factory AddressModel.fromMap(Map<String, dynamic> json) => AddressModel(
-        // id: json["_id"] == null ? null : json["_id"],
-        customerName:
-            json["customer_name"] == null ? null : json["customer_name"],
-        customerMobile:
-            json["customer_mobile"] == null ? null : json["customer_mobile"],
+        id: json["_id"] == null ? null : json["_id"],
+        customerName: json["customer_name"] == null ? null : json["customer_name"],
+        customerMobile: json["customer_mobile"] == null ? null : json["customer_mobile"],
         pincode: json["pincode"] == null ? null : json["pincode"],
         state: json["state"] == null ? null : json["state"],
         city: json["city"] == null ? null : json["city"],

@@ -1,9 +1,11 @@
 import 'package:bodmoo/Screens/drawer/myAddresses/addAddressScreen.dart';
 import 'package:bodmoo/Screens/drawer/myAddresses/editAddressScreen.dart';
+import 'package:bodmoo/methods/Address/deleteAddredd.dart';
 import 'package:bodmoo/methods/get/getAddress.dart';
 import 'package:bodmoo/models/addressModel.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
+import 'package:bodmoo/widgets/toastWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -21,14 +23,16 @@ class _AddressListScreenState extends State<AddressListScreen> {
     return false;
   }
 
-  deleteAddress({@required int index, @required BuildContext context}) async {
+  deleteAddressWrapper({@required String phno, @required String id}) async {
     setState(() {
       deleteLoad = true;
     });
-    await Future.delayed(Duration(seconds: 2), () {});
+    bool b = await deleteAddress(
+      phNo: phno,
+      AddressId: id,
+    );
+    showToast(msg: b ? "Address removed" : "Error");
     setState(() {
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text("Address removed")));
-
       deleteLoad = false;
     });
   }
@@ -64,93 +68,105 @@ class _AddressListScreenState extends State<AddressListScreen> {
                             },
                           ),
                         ),
-                        ListView.separated(
-                          separatorBuilder: (context, i) => Divider(),
-                          shrinkWrap: true,
-                          physics: ScrollPhysics(),
-                          itemBuilder: (context, i) {
-                            return Dismissible(
-                              key: UniqueKey(),
-                              // dismissThresholds: {
-                              //   DismissDirection.endToStart: -MediaQuery.of(context).size.width * 0.5,
-                              //   DismissDirection.startToEnd: MediaQuery.of(context).size.width * 0.5,
-                              // },
-                              secondaryBackground: Container(
-                                padding: EdgeInsets.all(15),
-                                color: Colors.redAccent,
-                                child: Text("Swipe left to Delete", style: TextStyle(color: Colors.white)),
-                                alignment: Alignment.centerRight,
-                              ),
-                              // direction: DismissDirection.endToStart,
-                              background: Container(
-                                color: Colors.green,
-                                child: Text("Swipe right to Edit", style: TextStyle(color: Colors.white)),
-                                alignment: Alignment.centerLeft,
-                              ),
-                              movementDuration: Duration(seconds: 1),
-                              onDismissed: (direction) async {
-                                switch (direction) {
-                                  case DismissDirection.endToStart:
-                                    addresses.removeAt(i);
-                                    await deleteAddress(context: context, index: i);
-                                    break;
-
-                                  case DismissDirection.startToEnd:
-                                    AddressModel am = addresses[i];
-                                    addresses.removeAt(i);
-                                    setState(() {});
-                                    await Navigator.of(context).push(CupertinoPageRoute(builder: (context) {
-                                      return EditAddressScreen(
-                                        addressModel: am,
-                                        addressIndex: i,
-                                      );
-                                    }));
-                                    setState(() {});
-                                    break;
-                                }
-                              },
-                              child: Card(
-                                child: ListTile(
-                                  title: addressWidget(addressModel: addresses[i]),
-                                  trailing: PopupMenuButton(
-                                    icon: Icon(Icons.more_vert),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
+                        addresses.length == 0
+                            ? Center(child: Text("No Address Added", style: TextStyle(color: Colors.grey)))
+                            : ListView.separated(
+                                separatorBuilder: (context, i) => Divider(),
+                                shrinkWrap: true,
+                                physics: ScrollPhysics(),
+                                itemBuilder: (context, i) {
+                                  return Dismissible(
+                                    key: UniqueKey(),
+                                    // dismissThresholds: {
+                                    //   DismissDirection.endToStart: -MediaQuery.of(context).size.width * 0.5,
+                                    //   DismissDirection.startToEnd: MediaQuery.of(context).size.width * 0.5,
+                                    // },
+                                    secondaryBackground: Container(
+                                      padding: EdgeInsets.all(15),
+                                      color: Colors.redAccent,
+                                      child: Text("Swipe left to Delete", style: TextStyle(color: Colors.white)),
+                                      alignment: Alignment.centerRight,
                                     ),
-                                    onSelected: (value) async {
-                                      switch (value) {
-                                        case 0:
-                                          Navigator.of(context).push(CupertinoPageRoute(builder: (context) {
+                                    // direction: DismissDirection.endToStart,
+                                    background: Container(
+                                      color: Colors.green,
+                                      child: Text("Swipe right to Edit", style: TextStyle(color: Colors.white)),
+                                      alignment: Alignment.centerLeft,
+                                    ),
+                                    movementDuration: Duration(seconds: 1),
+                                    onDismissed: (direction) async {
+                                      AddressModel am = addresses[i];
+
+                                      switch (direction) {
+                                        case DismissDirection.endToStart:
+                                          addresses.removeAt(i);
+                                          await deleteAddressWrapper(
+                                            phno: Provider.of<CustomerDetailsProvider>(context, listen: false)
+                                                .phoneNumber,
+                                            id: am.id,
+                                          );
+                                          break;
+
+                                        case DismissDirection.startToEnd:
+                                          AddressModel am = addresses[i];
+                                          addresses.removeAt(i);
+                                          setState(() {});
+                                          await Navigator.of(context).push(CupertinoPageRoute(builder: (context) {
                                             return EditAddressScreen(
-                                              addressModel: addresses[i],
+                                              addressModel: am,
                                               addressIndex: i,
                                             );
                                           }));
-                                          break;
-                                        case 1:
-                                          await deleteAddress(index: i, context: context);
+                                          setState(() {});
                                           break;
                                       }
                                     },
-                                    itemBuilder: (BuildContext context) {
-                                      return <PopupMenuItem>[
-                                        PopupMenuItem(
-                                          child: Text('Edit'),
-                                          value: 0,
+                                    child: Card(
+                                      child: ListTile(
+                                        title: addressWidget(addressModel: addresses[i]),
+                                        trailing: PopupMenuButton(
+                                          icon: Icon(Icons.more_vert),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          onSelected: (value) async {
+                                            switch (value) {
+                                              case 0:
+                                                Navigator.of(context).push(CupertinoPageRoute(builder: (context) {
+                                                  return EditAddressScreen(
+                                                    addressModel: addresses[i],
+                                                    addressIndex: i,
+                                                  );
+                                                }));
+                                                break;
+                                              case 1:
+                                                await deleteAddressWrapper(
+                                                  phno: Provider.of<CustomerDetailsProvider>(context, listen: false)
+                                                      .phoneNumber,
+                                                  id: addresses[i].id,
+                                                );
+                                                break;
+                                            }
+                                          },
+                                          itemBuilder: (BuildContext context) {
+                                            return <PopupMenuItem>[
+                                              PopupMenuItem(
+                                                child: Text('Edit'),
+                                                value: 0,
+                                              ),
+                                              PopupMenuItem(
+                                                child: Text('Delete'),
+                                                value: 1,
+                                              )
+                                            ];
+                                          },
                                         ),
-                                        PopupMenuItem(
-                                          child: Text('Delete'),
-                                          value: 1,
-                                        )
-                                      ];
-                                    },
-                                  ),
-                                ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                itemCount: snapshot.data.length,
                               ),
-                            );
-                          },
-                          itemCount: snapshot.data.length,
-                        ),
                       ],
                     );
                   } else

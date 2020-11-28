@@ -12,6 +12,7 @@ class AddAddressScreen extends StatefulWidget {
 }
 
 class _AddAddressScreenState extends State<AddAddressScreen> {
+  bool autoValid = false;
   TextEditingController name = TextEditingController();
   TextEditingController phone = TextEditingController();
   TextEditingController state = TextEditingController();
@@ -30,7 +31,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       padding: EdgeInsets.symmetric(horizontal: 15),
       margin: EdgeInsets.symmetric(vertical: 10),
       child: TextFormField(
-        autovalidate: true,
+        autovalidate: autoValid,
         controller: controller,
         decoration: InputDecoration(
           labelText: labelText + ' (Required)*',
@@ -80,10 +81,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       if (str.length < 1)
                         return 'Pls provide the necessary details';
                       else {
-                        if (str[0] != '9' &&
-                            str[0] != '8' &&
-                            str[0] != '7' &&
-                            str[0] != '6')
+                        if (str[0] != '9' && str[0] != '8' && str[0] != '7' && str[0] != '6')
                           return 'Enter valid Phone Number';
                         else if (str.length != 10)
                           return 'Enter 10digit Phone Number';
@@ -111,14 +109,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       )
                     ],
                   ),
-                  tff(
-                      controller: hno,
-                      labelText: 'House No./Building Name',
-                      validator: null),
-                  tff(
-                      controller: colony,
-                      labelText: 'Road Name/Area/Colony',
-                      validator: null),
+                  tff(controller: hno, labelText: 'House No./Building Name', validator: null),
+                  tff(controller: colony, labelText: 'Road Name/Area/Colony', validator: null),
                 ],
               ),
             ),
@@ -128,16 +120,21 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         bottomNavigationBar: BottomAppBar(
           child: Container(
             width: double.maxFinite,
-            height: MediaQuery.of(context).size.height * 0.07,
+            height: MediaQuery.of(context).size.height * 0.06,
             child: RaisedButton(
-                color: Colors.redAccent,
+                color: Colors.green,
                 child: Text(
                   "Save Address",
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 onPressed: () async {
                   if (_key.currentState.validate()) {
                     setState(() {
+                      autoValid = true;
                       loading = true;
                     });
                     AddressModel ad = AddressModel(
@@ -148,13 +145,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         city: city.text,
                         roadname: colony.text);
                     bool t = await addAddress(
-                        token: Provider.of<CustomerDetailsProvider>(context,
-                                listen: false)
-                            .token,
+                        token: Provider.of<CustomerDetailsProvider>(context, listen: false).token,
                         addressModel: ad,
-                        mobile: Provider.of<CustomerDetailsProvider>(context,
-                                listen: false)
-                            .phoneNumber);
+                        mobile: Provider.of<CustomerDetailsProvider>(context, listen: false).phoneNumber);
                     if (t)
                       Navigator.pop(context);
                     else
@@ -163,6 +156,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       setState(() {
                         loading = false;
                       });
+                  } else {
+                    autoValid = true;
                   }
                 }),
           ),
