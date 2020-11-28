@@ -20,9 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isEnabled = false;
 
   GlobalKey<FormState> _key = GlobalKey();
-  TextEditingController addController = TextEditingController();
   FocusNode nameNode = FocusNode();
-  FocusNode addNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,15 +31,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         elevation: 0,
         title: Text(
           "Welcome to new user, ${widget.phoneNumber}",
-          style: TextStyle(
-              color: Colors.white,
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.white, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           padding: EdgeInsets.only(bottom: 15),
           onPressed: () {
-            Navigator.pushReplacementNamed(context, "/home");
+            Navigator.pop(context);
+            // Navigator.pushReplacementNamed(context, "/home");
 //                context, MaterialPageRoute(builder: (context) => HomeScreen()), ModalRoute.withName(""));
           },
           icon: Icon(Icons.close),
@@ -82,12 +78,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     cursorColor: flipkartBlue,
                     // keyboardType: TextInputType,
                     textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (value) {
-                      FocusScope.of(context).requestFocus(addNode);
-                    },
+
 //                    style: labelStyle,
                     decoration: InputDecoration(
-                      hintText: "prayant",
+                      // hintText: "prayant",
                       labelText: "Name",
                       focusColor: flipkartBlue,
                       focusedBorder: fieldBorder,
@@ -100,52 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 //                        fillColor: Colors.white12
                     ),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-//                    autofocus: true,
-                    controller: addController,
-//                    onChanged: (String val) {
-//                      val = val.trim();
-//                      if (val == "")
-//                        setState(() {
-//                          isEnabled = false;
-//                        });
-//                      else
-//                        setState(() {
-//                          isEnabled = true;
-//                        });
-//                    },
-//                    validator: (String val) {
-//                      val = val.trim();
-//                      if (val == "") return "Enter address";
-//                    },
-                    showCursor: true,
-                    keyboardAppearance: Brightness.light,
-                    cursorColor: flipkartBlue,
-                    textInputAction: TextInputAction.done,
-                    onFieldSubmitted: (value) {
-                      FocusScope.of(context).unfocus();
-                    },
-                    // keyboardType: TextInputType.streetAddress,
-                    decoration: InputDecoration(
-                      hintText: "Abc, India",
-                      labelText: "Address",
-                      focusColor: flipkartBlue,
-                      focusedBorder: fieldBorder,
-                      border: fieldBorder,
-                      enabledBorder: fieldBorder,
-                      errorBorder: errorBorder,
-                      errorStyle: TextStyle(color: Colors.redAccent),
-                      filled: true,
-                      fillColor: Colors.transparent,
-                    ),
-                    focusNode: addNode,
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
+
 //                  InkWell(
 //                    onTap: () {
 ////                      Navigator.pushAndRemoveUntil(
@@ -181,13 +130,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     bool addUserStatus = await addUser(
                       Name: nameController.text,
                       PhNo: widget.phoneNumber,
-                      Addrees: addController.text,
                       context: context,
                     );
                     if (addUserStatus) {
                       if (widget.stored) {
                         int count = 0;
-                        Navigator.of(context).popUntil((_) => count++ >= 2);
+                        Navigator.pop(context);
+                        // Navigator.of(context).popUntil((_) => count++ >= 2);
                       } else
                         Navigator.pushAndRemoveUntil(
                             context,
@@ -210,7 +159,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Center(
               child: Text(
                 "Sign Up",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
           ),

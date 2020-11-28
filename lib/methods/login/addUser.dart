@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 Future<bool> addUser({
   @required String Name,
   @required String PhNo,
-  @required String Addrees,
   @required BuildContext context,
 }) async {
   Map<String, dynamic> body = UserModel(customerName: Name, customerMobile: PhNo).toMap();
