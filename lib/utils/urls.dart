@@ -35,5 +35,5 @@ String SIGNUP_URL = BASE_URL + 'store/users/addUser';
 
 String ADD_ADDRESS_URL = BASE_URL + 'store/users/addUser/address';
 String GET_ADDRESS_URL = BASE_URL + 'store/users/getAddress/';
-String EDIT_ADDRESS_URL = BASE_URL + '';
+String EDIT_ADDRESS_URL = BASE_URL + 'store/users/updateAddress/';
 String DELETE_ADDRESS_URL = BASE_URL + 'store/users/deleteAddress/';

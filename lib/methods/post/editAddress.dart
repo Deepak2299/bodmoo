@@ -17,16 +17,16 @@ Future<bool> editAddress({
     "mobile": mobile,
     "address": addressModel.toMap(),
   };
-
-  // var req = await http.post(
-  //   EDIT_ADDRESS_URL,
-  //   headers: {'Content-type': 'application/json', 'x-auth-token': token},
-  //   body: jsonEncode(body),
-  // );
-  // print(req.body);
-  // if (req.statusCode == 200) {
-  return true;
-  //   //TODO: DECODE USER MODEL
-  // } else
-  //   return false;
+  print(EDIT_ADDRESS_URL + addressModel.id);
+  var req = await http.post(
+    EDIT_ADDRESS_URL + addressModel.id,
+    headers: {'Content-type': 'application/json', 'x-auth-token': token},
+    body: jsonEncode(body),
+  );
+  print(req.body);
+  if (req.statusCode == 200) {
+    return true;
+    //TODO: DECODE USER MODEL
+  } else
+    return false;
 }

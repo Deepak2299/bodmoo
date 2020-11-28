@@ -97,10 +97,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                       if (str.length < 1)
                         return 'Pls provide the necessary details';
                       else {
-                        if (str[0] != '9' &&
-                            str[0] != '8' &&
-                            str[0] != '7' &&
-                            str[0] != '6')
+                        if (str[0] != '9' && str[0] != '8' && str[0] != '7' && str[0] != '6')
                           return 'Enter valid Phone Number';
                         else if (str.length != 10)
                           return 'Enter 10digit Phone Number';
@@ -128,14 +125,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                       )
                     ],
                   ),
-                  tff(
-                      controller: hno,
-                      labelText: 'House No./Building Name',
-                      validator: null),
-                  tff(
-                      controller: colony,
-                      labelText: 'Road Name/Area/Colony',
-                      validator: null),
+                  tff(controller: hno, labelText: 'House No./Building Name', validator: null),
+                  tff(controller: colony, labelText: 'Road Name/Area/Colony', validator: null),
                 ],
               ),
             ),
@@ -162,21 +153,18 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                       loading = true;
                     });
                     AddressModel ad = AddressModel(
-                      customerName: name.text,
-                      customerMobile: phone.text,
-                      houseno: hno.text,
-                      state: state.text,
-                      city: city.text,
-                      roadname: colony.text,
-                    );
+                        id: widget.addressModel.id,
+                        customerName: name.text,
+                        customerMobile: phone.text,
+                        houseno: hno.text,
+                        state: state.text,
+                        city: city.text,
+                        roadname: colony.text,
+                        pincode: '121003');
                     bool t = await editAddress(
-                      token: Provider.of<CustomerDetailsProvider>(context,
-                              listen: false)
-                          .token,
+                      token: Provider.of<CustomerDetailsProvider>(context, listen: false).token,
                       addressModel: ad,
-                      mobile: Provider.of<CustomerDetailsProvider>(context,
-                              listen: false)
-                          .phoneNumber,
+                      mobile: Provider.of<CustomerDetailsProvider>(context, listen: false).phoneNumber,
                       addressIndex: widget.addressIndex,
                     );
                     if (t)

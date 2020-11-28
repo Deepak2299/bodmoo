@@ -55,7 +55,7 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                       title: Text("Add Address"),
                       onTap: () async {
                         await Navigator.push(context, CupertinoPageRoute(builder: (context) => AddAddressScreen()));
-                        // setState(() {});
+                        setState(() {});
                       },
                     ),
                   ),
