@@ -9,8 +9,7 @@ import 'package:provider/provider.dart';
 
 Future<List<dynamic>> getBrands() async {
   List<dynamic> brands = [];
-  var req = await http
-      .get(GET_BRANDS_URL, headers: {'Content-type': 'application/json'});
+  var req = await http.get(GET_BRANDS_URL, headers: {'Content-type': 'application/json'});
   // if (req.statusCode == 200) brands = jsonDecode(req.body)['output'];
   if (req.statusCode != 200) {
 //    ScreenErrorData.brandError = jsonDecode(req.body)['message'];
