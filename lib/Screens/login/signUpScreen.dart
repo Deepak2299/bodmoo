@@ -18,6 +18,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController nameController = new TextEditingController();
   bool isEnabled = false;
+  bool loading = false;
 
   GlobalKey<FormState> _key = GlobalKey();
   FocusNode nameNode = FocusNode();
@@ -31,7 +32,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         elevation: 0,
         title: Text(
           "Welcome to new user, ${widget.phoneNumber}",
-          style: TextStyle(color: Colors.white, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Colors.white,
+              fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           padding: EdgeInsets.only(bottom: 15),
@@ -43,57 +47,59 @@ class _SignUpScreenState extends State<SignUpScreen> {
           icon: Icon(Icons.close),
         ),
       ),
-      body: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Form(
-              key: _key,
-              child: ListView(
-                shrinkWrap: true,
-                children: <Widget>[
-                  SizedBox(
-                    height: 50,
-                  ),
-                  TextFormField(
-                    autofocus: true,
-                    controller: nameController,
-                    focusNode: nameNode,
-                    validator: (String code) {
-                      code = code.trim();
-                      if (code == "") return "Enter your name";
-                      return null;
-                    },
-                    onChanged: (String val) {
-                      val = val.trim();
-                      if (val == "")
-                        setState(() {
-                          isEnabled = false;
-                        });
-                      else
-                        setState(() {
-                          isEnabled = true;
-                        });
-                    },
-                    cursorColor: flipkartBlue,
-                    // keyboardType: TextInputType,
-                    textInputAction: TextInputAction.next,
+      body: Stack(
+        children: [
+          Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Form(
+                  key: _key,
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 50,
+                      ),
+                      TextFormField(
+                        autofocus: true,
+                        controller: nameController,
+                        focusNode: nameNode,
+                        validator: (String code) {
+                          code = code.trim();
+                          if (code == "") return "Enter your name";
+                          return null;
+                        },
+                        onChanged: (String val) {
+                          val = val.trim();
+                          if (val == "")
+                            setState(() {
+                              isEnabled = false;
+                            });
+                          else
+                            setState(() {
+                              isEnabled = true;
+                            });
+                        },
+                        cursorColor: flipkartBlue,
+                        // keyboardType: TextInputType,
+                        textInputAction: TextInputAction.next,
 
 //                    style: labelStyle,
-                    decoration: InputDecoration(
-                      // hintText: "prayant",
-                      labelText: "Name",
-                      focusColor: flipkartBlue,
-                      focusedBorder: fieldBorder,
-                      border: fieldBorder,
-                      enabledBorder: fieldBorder,
-                      errorBorder: errorBorder,
-                      errorStyle: TextStyle(color: Colors.redAccent),
-                      filled: true,
-                      fillColor: Colors.transparent,
+                        decoration: InputDecoration(
+                          // hintText: "prayant",
+                          labelText: "Name",
+                          focusColor: flipkartBlue,
+                          focusedBorder: fieldBorder,
+                          border: fieldBorder,
+                          enabledBorder: fieldBorder,
+                          errorBorder: errorBorder,
+                          errorStyle: TextStyle(color: Colors.redAccent),
+                          filled: true,
+                          fillColor: Colors.transparent,
 //                        fillColor: Colors.white12
-                    ),
-                  ),
+                        ),
+                      ),
 
 //                  InkWell(
 //                    onTap: () {
@@ -114,10 +120,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
 //                      ),
 //                    ),
 //                  )
-                ],
+                    ],
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
+          loading ? LoadingWidget(msg: 'Signing Up') : Container()
         ],
       ),
       bottomNavigationBar: BottomAppBar(
@@ -127,11 +136,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
               : () async {
                   FocusScope.of(context).unfocus();
                   if (_key.currentState.validate()) {
+                    setState(() {
+                      loading = true;
+                    });
                     bool addUserStatus = await addUser(
                       Name: nameController.text,
                       PhNo: widget.phoneNumber,
                       context: context,
                     );
+                    await Future.delayed(Duration(seconds: 1), () {});
+                    setState(() {
+                      loading = false;
+                    });
                     if (addUserStatus) {
                       if (widget.stored) {
                         int count = 0;
@@ -159,7 +175,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Center(
               child: Text(
                 "Sign Up",
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
           ),
