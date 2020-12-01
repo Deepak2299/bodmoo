@@ -1,3 +1,4 @@
+import 'package:bodmoo/Screens/Payment/paymentScreen.dart';
 import 'package:bodmoo/Screens/drawer/myAddresses/addAddressScreen.dart';
 import 'package:bodmoo/Screens/drawer/myAddresses/editAddressScreen.dart';
 import 'package:bodmoo/Screens/drawer/myOrders/1ordersListScreen.dart';
@@ -112,29 +113,36 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
           child: RaisedButton(
               color: Colors.green,
               child: Center(
-                  child: Text('Confirm Order',
+                  child: Text('Checkout',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ))),
               onPressed: () async {
-                bool b = await prepareOrder(
-                  address: addresses[Provider.of<CustomerDetailsProvider>(context, listen: false).addressIndex],
-                  context: context,
-                );
-//                    bool b = true;
-                if (b) {
-                  // TODO:SHOW ORDER PLACED SUCCEFULLY
-                  widget.cartOrder ? Provider.of<CartProvider>(context, listen: false).clearCart() : null;
-                  Navigator.pushReplacement(
+                Navigator.push(
                     context,
-                    CupertinoPageRoute(builder: (context) => OrderListScreen()),
-                    // ModalRoute.withName('/parts'),
-                  );
-                } else {
-                  showToast(msg: 'Error in Order');
-                }
+                    CupertinoPageRoute(
+                        builder: (context) => PaymentScreen(
+                              paymentAmount: 25451.0,
+                            )));
+
+//                 bool b = await prepareOrder(
+//                   address: addresses[Provider.of<CustomerDetailsProvider>(context, listen: false).addressIndex],
+//                   context: context,
+//                 );
+// //                    bool b = true;
+//                 if (b) {
+//                   // TODO:SHOW ORDER PLACED SUCCEFULLY
+//                   widget.cartOrder ? Provider.of<CartProvider>(context, listen: false).clearCart() : null;
+//                   Navigator.pushReplacement(
+//                     context,
+//                     CupertinoPageRoute(builder: (context) => OrderListScreen()),
+//                     // ModalRoute.withName('/parts'),
+//                   );
+//                 } else {
+//                   showToast(msg: 'Error in Order');
+//                 }
               }
               // : showToast(msg: 'Choose Delivery address'),
               ),
