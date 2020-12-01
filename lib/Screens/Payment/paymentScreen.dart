@@ -48,7 +48,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Paume"),
+          title: Text("Payment"),
         ),
       ),
     );
