@@ -1,6 +1,8 @@
+import 'package:bodmoo/Screens/GoogleSignIn/googleSignInScreen.dart';
 import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,18 +16,19 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
 
-    Future.delayed(Duration(seconds: 1), () async {
+    Future.delayed(Duration(seconds: 2), () async {
       bool b = await checkPrefsForLogin(context: context);
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               fullscreenDialog: true,
               builder: (context) {
-                // if (b) {
+                if (b) {
+                  return HomeScreen();
+                } else
+                  return GoogleScreen();
 
-                return HomeScreen();
-                // } else
-                //   return SignInWithPhoneNO();
+                // return SignInWithPhoneNO();
               }));
     });
   }
@@ -34,7 +37,22 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(child: Text("Loading")),
+        body: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image.asset(
+              'assets/logo.png',
+            ),
+            Text(
+              "Welcome",
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+            Text("Now, spare parts at your door"),
+            SizedBox(height: 20),
+            CircularProgressIndicator(),
+          ],
+        ),
       ),
     );
   }

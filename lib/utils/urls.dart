@@ -1,6 +1,6 @@
 String BASE_URL = 'https://apicarparts.herokuapp.com/api/';
 
-// String IMAGE = 'assets/logo.png';
+// String IMAGE = 'assets/cycle.png';
 String IMAGE = 'assets/bike.png';
 
 //CATEGORY URL

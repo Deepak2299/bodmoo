@@ -28,8 +28,14 @@ dependencies:
   firebase_analytics: ^5.0.15
   firebase_auth: ^0.16.1
   firebase_core: ^0.4.5
-#  payment
+  cloud_firestore:
+  url_launcher:
+
+
+  #  payment
   razorpay_flutter: 1.1.0
+  material_design_icons_flutter: ^4.0.5755
+
 
 
 dev_dependencies:
@@ -49,3 +55,8 @@ flutter:
 
   assets:
     - assets/
+
+  fonts:
+    - family: Sans
+      fonts:
+        - asset: assets/OpenSans-Regular.ttf

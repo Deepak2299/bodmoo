@@ -36,11 +36,8 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
         centerTitle: true,
         elevation: 0,
         title: Text(
-          "Bodmoo",
-          style: TextStyle(
-              color: Colors.white,
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.bold),
+          "Spare Parts",
+          style: TextStyle(color: Colors.white, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           padding: EdgeInsets.only(bottom: 15),
@@ -68,11 +65,8 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
                     children: <Widget>[
                       Text(
                         "Log in to get started",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            wordSpacing: 1.5),
+                        style:
+                            TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500, wordSpacing: 1.5),
                       ),
                       SizedBox(
                         height: 15,
@@ -80,10 +74,7 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
                       Text(
                         "Experience the all new Bodmoo!",
                         style: TextStyle(
-                            color: Color(0xff888888),
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            wordSpacing: 1.5),
+                            color: Color(0xff888888), fontSize: 12, fontWeight: FontWeight.w500, wordSpacing: 1.5),
                       ),
                       SizedBox(
                         height: 20,
@@ -126,8 +117,7 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
                         },
                         validator: (String val) {
                           val = val.trim();
-                          if (val.length > 10 || val.length < 10)
-                            return "Invalid mobile number";
+                          if (val.length > 10 || val.length < 10) return "Invalid mobile number";
                           return null;
                         },
                         showCursor: true,
@@ -171,9 +161,7 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
                       loading = true;
                     });
                     await sendCodeToPhoneNumber(
-                        phonenumber: phoneController.text,
-                        context: context,
-                        stored: widget.stored);
+                        phonenumber: phoneController.text, context: context, stored: widget.stored);
                     await Future.delayed(Duration(seconds: 1), () {});
                     setState(() {
                       loading = false;
@@ -187,10 +175,7 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
             child: Center(
               child: Text(
                 "Send OTP",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 16),
               ),
             ),
           ),
