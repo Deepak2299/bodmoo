@@ -1,3 +1,4 @@
+import 'package:bodmoo/Screens/Payment/paymentMethod.dart';
 import 'package:bodmoo/Screens/Payment/paymentScreen.dart';
 import 'package:bodmoo/Screens/drawer/myAddresses/addAddressScreen.dart';
 import 'package:bodmoo/Screens/drawer/myAddresses/editAddressScreen.dart';
@@ -16,6 +17,7 @@ import 'package:bodmoo/widgets/toastWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class ChooseAddressScreen extends StatefulWidget {
   bool cartOrder = false;
@@ -41,8 +43,11 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
       ),
       body: FutureBuilder(
           future: getAddress(
-              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false).phoneNumber,
-              token: Provider.of<CustomerDetailsProvider>(context, listen: false).token),
+              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false)
+                  .phoneNumber,
+              token:
+                  Provider.of<CustomerDetailsProvider>(context, listen: false)
+                      .token),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               addresses = snapshot.data;
@@ -55,7 +60,10 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                       leading: Icon(Icons.add),
                       title: Text("Add Address"),
                       onTap: () async {
-                        await Navigator.push(context, CupertinoPageRoute(builder: (context) => AddAddressScreen()));
+                        await Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => AddAddressScreen()));
                         setState(() {});
                       },
                     ),
@@ -72,8 +80,15 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                         child: RadioListTile(
                           value: i,
                           // groupValue: Provider.of<CustomerDetailsProvider>(context).deliveryAddress,
-                          groupValue: Provider.of<CustomerDetailsProvider>(context, listen: true).addressIndex,
-                          secondary: Provider.of<CustomerDetailsProvider>(context, listen: true).addressIndex == i
+                          groupValue: Provider.of<CustomerDetailsProvider>(
+                                  context,
+                                  listen: true)
+                              .addressIndex,
+                          secondary: Provider.of<CustomerDetailsProvider>(
+                                          context,
+                                          listen: true)
+                                      .addressIndex ==
+                                  i
                               ? EditAddressButton(
                                   i: i,
                                   addressModel: addresses[i],
@@ -91,7 +106,9 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                             ],
                           ),
                           onChanged: (int value) {
-                            Provider.of<CustomerDetailsProvider>(context, listen: false).setAddressINdex(value);
+                            Provider.of<CustomerDetailsProvider>(context,
+                                    listen: false)
+                                .setAddressINdex(value);
                             // setState(() {});
                             // addressIndex = value;
                           },
@@ -120,29 +137,42 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                         fontWeight: FontWeight.bold,
                       ))),
               onPressed: () async {
-                Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                        builder: (context) => PaymentScreen(
-                              paymentAmount: 25451.0,
-                            )));
+//                Navigator.push(
+//                    context,
+//                    CupertinoPageRoute(
+//                        builder: (context) => PaymentScreen(
+//                              paymentAmount: 25451.0,
+//                            )));
+                Razorpay _razorpay = Razorpay();
+                pay(amount: 25451);
+                _razorpay.on(
+                    Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+                _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+                _razorpay.on(
+                    Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
 
-//                 bool b = await prepareOrder(
-//                   address: addresses[Provider.of<CustomerDetailsProvider>(context, listen: false).addressIndex],
-//                   context: context,
-//                 );
-// //                    bool b = true;
-//                 if (b) {
-//                   // TODO:SHOW ORDER PLACED SUCCEFULLY
-//                   widget.cartOrder ? Provider.of<CartProvider>(context, listen: false).clearCart() : null;
-//                   Navigator.pushReplacement(
-//                     context,
-//                     CupertinoPageRoute(builder: (context) => OrderListScreen()),
-//                     // ModalRoute.withName('/parts'),
-//                   );
-//                 } else {
-//                   showToast(msg: 'Error in Order');
-//                 }
+                bool b = await prepareOrder(
+                  address: addresses[Provider.of<CustomerDetailsProvider>(
+                          context,
+                          listen: false)
+                      .addressIndex],
+                  context: context,
+                );
+                //                    bool b = true;
+                if (b) {
+                  // TODO:SHOW ORDER PLACED SUCCEFULLY
+                  widget.cartOrder
+                      ? Provider.of<CartProvider>(context, listen: false)
+                          .clearCart()
+                      : null;
+                  Navigator.pushReplacement(
+                    context,
+                    CupertinoPageRoute(builder: (context) => OrderListScreen()),
+                    // ModalRoute.withName('/parts'),
+                  );
+                } else {
+                  showToast(msg: 'Error in Order');
+                }
               }
               // : showToast(msg: 'Choose Delivery address'),
               ),
@@ -157,4 +187,51 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
   //   super.didChangeDependencies();
   //   savePrefsForCarts(context: context);
   // }
+
+//  @override
+//  void initState() {
+//    // TODO: implement initState
+//    super.initState();
+//
+//  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    // Do something when payment succeeds
+    bool b = await prepareOrder(
+      address: addresses[
+          Provider.of<CustomerDetailsProvider>(context, listen: false)
+              .addressIndex],
+      context: context,
+    );
+    //                    bool b = true;
+    if (b) {
+      // TODO:SHOW ORDER PLACED SUCCEFULLY
+      widget.cartOrder
+          ? Provider.of<CartProvider>(context, listen: false).clearCart()
+          : null;
+      Navigator.pushReplacement(
+        context,
+        CupertinoPageRoute(builder: (context) => OrderListScreen()),
+        // ModalRoute.withName('/parts'),
+      );
+    } else {
+      showToast(msg: 'Error in Order');
+    }
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Do something when payment fails
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet is selected
+  }
+
+//  @override
+//  void dispose() {
+//    // TODO: implement dispose
+//    _razorpay.clear(); // Removes all listeners
+//
+//    super.dispose();
+//  }
 }

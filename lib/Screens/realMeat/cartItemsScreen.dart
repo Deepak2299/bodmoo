@@ -126,11 +126,15 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                               Flexible(
                                   child: Row(
                                 children: [
-                                  Text("Total Price: Rs. " +
-                                      (double.parse(itemModel.partPrice) *
-                                              itemModel.orderQty)
-                                          .toString()),
-                                  Spacer(),
+                                  Expanded(
+                                    child: Text(
+                                      "Total Price: Rs. " +
+                                          (double.parse(itemModel.partPrice) *
+                                                  itemModel.orderQty)
+                                              .toString(),
+                                    ),
+                                  ),
+//                                  Spacer(),
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: Row(
