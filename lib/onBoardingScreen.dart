@@ -1,4 +1,5 @@
 import 'package:bodmoo/Screens/GoogleSignIn/googleSignInScreen.dart';
+import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -50,7 +51,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   alignment: Alignment.centerRight,
                   child: FlatButton(
                     onPressed: () =>
-                        Navigator.push(context, new MaterialPageRoute(builder: (context) => new GoogleScreen())),
+                        Navigator.push(context, new MaterialPageRoute(builder: (context) => new HomeScreen())),
                     child: Text(
                       'Skip',
                       style: TextStyle(
@@ -266,6 +267,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _getStartedTapped() {
-    Navigator.push(context, new MaterialPageRoute(builder: (context) => new GoogleScreen()));
+    Navigator.push(context, new MaterialPageRoute(builder: (context) => new HomeScreen()));
   }
 }

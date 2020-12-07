@@ -25,7 +25,8 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class ChooseAddressScreen extends StatefulWidget {
   bool cartOrder = false;
-  ChooseAddressScreen({@required this.cartOrder});
+  double amount;
+  ChooseAddressScreen({@required this.cartOrder, @required this.amount});
   @override
   _ChooseAddressScreenState createState() => _ChooseAddressScreenState();
 }
@@ -54,12 +55,8 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
         children: [
           FutureBuilder(
               future: getAddress(
-                  PhNo: Provider.of<CustomerDetailsProvider>(context,
-                          listen: false)
-                      .phoneNumber,
-                  token: Provider.of<CustomerDetailsProvider>(context,
-                          listen: false)
-                      .token),
+                  PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false).phoneNumber,
+                  token: Provider.of<CustomerDetailsProvider>(context, listen: false).token),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   addresses = snapshot.data;
@@ -72,10 +69,7 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                           leading: Icon(Icons.add),
                           title: Text("Add Address"),
                           onTap: () async {
-                            await Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                    builder: (context) => AddAddressScreen()));
+                            await Navigator.push(context, CupertinoPageRoute(builder: (context) => AddAddressScreen()));
                             setState(() {});
                           },
                         ),
@@ -92,15 +86,8 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                             child: RadioListTile(
                               value: i,
                               // groupValue: Provider.of<CustomerDetailsProvider>(context).deliveryAddress,
-                              groupValue: Provider.of<CustomerDetailsProvider>(
-                                      context,
-                                      listen: true)
-                                  .addressIndex,
-                              secondary: Provider.of<CustomerDetailsProvider>(
-                                              context,
-                                              listen: true)
-                                          .addressIndex ==
-                                      i
+                              groupValue: Provider.of<CustomerDetailsProvider>(context, listen: true).addressIndex,
+                              secondary: Provider.of<CustomerDetailsProvider>(context, listen: true).addressIndex == i
                                   ? EditAddressButton(
                                       i: i,
                                       addressModel: addresses[i],
@@ -112,16 +99,13 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   SizedBox(height: 10),
-                                  Text(prepareAddress(
-                                      addressModel: addresses[i])),
+                                  Text(prepareAddress(addressModel: addresses[i])),
                                   SizedBox(height: 10),
                                   Text(addresses[i].customerMobile),
                                 ],
                               ),
                               onChanged: (int value) {
-                                Provider.of<CustomerDetailsProvider>(context,
-                                        listen: false)
-                                    .setAddressINdex(value);
+                                Provider.of<CustomerDetailsProvider>(context, listen: false).setAddressINdex(value);
                                 // setState(() {});
                                 // addressIndex = value;
                               },
@@ -156,7 +140,8 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ))),
-              onPressed: () async {
+              onPressed: Provider.of<CustomerDetailsProvider>(context).addressIndex != -1
+                  ? () async {
 //                Navigator.push(
 //                    context,
 //                    CupertinoPageRoute(
@@ -166,12 +151,12 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
 //                Razorpay _razorpay = Razorpay();
 //                Provider.of<ScreenProvider>(context, listen: false)
 //                    .setOrderLorder(true);
-                pay(
-                    amount: Provider.of<CartProvider>(context, listen: false)
-                            .getTotalPriceOfCart() *
-                        100,
-                    razorpay: _razorpay);
-              }
+                      print(Provider.of<CartProvider>(context, listen: false).getTotalPriceOfCart() * 100);
+                      pay(
+                          amount: Provider.of<CartProvider>(context, listen: false).getTotalPriceOfCart() * 100,
+                          razorpay: _razorpay);
+                    }
+                  : null
               // : showToast(msg: 'Choose Delivery address'),
               ),
         ),
@@ -184,18 +169,14 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
     Provider.of<ScreenProvider>(context, listen: false).setOrderLorder(true);
 
     bool b = await prepareOrder(
-      address: addresses[
-          Provider.of<CustomerDetailsProvider>(context, listen: false)
-              .addressIndex],
+      address: addresses[Provider.of<CustomerDetailsProvider>(context, listen: false).addressIndex],
       context: context,
     );
 //    bool b = true;
     Provider.of<ScreenProvider>(context, listen: false).setOrderLorder(false);
     if (b) {
       // TODO:SHOW ORDER PLACED SUCCEFULLY
-      widget.cartOrder
-          ? Provider.of<CartProvider>(context, listen: false).clearCart()
-          : null;
+      widget.cartOrder ? Provider.of<CartProvider>(context, listen: false).clearCart() : null;
       Navigator.pushReplacement(
         context,
         CupertinoPageRoute(builder: (context) => OrderListScreen()),
@@ -218,7 +199,7 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
   void _handlePaymentError(PaymentFailureResponse response) {
     // Do something when payment fails
     Fluttertoast.showToast(
-        msg: response.code.toString(),
+        msg: response.message,
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,

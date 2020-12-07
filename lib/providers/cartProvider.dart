@@ -8,10 +8,10 @@ class CartProvider extends ChangeNotifier {
   List<OrderItemModel> cartItems = [];
   List<OrderItemModel> get getCartItems => cartItems;
 
-  addOrder({@required List<OrderItemModel> orderItems}) {
-    items = orderItems;
-    notifyListeners();
-  }
+  // addOrder({@required List<OrderItemModel> orderItems}) {
+  //   items = orderItems;
+  //   notifyListeners();
+  // }
 
   int get cartItemsLength => cartItems.length;
   void itemAdd(OrderItemModel itemOrderModel) async {

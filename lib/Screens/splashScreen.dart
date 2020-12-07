@@ -1,6 +1,7 @@
 import 'package:bodmoo/Screens/GoogleSignIn/googleSignInScreen.dart';
 import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
+import 'package:bodmoo/onBoardingScreen.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 if (b) {
                   return HomeScreen();
                 } else
-                  return GoogleScreen();
-
+                  return OnboardingScreen();
                 // return SignInWithPhoneNO();
               }));
     });
