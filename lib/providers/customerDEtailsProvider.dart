@@ -13,6 +13,7 @@ class CustomerDetailsProvider extends ChangeNotifier {
   String customerName;
   String token;
   int addressIndex = -1;
+
   List<OrderItemModel> items;
   setAddressINdex(int i) {
     addressIndex = i;

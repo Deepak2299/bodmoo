@@ -12,11 +12,13 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   Razorpay _razorpay = Razorpay();
+  bool check = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    Razorpay _razorpay = Razorpay();
     pay(amount: widget.paymentAmount);
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
@@ -24,6 +26,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    setState(() {
+      check = true;
+    });
+
     // Do something when payment succeeds
   }
 
@@ -45,10 +51,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(check);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Payment"),
+          title: Text(!check ? "Payment" : "order"),
         ),
       ),
     );
