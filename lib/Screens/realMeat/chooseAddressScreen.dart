@@ -171,7 +171,6 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                             .getTotalPriceOfCart() *
                         100,
                     razorpay: _razorpay);
-
               }
               // : showToast(msg: 'Choose Delivery address'),
               ),
@@ -179,8 +178,6 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
       ),
     );
   }
-
-
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
 //    showToast(msg: 'Error in Order');
