@@ -50,19 +50,21 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
       child: Scaffold(
         body: Stack(
           children: <Widget>[
-            ListView.builder(
-                itemCount: widget.items.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    child: Container(
-                      child: Column(
-                        children: <Widget>[
-                          Text(widget.items[index].partName),
-                        ],
-                      ),
-                    ),
-                  );
-                }),
+            Text(widget.items[0].partName),
+            // ListView.builder(
+            //     shrinkWrap: true,
+            //     itemCount: widget.items.length,
+            //     itemBuilder: (context, index) {
+            //       return Card(
+            //         child: Container(
+            //           child: Column(
+            //             children: <Widget>[
+            //               Text(widget.items[index].partName),
+            //             ],
+            //           ),
+            //         ),
+            //       );
+            //     }),
             Provider.of<ScreenProvider>(context, listen: true).orderLoader
                 ? LoadingWidget(
                     msg: 'Ordering...',
@@ -98,9 +100,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
     Provider.of<ScreenProvider>(context, listen: false).setOrderLoader(false);
     if (b) {
       // TODO:SHOW ORDER PLACED SUCCEFULLY
-      widget.cartOrder
-          ? Provider.of<CartProvider>(context, listen: false).clearCart()
-          : null;
+      widget.cartOrder ? Provider.of<CartProvider>(context, listen: false).clearCart() : null;
       Navigator.pushReplacement(
         context,
         CupertinoPageRoute(builder: (context) => OrderListScreen()),
@@ -111,8 +111,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
         context: context,
         child: CupertinoAlertDialog(
           title: Text("Error"),
-          content: Text(
-              "Some error occurred while placing the order. Contact dealer for refund."),
+          content: Text("Some error occurred while placing the order. Contact dealer for refund."),
         ),
       );
     }

@@ -267,6 +267,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _getStartedTapped() {
-    Navigator.push(context, new MaterialPageRoute(builder: (context) => new HomeScreen()));
+    Navigator.push(context, new MaterialPageRoute(builder: (context) => new GoogleScreen()));
   }
 }

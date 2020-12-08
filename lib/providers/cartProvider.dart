@@ -3,19 +3,10 @@ import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:flutter/material.dart';
 
 class CartProvider extends ChangeNotifier {
-  List<OrderItemModel> items;
+  // List<OrderItemModel> items;
 
   List<OrderItemModel> cartItems = [];
   List<OrderItemModel> get getCartItems => cartItems;
-
-  // addOrder({@required List<OrderItemModel> orderItems}) {
-  //   items = orderItems;
-  //   notifyListeners();
-  // }
-  addOrderItems({@required List<OrderItemModel> orderItems}) {
-    cartItems = orderItems;
-    notifyListeners();
-  }
 
   int get cartItemsLength => cartItems.length;
   void itemAdd(OrderItemModel itemOrderModel) async {

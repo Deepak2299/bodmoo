@@ -166,7 +166,13 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
 
                           if (Provider.of<CustomerDetailsProvider>(context, listen: false).token != null) {
                             Provider.of<CustomerDetailsProvider>(context, listen: false)
-                                .addOrderItems(orderItems: item);
+                                .addOrderItems(orderItemsList: item);
+                            print("sndns" +
+                                Provider.of<CustomerDetailsProvider>(context, listen: false)
+                                    .orderItems
+                                    .length
+                                    .toString());
+
                             //TODO:SHOW ORDER PLACED SUCCEFULLY
                             Navigator.push(
                                 context,

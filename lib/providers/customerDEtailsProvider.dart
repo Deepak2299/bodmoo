@@ -14,7 +14,7 @@ class CustomerDetailsProvider extends ChangeNotifier {
   String token;
   int addressIndex = -1;
 
-  List<OrderItemModel> orderItems;
+  List<OrderItemModel> orderItems = [];
   setAddressINdex(int i) {
     addressIndex = i;
     notifyListeners();
@@ -28,8 +28,9 @@ class CustomerDetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  addOrderItems({@required List<OrderItemModel> orderItems}) {
-    orderItems = orderItems;
+  addOrderItems({@required List<OrderItemModel> orderItemsList}) {
+    for (int i = 0; i < orderItemsList.length; i++) orderItems.add(orderItemsList[i]);
+    // orderItemsList = orderItemsList;
     notifyListeners();
   }
 

@@ -172,11 +172,13 @@ class _GoogleScreenState extends State<GoogleScreen> {
                                           customerMobile: null,
                                           customerName: email.split('@')[0],
                                         ));
-                                        Navigator.pushReplacement(
-                                            context,
-                                            CupertinoPageRoute(
-                                              builder: (context) => HomeScreen(),
-                                            ));
+                                        Navigator.pushAndRemoveUntil(
+                                          context,
+                                          CupertinoPageRoute(
+                                            builder: (context) => HomeScreen(),
+                                          ),
+                                          (route) => false,
+                                        );
                                       } else {
                                         showDialog(
                                             context: context,
