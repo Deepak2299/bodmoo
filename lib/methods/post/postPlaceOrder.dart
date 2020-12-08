@@ -1,4 +1,5 @@
 import 'package:bodmoo/models/orderModel.dart';
+import 'package:bodmoo/providers/cartProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/urls.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,6 +20,10 @@ Future<bool> postPlaceOrder(
   if (req.statusCode == 200) {
     //TODO: show MESSAGE
     print("success");
+    Provider.of<CartProvider>(context, listen: false).clearCart();
+    savePrefsForCarts(
+        orderItems:
+            Provider.of<CartProvider>(context, listen: false).cartItems);
     return true;
   } else
     return false;

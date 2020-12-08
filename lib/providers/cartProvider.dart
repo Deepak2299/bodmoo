@@ -12,6 +12,10 @@ class CartProvider extends ChangeNotifier {
   //   items = orderItems;
   //   notifyListeners();
   // }
+  addOrderItems({@required List<OrderItemModel> orderItems}) {
+    cartItems = orderItems;
+    notifyListeners();
+  }
 
   int get cartItemsLength => cartItems.length;
   void itemAdd(OrderItemModel itemOrderModel) async {

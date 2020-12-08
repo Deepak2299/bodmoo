@@ -2,6 +2,7 @@ import 'package:bodmoo/methods/post/postPlaceOrder.dart';
 import 'package:bodmoo/models/addressModel.dart';
 import 'package:bodmoo/models/orderModel.dart';
 import 'package:bodmoo/models/userModel.dart';
+import 'package:bodmoo/providers/cartProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:math';
@@ -15,7 +16,7 @@ Future<bool> prepareOrder(
   OrderModel order = OrderModel(
     paymentTransactionId: transactionId,
     paymentType: "COD",
-    orderItems: Provider.of<CustomerDetailsProvider>(context, listen: false).orderItems,
+    orderItems: Provider.of<CartProvider>(context, listen: false).cartItems,
     addressModel: address,
     // orderId: orderId
   );

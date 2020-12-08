@@ -98,7 +98,9 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
     Provider.of<ScreenProvider>(context, listen: false).setOrderLoader(false);
     if (b) {
       // TODO:SHOW ORDER PLACED SUCCEFULLY
-      widget.cartOrder ? Provider.of<CartProvider>(context, listen: false).clearCart() : null;
+      widget.cartOrder
+          ? Provider.of<CartProvider>(context, listen: false).clearCart()
+          : null;
       Navigator.pushReplacement(
         context,
         CupertinoPageRoute(builder: (context) => OrderListScreen()),
@@ -109,7 +111,8 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
         context: context,
         child: CupertinoAlertDialog(
           title: Text("Error"),
-          content: Text("Some error occurred while placing the order. Contact dealer for refund."),
+          content: Text(
+              "Some error occurred while placing the order. Contact dealer for refund."),
         ),
       );
     }

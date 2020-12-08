@@ -43,8 +43,11 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
       ),
       body: FutureBuilder(
           future: getAddress(
-              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false).phoneNumber,
-              token: Provider.of<CustomerDetailsProvider>(context, listen: false).token),
+              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false)
+                  .phoneNumber,
+              token:
+                  Provider.of<CustomerDetailsProvider>(context, listen: false)
+                      .token),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               addresses = snapshot.data;
@@ -57,7 +60,10 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                       leading: Icon(Icons.add),
                       title: Text("Add Address"),
                       onTap: () async {
-                        await Navigator.push(context, CupertinoPageRoute(builder: (context) => AddAddressScreen()));
+                        await Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => AddAddressScreen()));
                         setState(() {});
                       },
                     ),
@@ -74,8 +80,15 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                         child: RadioListTile(
                           value: i,
                           // groupValue: Provider.of<CustomerDetailsProvider>(context).deliveryAddress,
-                          groupValue: Provider.of<CustomerDetailsProvider>(context, listen: true).addressIndex,
-                          secondary: Provider.of<CustomerDetailsProvider>(context, listen: true).addressIndex == i
+                          groupValue: Provider.of<CustomerDetailsProvider>(
+                                  context,
+                                  listen: true)
+                              .addressIndex,
+                          secondary: Provider.of<CustomerDetailsProvider>(
+                                          context,
+                                          listen: true)
+                                      .addressIndex ==
+                                  i
                               ? EditAddressButton(
                                   i: i,
                                   addressModel: addresses[i],
@@ -93,7 +106,9 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                             ],
                           ),
                           onChanged: (int value) {
-                            Provider.of<CustomerDetailsProvider>(context, listen: false).setAddressINdex(value);
+                            Provider.of<CustomerDetailsProvider>(context,
+                                    listen: false)
+                                .setAddressINdex(value);
                             // setState(() {});
                             // addressIndex = value;
                           },
@@ -121,7 +136,9 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ))),
-              onPressed: Provider.of<CustomerDetailsProvider>(context).addressIndex != -1
+              onPressed: Provider.of<CustomerDetailsProvider>(context)
+                          .addressIndex !=
+                      -1
                   ? () async {
                       Navigator.push(
                           context,
@@ -129,8 +146,12 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                             builder: (context) => ConfirmPaymentScreen(
                               cartOrder: widget.cartOrder,
                               amount: widget.amount,
-                              addressModel: addresses[Provider.of<CustomerDetailsProvider>(context).addressIndex],
-                              items: Provider.of<CustomerDetailsProvider>(context, listen: false).orderItems,
+                              addressModel: addresses[
+                                  Provider.of<CustomerDetailsProvider>(context)
+                                      .addressIndex],
+                              items: Provider.of<CartProvider>(context,
+                                      listen: true)
+                                  .cartItems,
                             ),
                           ));
                     }
