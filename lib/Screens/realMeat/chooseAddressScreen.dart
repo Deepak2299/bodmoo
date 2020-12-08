@@ -149,9 +149,9 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                               addressModel: addresses[
                                   Provider.of<CustomerDetailsProvider>(context)
                                       .addressIndex],
-                              items: Provider.of<CartProvider>(context,
+                              items: Provider.of<CustomerDetailsProvider>(context,
                                       listen: true)
-                                  .cartItems,
+                                  .orderItems,
                             ),
                           ));
                     }
