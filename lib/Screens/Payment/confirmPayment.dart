@@ -1,5 +1,6 @@
 import 'package:bodmoo/Screens/Payment/paymentMethod.dart';
 import 'package:bodmoo/Screens/drawer/myOrders/1ordersListScreen.dart';
+import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
 import 'package:bodmoo/Screens/realMeat/chooseAddressScreen.dart';
 import 'package:bodmoo/methods/prepareOrder.dart';
 import 'package:bodmoo/models/addressModel.dart';
@@ -45,46 +46,46 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Stack(
-          children: <Widget>[
-            Text(widget.items[0].partName),
-            // ListView.builder(
-            //     shrinkWrap: true,
-            //     itemCount: widget.items.length,
-            //     itemBuilder: (context, index) {
-            //       return Card(
-            //         child: Container(
-            //           child: Column(
-            //             children: <Widget>[
-            //               Text(widget.items[index].partName),
-            //             ],
-            //           ),
-            //         ),
-            //       );
-            //     }),
-            Provider.of<ScreenProvider>(context, listen: true).orderLoader
-                ? LoadingWidget(
-                    msg: 'Ordering...',
-                  )
-                : Container()
-          ],
-        ),
-        bottomNavigationBar: RaisedButton(
-          child: Text("Proceed to pay"),
-          onPressed: () {
-            pay(
-              amount: widget.amount,
-              razorpay: _razorpay,
-              PhoneNumber: widget.addressModel.customerMobile,
-            );
-          },
-        ),
-      ),
-    );
-  }
+//  Widget build(BuildContext context) {
+//    return SafeArea(
+//      child: Scaffold(
+//        body: Stack(
+//          children: <Widget>[
+//            Text(widget.items[0].partName),
+//            // ListView.builder(
+//            //     shrinkWrap: true,
+//            //     itemCount: widget.items.length,
+//            //     itemBuilder: (context, index) {
+//            //       return Card(
+//            //         child: Container(
+//            //           child: Column(
+//            //             children: <Widget>[
+//            //               Text(widget.items[index].partName),
+//            //             ],
+//            //           ),
+//            //         ),
+//            //       );
+//            //     }),
+//            Provider.of<ScreenProvider>(context, listen: true).orderLoader
+//                ? LoadingWidget(
+//                    msg: 'Ordering...',
+//                  )
+//                : Container()
+//          ],
+//        ),
+//        bottomNavigationBar: RaisedButton(
+//          child: Text("Proceed to pay"),
+//          onPressed: () {
+//            pay(
+//              amount: widget.amount,
+//              razorpay: _razorpay,
+//              PhoneNumber: widget.addressModel.customerMobile,
+//            );
+//          },
+//        ),
+//      ),
+//    );
+//  }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
 //    showToast(msg: 'Error in Order');
@@ -100,7 +101,9 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
     Provider.of<ScreenProvider>(context, listen: false).setOrderLoader(false);
     if (b) {
       // TODO:SHOW ORDER PLACED SUCCEFULLY
-      widget.cartOrder ? Provider.of<CartProvider>(context, listen: false).clearCart() : null;
+      widget.cartOrder
+          ? Provider.of<CartProvider>(context, listen: false).clearCart()
+          : null;
       Navigator.pushReplacement(
         context,
         CupertinoPageRoute(builder: (context) => OrderListScreen()),
@@ -111,7 +114,8 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
         context: context,
         child: CupertinoAlertDialog(
           title: Text("Error"),
-          content: Text("Some error occurred while placing the order. Contact dealer for refund."),
+          content: Text(
+              "Some error occurred while placing the order. Contact dealer for refund."),
         ),
       );
     }
@@ -139,5 +143,199 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
 
   void _handleExternalWallet(ExternalWalletResponse response) {
     // Do something when an external wallet is selected
+  }
+
+  double getOrderTotal() {
+    double sum = 0;
+    widget.items.forEach((element) {
+      sum += double.parse(element.partPrice) * element.orderQty;
+    });
+    return sum;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Order Details"),
+        ),
+        body: ListView(
+//          shrinkWrap: true,
+          physics: ScrollPhysics(),
+          children: [
+            cardWidget(
+              children: [
+//                Container(
+//                  width: double.maxFinite,
+//                  child: Padding(
+//                    padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+//                    child: Text(
+//                      "Order ID - " + widget.orderModel.orderNumber.toString(),
+//                      style: TextStyle(color: Colors.black54),
+//                    ),
+//                  ),
+//                ),
+//                Divider(
+//                  height: 2,
+//                  thickness: 1.2,
+//                ),
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: ScrollPhysics(),
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  itemBuilder: (context, orderItemIndex) {
+                    List<OrderItemModel> orderItem = widget.items;
+                    return ListTile(
+                      onTap: () {
+//                        Navigator.push(
+//                            context,
+//                            CupertinoPageRoute(
+//                              builder: (context) => OrderItemDetailsScreen(
+//                                orderItem: orderItem[orderItemIndex],
+//                              ),
+//                            ));
+                      },
+                      leading: Image.asset(
+                        IMAGE,
+                        fit: BoxFit.fill,
+                      ),
+                      title: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            orderItem[orderItemIndex].partName,
+                            style: TextStyle(fontSize: 17),
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Flexible(
+                            child: Row(
+                              children: <Widget>[
+                                tagStyle(
+                                    str: orderItem[orderItemIndex].brandName),
+                                tagStyle(
+                                    str: orderItem[orderItemIndex].vehicleName),
+                                tagStyle(
+                                    str: orderItem[orderItemIndex]
+                                            .vehicleModel +
+                                        " " +
+                                        orderItem[orderItemIndex].vehicleYear),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                              "Price: Rs. " +
+                                  orderItem[orderItemIndex].partPrice,
+                              style: TextStyle(fontSize: 14)),
+                          SizedBox(height: 2),
+                          Text(
+                            "Qty: " +
+                                orderItem[orderItemIndex].orderQty.toString(),
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, i) => Divider(),
+                  itemCount: widget.items.length,
+                )
+              ],
+            ),
+            cardWidget(
+              children: [
+                Container(
+                  width: double.maxFinite,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15.0, vertical: 10.0),
+                    child: Text(
+                      "Shipping Details",
+                      style: TextStyle(color: Colors.black54),
+                    ),
+                  ),
+                ),
+                Divider(
+                  height: 2,
+                  thickness: 1.2,
+                ),
+                Container(
+                  width: double.maxFinite,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 15.0, vertical: 10.0),
+                  child: addressWidget(addressModel: widget.addressModel),
+                ),
+              ],
+            ),
+            cardWidget(
+              children: [
+                Container(
+                  width: double.maxFinite,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15.0, vertical: 10.0),
+                    child: Text(
+                      "Price Details",
+                      style: TextStyle(color: Colors.black54),
+                    ),
+                  ),
+                ),
+                Divider(
+                  height: 2,
+                  thickness: 1.2,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 15.0, vertical: 8.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Total Amount",
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                      Spacer(),
+                      Text(
+                        "Rs. " + getOrderTotal().toString(),
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      )
+                    ],
+                  ),
+                ),
+                Divider(
+                  height: 2,
+                  thickness: 1.2,
+                ),
+              ],
+            ),
+          ],
+        ),
+        bottomNavigationBar: GestureDetector(
+          onTap: () {
+            pay(
+              amount: widget.amount,
+              razorpay: _razorpay,
+              PhoneNumber: widget.addressModel.customerMobile,
+            );
+          },
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.06,
+            color: Colors.deepOrange,
+            child: Center(
+              child: Text(
+                "Proceed to pay",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
