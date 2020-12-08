@@ -1,3 +1,4 @@
+import 'package:bodmoo/Screens/Payment/confirmPayment.dart';
 import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/Screens/realMeat/chooseAddressScreen.dart';
 import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
@@ -164,7 +165,8 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                               orderQty: 1));
 
                           if (Provider.of<CustomerDetailsProvider>(context, listen: false).token != null) {
-                            // Provider.of<CustomerDetailsProvider>(context, listen: false).addOrder(orderItems: item);
+                            Provider.of<CustomerDetailsProvider>(context, listen: false)
+                                .addOrderItems(orderItems: item);
                             //TODO:SHOW ORDER PLACED SUCCEFULLY
                             Navigator.push(
                                 context,
@@ -173,7 +175,7 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                                           cartOrder: false,
                                           amount: double.parse(
                                                   widget.partModel.details[widget.partIndex].itemPrice.toString()) *
-                                              100,
+                                              100.0,
                                         )));
                           } else {
                             Navigator.push(

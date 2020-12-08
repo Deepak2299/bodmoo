@@ -7,13 +7,17 @@ import 'package:flutter/cupertino.dart';
 import 'dart:math';
 import 'package:provider/provider.dart';
 
-Future<bool> prepareOrder({@required AddressModel address, @required BuildContext context}) async {
-  var rng = new Random();
+Future<bool> prepareOrder(
+    {@required AddressModel address,
+    @required BuildContext context,
+    @required orderId,
+    @required transactionId}) async {
   OrderModel order = OrderModel(
-    paymentTransactionId: "152522" + rng.nextInt(1000).toString(),
+    paymentTransactionId: transactionId,
     paymentType: "COD",
-    orderItems: Provider.of<CustomerDetailsProvider>(context, listen: false).items,
+    orderItems: Provider.of<CustomerDetailsProvider>(context, listen: false).orderItems,
     addressModel: address,
+    // orderId: orderId
   );
   return await postPlaceOrder(order: order, context: context);
 }

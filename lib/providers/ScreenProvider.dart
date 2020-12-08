@@ -5,10 +5,10 @@ import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 
 class ScreenProvider extends ChangeNotifier {
 //  ScreenProvider(value) : super(value);
-  bool orderLorder = false;
+  bool orderLoader = false;
 
-  setOrderLorder(bool result) {
-    orderLorder = result;
+  setOrderLoader(bool result) {
+    orderLoader = result;
     notifyListeners();
   }
 
