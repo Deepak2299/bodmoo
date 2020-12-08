@@ -16,7 +16,7 @@ Future<bool> prepareOrder(
   OrderModel order = OrderModel(
     paymentTransactionId: transactionId,
     paymentType: "COD",
-    orderItems: Provider.of<CartProvider>(context, listen: false).cartItems,
+    orderItems: Provider.of<CustomerDetailsProvider>(context, listen: false).orderItems,
     addressModel: address,
     // orderId: orderId
   );
