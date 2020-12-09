@@ -180,8 +180,7 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                                     builder: (context) => ChooseAddressScreen(
                                           cartOrder: false,
                                           amount: double.parse(
-                                                  widget.partModel.details[widget.partIndex].itemPrice.toString()) *
-                                              100.0,
+                                              widget.partModel.details[widget.partIndex].itemPrice.toString()),
                                         )));
                           } else {
                             Navigator.push(

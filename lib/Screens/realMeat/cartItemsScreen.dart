@@ -216,7 +216,7 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                                 MaterialPageRoute(
                                     builder: (context) => ChooseAddressScreen(
                                           cartOrder: true,
-                                          amount: Provider.of<CartProvider>(context).getTotalPriceOfCart() * 100,
+                                          amount: Provider.of<CartProvider>(context).getTotalPriceOfCart(),
                                         )),
                               );
                             } else {

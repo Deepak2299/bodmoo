@@ -289,7 +289,8 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                           ),
                           Spacer(),
                           Text(
-                            "Rs. " + getOrderTotal().toString(),
+                            "Rs. " + widget.amount.toString(),
+                            // getOrderTotal().toString(),
                             style: TextStyle(fontWeight: FontWeight.w500),
                           )
                         ],
