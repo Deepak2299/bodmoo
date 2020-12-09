@@ -66,6 +66,9 @@ class _OrderListScreen1State extends State<OrderListScreen> {
                                 Text(
                                   "Payment Mode: " + orderModel.paymentType,
                                   style: TextStyle(fontSize: 12),
+                                ),Text(
+                                  "Transaction Id: " + orderModel.paymentTransactionId,
+                                  style: TextStyle(fontSize: 12),
                                 ),
 //                        Text(orderModel.paymentTransactionId),
                               ],
