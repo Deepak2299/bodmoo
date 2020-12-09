@@ -51,7 +51,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   alignment: Alignment.centerRight,
                   child: FlatButton(
                     onPressed: () =>
-                        Navigator.push(context, new MaterialPageRoute(builder: (context) => new HomeScreen())),
+                        Navigator.push(context, new MaterialPageRoute(builder: (context) => new GoogleScreen())),
                     child: Text(
                       'Skip',
                       style: TextStyle(

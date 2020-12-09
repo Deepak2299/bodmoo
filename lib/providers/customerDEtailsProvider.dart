@@ -29,6 +29,7 @@ class CustomerDetailsProvider extends ChangeNotifier {
   }
 
   addOrderItems({@required List<OrderItemModel> orderItemsList}) {
+    orderItems = [];
     for (int i = 0; i < orderItemsList.length; i++) orderItems.add(orderItemsList[i]);
     // orderItemsList = orderItemsList;
     notifyListeners();
