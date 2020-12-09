@@ -23,7 +23,7 @@ pay({@required double amount, @required Razorpay razorpay, @required PhoneNumber
 checkout({@required String orderId, @required double amount, @required Razorpay razorpay, @required PhoneNumber}) {
   var options = {
     'key': 'rzp_test_Cmt4oHRCGuf0BP',
-    'amount': amount*100, //in the smallest currency sub-unit.
+    'amount': amount * 100, //in the smallest currency sub-unit.
     'name': 'Spare Parts',
     'order_id': orderId, // Generate order_id using Orders API
     // 'description': 'Fine T-Shirt',
