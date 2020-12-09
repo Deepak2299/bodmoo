@@ -22,15 +22,12 @@ class _OrderListScreen1State extends State<OrderListScreen> {
         appBar: AppBar(title: Text("My Orders")),
         body: FutureBuilder(
           future: getOrdersList(
-              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false)
-                  .phoneNumber,
-              context: context),
+              PhNo: Provider.of<CustomerDetailsProvider>(context, listen: false).phoneNumber, context: context),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               List<OrderModel> ordersList = snapshot.data;
               return Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 10.0, vertical: 10.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                 child: ListView(
                   physics: ScrollPhysics(),
 //                    mainAxisSize: MainAxisSize.min,
@@ -55,8 +52,7 @@ class _OrderListScreen1State extends State<OrderListScreen> {
                                   style: TextStyle(fontSize: 15),
                                 ),
                                 Text(
-                                  "Order at " +
-                                      orderModel.orderDate.toIso8601String(),
+                                  "Order at " + orderModel.orderDate.toIso8601String(),
                                   style: TextStyle(fontSize: 15),
                                 ),
                                 Text(
@@ -66,7 +62,8 @@ class _OrderListScreen1State extends State<OrderListScreen> {
                                 Text(
                                   "Payment Mode: " + orderModel.paymentType,
                                   style: TextStyle(fontSize: 12),
-                                ),Text(
+                                ),
+                                Text(
                                   "Transaction Id: " + orderModel.paymentTransactionId,
                                   style: TextStyle(fontSize: 12),
                                 ),
@@ -82,8 +79,7 @@ class _OrderListScreen1State extends State<OrderListScreen> {
                             Navigator.push(
                                 context,
                                 CupertinoPageRoute(
-                                  builder: (context) => OrderDetailsScreen(
-                                      orderModel: orderModel),
+                                  builder: (context) => OrderDetailsScreen(orderModel: orderModel),
                                 ));
                           },
                         );
@@ -102,8 +98,7 @@ class _OrderListScreen1State extends State<OrderListScreen> {
                         heightFactor: 3,
                         child: Text(
                           "No more orders",
-                          style: TextStyle(
-                              color: Colors.grey, fontWeight: FontWeight.w500),
+                          style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
                         ))
                   ],
                 ),

@@ -1,5 +1,6 @@
 import 'package:bodmoo/Screens/Payment/paymentMethod.dart';
 import 'package:bodmoo/Screens/drawer/myOrders/1ordersListScreen.dart';
+import 'package:bodmoo/Screens/drawer/myOrders/orderError.dart';
 import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
 import 'package:bodmoo/Screens/realMeat/chooseAddressScreen.dart';
 import 'package:bodmoo/methods/prepareOrder.dart';
@@ -108,13 +109,17 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
         // ModalRoute.withName('/parts'),
       );
     } else {
-      showDialog(
-        context: context,
-        child: CupertinoAlertDialog(
-          title: Text("Error"),
-          content: Text("Some error occurred while placing the order. Contact dealer for refund."),
-        ),
-      );
+      Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>OrderPlaceErrorScreen(
+        transactionId: response.paymentId,
+      ),));
+      // showDialog(
+          //   context: context,
+          //   child: CupertinoAlertDialog(
+          //     title: Text("Error"),
+          //     content: Text("Some error occurred while placing the order. Contact dealer for refund."),
+          //   ),
+          // );
+      //
     }
   }
 
