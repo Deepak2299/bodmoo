@@ -11,7 +11,7 @@ import 'package:bodmoo/methods/get/getVehiclesbyBrand.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/widgets/cartIcon.dart';
-
+import 'package:bodmoo/widgets/items_view.dart';
 import 'package:bodmoo/widgets/items_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -133,6 +133,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       i: 1,
                     )
                   : Container(),
+              SizedBox(
+                height: 20,
+              ),
+              DropdownUI(
+                futureFunction: getCategories(),
+                header: 'Category',
+              ),
               SizedBox(
                 height: 20,
               ),
