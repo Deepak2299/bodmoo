@@ -1,4 +1,5 @@
 import 'package:bodmoo/Screens/realMeat/screenData.dart';
+import 'package:bodmoo/models/VarinatModel.dart';
 import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
@@ -25,16 +26,16 @@ class ScreenProvider extends ChangeNotifier {
       case 0:
         screenData.catgName = dataValue;
         screenData.subCatgName = null;
-        screenData.brandName = null;
-        screenData.vehicleName = null;
-        screenData.vm = null;
+        // screenData.brandName = null;
+        // screenData.vehicleName = null;
+        // screenData.vm = VariantsModel(modelName: '', manufactureYear: '');
         i = 1;
         break;
       case 1:
         screenData.subCatgName = dataValue;
-        screenData.brandName = null;
-        screenData.vehicleName = null;
-        screenData.vm = null;
+        // screenData.brandName = null;
+        // screenData.vehicleName = null;
+        // screenData.vm = VariantsModel(modelName: '', manufactureYear: '');
         i = 2;
         break;
       case 2:

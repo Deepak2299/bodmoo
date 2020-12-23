@@ -19,5 +19,6 @@ Future<List<VariantsModel>> getVariants({
   for (int i = 0; i < body.length; i++) {
     variants.add(VariantsModel.fromJson(body[i]));
   }
+
   return variants;
 }

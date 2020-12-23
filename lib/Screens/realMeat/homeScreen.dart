@@ -115,64 +115,92 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 20,
               ),
-              ItemView(
-                context: context,
-                title: "Categories",
-                futureFunction: getCategories(),
-                i: 0,
-              ),
+              // ItemView(
+              //   context: context,
+              //   title: "Categories",
+              //   futureFunction: getCategories(),
+              //   i: 0,
+              // ),
               SizedBox(
                 height: 20,
               ),
-              screenProvider.getScreenData.catgName != null
-                  ? ItemView(
-                      context: context,
-                      title: "Sub Categories",
-                      futureFunction:
-                          getSubCategories(catgName: Provider.of<ScreenProvider>(context).getScreenData.catgName),
-                      i: 1,
-                    )
-                  : Container(),
+              // screenProvider.getScreenData.catgName != null
+              //     ? ItemView(
+              //         context: context,
+              //         title: "Sub Categories",
+              //         futureFunction:
+              //             getSubCategories(catgName: Provider.of<ScreenProvider>(context).getScreenData.catgName),
+              //         i: 1,
+              //       )
+              //     : Container(),
               SizedBox(
                 height: 20,
               ),
               DropdownUI(
                 futureFunction: getCategories(),
                 header: 'Category',
+                dropIndex: 0,
               ),
-              SizedBox(
-                height: 20,
-              ),
-              screenProvider.getScreenData.subCatgName != null
-                  ? ItemView(
-                      context: context,
-                      title: "Brands",
-                      futureFunction: getBrands(),
-                      i: 2,
+              screenProvider.getScreenData.catgName != null
+                  ? DropdownUI(
+                      futureFunction:
+                          getSubCategories(catgName: Provider.of<ScreenProvider>(context).getScreenData.catgName),
+                      header: 'Sub-Category',
+                      dropIndex: 1,
                     )
-                  : Container(),
-              SizedBox(
-                height: 20,
+                  : dummyDropdown('Sub-Category'),
+              DropdownUI(
+                futureFunction: getBrands(),
+                header: 'Brand',
+                dropIndex: 2,
               ),
               screenProvider.getScreenData.brandName != null
-                  ? ItemView(
-                      context: context,
-                      title: "Vehicles",
+                  ? DropdownUI(
                       futureFunction: getVehiclesByBrand(brandName: screenProvider.getScreenData.brandName),
-                      i: 3,
+                      header: 'Vehicle',
+                      dropIndex: 3,
                     )
-                  : Container(),
-              SizedBox(
-                height: 20,
-              ),
+                  : dummyDropdown('Vehicle'),
               screenProvider.getScreenData.vehicleName != null
-                  ? ItemView(
-                      context: context,
-                      title: "Variants",
+                  ? DropdownUI(
                       futureFunction: getVariants(Vehiclename: screenProvider.getScreenData.vehicleName),
-                      i: 4,
+                      header: 'Model',
+                      dropIndex: 4,
                     )
-                  : Container(),
+                  : dummyDropdown('Model'),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // screenProvider.getScreenData.subCatgName != null
+              //     ? ItemView(
+              //         context: context,
+              //         title: "Brands",
+              //         futureFunction: getBrands(),
+              //         i: 2,
+              //       )
+              //     : Container(),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // screenProvider.getScreenData.brandName != null
+              //     ? ItemView(
+              //         context: context,
+              //         title: "Vehicles",
+              //         futureFunction: getVehiclesByBrand(brandName: screenProvider.getScreenData.brandName),
+              //         i: 3,
+              //       )
+              //     : Container(),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // screenProvider.getScreenData.vehicleName != null
+              //     ? ItemView(
+              //         context: context,
+              //         title: "Variants",
+              //         futureFunction: getVariants(Vehiclename: screenProvider.getScreenData.vehicleName),
+              //         i: 4,
+              //       )
+              //     : Container(),
               SizedBox(
                 height: 20,
               ),
@@ -227,7 +255,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Text(
                         Provider.of<ScreenProvider>(context).getScreenData.vm != null
-                            ? Provider.of<ScreenProvider>(context).getScreenData.vm.modelName
+                            ? Provider.of<ScreenProvider>(context).getScreenData.vm.modelName +
+                                Provider.of<ScreenProvider>(context).getScreenData.vm.manufactureYear
                             : '',
                         style: TextStyle(color: Colors.white),
                       ),

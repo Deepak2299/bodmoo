@@ -1,4 +1,5 @@
 import 'package:bodmoo/methods/get/getCategories.dart';
+import 'package:bodmoo/models/VarinatModel.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -215,7 +216,11 @@ class _ItemViewState extends State<ItemView> {
             break;
           default:
             if (snapshots.hasError)
-              return Center(child: Text(snapshots.error.toString()));
+              return Center(
+                child: Text(
+                  snapshots.error.toString(),
+                ),
+              );
             else if (snapshots.hasData) {
               return show(context, snapshots);
             }
@@ -229,30 +234,59 @@ class _ItemViewState extends State<ItemView> {
 class DropdownUI extends StatefulWidget {
   Future<dynamic> futureFunction;
   String header;
-  DropdownUI({@required this.futureFunction, @required this.header});
+  int dropIndex;
+  DropdownUI({@required this.futureFunction, @required this.header, @required this.dropIndex});
 
   @override
   _DropdownUIState createState() => _DropdownUIState();
 }
 
 class _DropdownUIState extends State<DropdownUI> {
-  String value = null;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+  value() {
+    switch (widget.dropIndex) {
+      case 0:
+        return Provider.of<ScreenProvider>(context).getScreenData.catgName;
+        break;
+      case 1:
+        return Provider.of<ScreenProvider>(context).getScreenData.subCatgName;
+        break;
+      case 2:
+        return Provider.of<ScreenProvider>(context).getScreenData.brandName;
+        break;
+      case 3:
+        return Provider.of<ScreenProvider>(context).getScreenData.vehicleName;
+        break;
+      case 4:
+        return Provider.of<ScreenProvider>(context).getScreenData.vm != null
+            ? (Provider.of<ScreenProvider>(context).getScreenData.vm.modelName.trim().toString() +
+                ' ' +
+                Provider.of<ScreenProvider>(context).getScreenData.vm.manufactureYear.trim().toString())
+            : null;
+        break;
+    }
+
+    if (mounted) setState(() {});
   }
 
-  List<DropdownMenuItem<String>> prepareDropdownItems(AsyncSnapshot snapshot) {
-    print(snapshot.data);
+  List<DropdownMenuItem<String>> items = [];
 
-    List<DropdownMenuItem<String>> items = [];
+  List<DropdownMenuItem<String>> prepareDropdownItems(AsyncSnapshot snapshot) {
+    items = [];
     for (int i = 0; i < snapshot.data.length; i++) {
+      print(widget.dropIndex.toString());
       items.add(DropdownMenuItem<String>(
-        value: snapshot.data[i].toString(),
+        value: widget.dropIndex == 4
+            ? snapshot.data[i].modelName.trim() + ' ' + snapshot.data[i].manufactureYear.trim()
+            : snapshot.data[i].toString(),
         child: Container(
             width: MediaQuery.of(context).size.width * 0.5,
-            child: ListTile(leading: Icon(Icons.card_giftcard), title: Text(snapshot.data[i].toString()))),
+            child: ListTile(
+                leading: Icon(Icons.card_giftcard),
+                title: Text(
+                  widget.dropIndex != 4
+                      ? snapshot.data[i].toString()
+                      : snapshot.data[i].modelName.toString() + ' ' + snapshot.data[i].manufactureYear.toString(),
+                ))),
       ));
     }
     return items;
@@ -261,20 +295,46 @@ class _DropdownUIState extends State<DropdownUI> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getCategories(),
+      future: widget.futureFunction,
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           return DropdownButton<String>(
-              hint: Text('Select ${widget.header}'),
-              items: prepareDropdownItems(snapshot),
-              value: value,
-              onChanged: (String str) {
-                value = str;
-                setState(() {});
-              });
+            hint: snapshot.data.length > 0 ? Text('Select ${widget.header}') : Text('No ${widget.header} found'),
+            items: prepareDropdownItems(snapshot),
+            value: value(),
+            onChanged: (String str) {
+              Provider.of<ScreenProvider>(context, listen: false).updateData(
+                  dataValue: widget.dropIndex == 4
+                      ? VariantsModel(manufactureYear: str.split(' ')[1], modelName: str.split(' ')[0])
+                      : str,
+                  dataIndex: widget.dropIndex);
+              items = [];
+              // setState(() {});
+            },
+            isExpanded: true,
+          );
         } else
-          return CircularProgressIndicator();
+          return Row(
+            children: [
+              DropdownButton(
+                value: null,
+                items: [],
+                hint: Text('Select ${widget.header}'),
+                onChanged: (str) {},
+              ),
+              CircularProgressIndicator(),
+            ],
+          );
       },
     );
   }
+}
+
+dummyDropdown(String header) {
+  return DropdownButton(
+    value: null,
+    items: [],
+    hint: Text('Select ${header}'),
+    onChanged: (str) {},
+  );
 }
