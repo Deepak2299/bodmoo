@@ -26,7 +26,8 @@ class PartsModel {
   String subCategory;
   List<PartDetail> details;
 
-  factory PartsModel.fromJson(String str) => PartsModel.fromMap(json.decode(str));
+  factory PartsModel.fromJson(String str) =>
+      PartsModel.fromMap(json.decode(str));
 
   // String toJson() => json.encode(toMap());
 
@@ -38,8 +39,10 @@ class PartsModel {
         modelYear: json["model_year"] == null ? null : json["model_year"],
         category: json["category"] == null ? null : json["category"],
         subCategory: json["sub_category"] == null ? null : json["sub_category"],
-        details:
-            json["details"] == null ? null : List<PartDetail>.from(json["details"].map((x) => PartDetail.fromMap(x))),
+        details: json["details"] == null
+            ? null
+            : List<PartDetail>.from(
+                json["details"].map((x) => PartDetail.fromMap(x))),
       );
 
 //   Map<String, dynamic> toMap() => {
@@ -64,6 +67,7 @@ class PartDetail {
     @required this.itemPrice,
     @required this.quantity,
     @required this.outOfStock,
+    @required this.productImages,
   });
 
   String id;
@@ -72,10 +76,12 @@ class PartDetail {
   int itemPrice;
   int quantity;
   bool outOfStock;
+  List<String> productImages = [];
 
-  factory PartDetail.fromJson(String str) => PartDetail.fromMap(json.decode(str));
+  factory PartDetail.fromJson(String str) =>
+      PartDetail.fromMap(json.decode(str));
 
-  // String toJson() => json.encode(toMap());
+//  String toJson() => json.encode(toMap());
 
   factory PartDetail.fromMap(Map<String, dynamic> json) => PartDetail(
         id: json["_id"] == null ? null : json["_id"],
@@ -84,14 +90,20 @@ class PartDetail {
         itemPrice: json["item_price"] == null ? null : json["item_price"],
         quantity: json["quantity"] == null ? null : json["quantity"],
         outOfStock: json["outOfStock"] == null ? null : json["outOfStock"],
+        productImages: json["productImages"] == null
+            ? null
+            : List<String>.from(json["productImages"].map((x) => x)),
       );
 
-//   Map<String, dynamic> toMap() => {
-// //    "_id": id == null ? null : id,
-//         "part_name": partName == null ? null : partName,
-//         "description": description == null ? null : description,
-//         "item_price": itemPrice == null ? null : itemPrice,
-//         "quantity": quantity == null ? null : quantity,
-// //    "outOfStock": outOfStock == null ? null : outOfStock,
-//       };
+//  Map<String, dynamic> toMap() => {
+//    "_id": id == null ? null : id,
+//    "part_name": partName == null ? null : partName,
+//    "description": description == null ? null : description,
+//    "item_price": itemPrice == null ? null : itemPrice,
+//    "quantity": quantity == null ? null : quantity,
+//    "outOfStock": outOfStock,
+//    "productImages": productImages == null
+//        ? null
+//        : List<dynamic>.from(productImages.map((x) => x)),
+//  };
 }

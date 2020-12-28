@@ -4,6 +4,7 @@ import 'package:bodmoo/models/partsModel.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/utils/urls.dart';
 import 'package:bodmoo/widgets/cartIcon.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -72,9 +73,30 @@ class _PartScreenState extends State<PartScreen> {
                             itemBuilder: (context, index) {
                               return Card(
                                 child: ListTile(
-                                  leading: Hero(
-                                      tag: "images_${index}",
-                                      child: Image.asset(IMAGE)),
+                                  leading: Center(
+                                    widthFactor: 1,
+                                    heightFactor: 0.8,
+                                    child: Hero(
+                                        tag: "images_${index}",
+                                        child: partsList[index]
+                                                .productImages
+                                                .isEmpty
+                                            ? Image.asset(IMAGE)
+                                            : CachedNetworkImage(
+                                                imageUrl: partsList[index]
+                                                    .productImages[0],
+                                                progressIndicatorBuilder:
+                                                    (context, url,
+                                                            downloadProgress) =>
+                                                        CircularProgressIndicator(
+                                                            value:
+                                                                downloadProgress
+                                                                    .progress),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Icon(Icons.error),
+                                              )),
+                                  ),
                                   title: Text(
                                     partsList[index].partName,
                                     style:

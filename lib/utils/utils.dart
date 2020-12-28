@@ -9,11 +9,13 @@ final Color flipkartBlue = new Color(0XFF2874f0);
 final OutlineInputBorder fieldBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(4.0),
     gapPadding: 2,
-    borderSide: BorderSide(width: 1.8, color: flipkartBlue, style: BorderStyle.solid));
+    borderSide:
+        BorderSide(width: 1.8, color: flipkartBlue, style: BorderStyle.solid));
 final OutlineInputBorder errorBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(4.0),
     gapPadding: 2,
-    borderSide: BorderSide(width: 1.8, color: Colors.redAccent, style: BorderStyle.solid));
+    borderSide: BorderSide(
+        width: 1.8, color: Colors.redAccent, style: BorderStyle.solid));
 
 pwdValidator(String pwd) {
   pwd = pwd.trim();
@@ -45,7 +47,9 @@ addressWidget({@required AddressModel addressModel}) {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Phone number : ", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500)),
+          Text("Phone number : ",
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.w500)),
           Text(addressModel.customerMobile.toString(),
               style: TextStyle(
                 color: Colors.black,
@@ -58,7 +62,13 @@ addressWidget({@required AddressModel addressModel}) {
 }
 
 String prepareAddress({@required AddressModel addressModel}) {
-  return addressModel.houseno + "," + addressModel.roadname + "," + addressModel.city + "," + addressModel.state;
+  return addressModel.houseno +
+      "," +
+      addressModel.roadname +
+      "," +
+      addressModel.city +
+      "," +
+      addressModel.state;
 }
 
 class LoadingWidget extends StatelessWidget {
@@ -78,7 +88,8 @@ class LoadingWidget extends StatelessWidget {
           children: <Widget>[
             Text(
               msg ?? 'Loading',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
             ),
             SizedBox(width: 20),
             CircularProgressIndicator(
@@ -136,4 +147,26 @@ cardWidget({@required List<Widget> children}) {
           children: children,
         )),
   );
+}
+
+Widget indicator(bool isActive) {
+  return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: isActive ? Colors.blue : Colors.grey,
+      ),
+      height: 10,
+      width: 10,
+      margin: EdgeInsets.symmetric(horizontal: 6.0, vertical: 5));
+
+  // return AnimatedContainer(
+  //   duration: Duration(milliseconds: 500),
+  //   margin: EdgeInsets.symmetric(horizontal: 8.0),
+  //   height: 8.0,
+  //   width: isActive ? 16.0 : 8.0,
+  //   decoration: BoxDecoration(
+  //     color: isActive ? Colors.blue : Colors.grey,
+  //     borderRadius: BorderRadius.all(Radius.circular(12)),
+  //   ),
+  // );
 }

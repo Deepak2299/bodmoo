@@ -23,6 +23,7 @@ dependencies:
   badges: 1.0.0
   fluttertoast:
   shared_preferences: ^0.5.12+4
+  cached_network_image:
 
 #  LOGIN
   firebase_analytics: ^5.0.15

@@ -7,8 +7,10 @@ import 'package:bodmoo/models/partsModel.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/cartProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
-import 'package:bodmoo/utils/urls.dart';
+//import 'package:bodmoo/utils/urls.dart';
+import 'package:bodmoo/utils/utils.dart';
 import 'package:bodmoo/widgets/cartIcon.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +24,10 @@ class PartDetailsScren extends StatefulWidget {
 }
 
 class _PartDetailsScrenState extends State<PartDetailsScren> {
+  PageController pageController = PageController();
+//  bool updateLoad = false;
+  int page = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +51,119 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
             children: [
               Container(
                 height: MediaQuery.of(context).size.height * 0.5,
-                child: Hero(tag: "images_${widget.partIndex}", child: Image.asset(IMAGE)),
+                child: widget.partModel.details[widget.partIndex].productImages
+                        .isEmpty
+                    ? Hero(
+                        tag: "images_${widget.partIndex}",
+                        child: Image.asset(
+                          IMAGE,
+                          height: MediaQuery.of(context).size.height * 0.4,
+                        ),
+                      )
+                    : Column(
+                        children: [
+//                          Align(
+//                            alignment: Alignment.centerRight,
+//                            child: RaisedButton(
+//                              child: Row(
+//                                children: [
+//                                  Text("Next"),
+//                                  Icon(Icons.arrow_forward_outlined),
+//                                ],
+//                                mainAxisSize: MainAxisSize.min,
+//                              ),
+//                              onPressed: () {
+//                                pageController.animateToPage(
+//                                  (page + 1) %
+//                                      widget.partModel.details[widget.partIndex]
+//                                          .productImages.length,
+//                                  duration: Duration(milliseconds: 500),
+//                                  curve: Curves.ease,
+//                                );
+//                              },
+//                            ),
+//                          ),
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.4,
+                            child: PageView(
+                              physics: ScrollPhysics(),
+                              controller: pageController,
+                              onPageChanged: (p) {
+                                page = p;
+                                setState(() {});
+                              },
+                              children: [
+                                for (int i = 0;
+                                    i <
+                                        widget
+                                            .partModel
+                                            .details[widget.partIndex]
+                                            .productImages
+                                            .length;
+                                    i++)
+                                  i == 0
+                                      ? Stack(
+                                          children: [
+                                            Center(
+                                              child: Hero(
+                                                  tag:
+                                                      "images_${widget.partIndex}",
+                                                  child: CachedNetworkImage(
+                                                    imageUrl: widget
+                                                        .partModel
+                                                        .details[
+                                                            widget.partIndex]
+                                                        .productImages[0],
+                                                    // 'https://picsum.photos/250?image=9',
+                                                    // placeholder: (context, url) =>
+                                                    //     Container(child: CircularProgressIndicator()),
+                                                    progressIndicatorBuilder: (context,
+                                                            url,
+                                                            downloadProgress) =>
+                                                        CircularProgressIndicator(
+                                                            value:
+                                                                downloadProgress
+                                                                    .progress),
+                                                    errorWidget:
+                                                        (context, url, error) =>
+                                                            Icon(Icons.error),
+                                                  )),
+                                            ),
+                                          ],
+                                        )
+                                      : Center(
+                                          child: CachedNetworkImage(
+                                            imageUrl: widget
+                                                .partModel
+                                                .details[widget.partIndex]
+                                                .productImages[i],
+                                            progressIndicatorBuilder: (context,
+                                                    url, downloadProgress) =>
+                                                CircularProgressIndicator(
+                                                    value: downloadProgress
+                                                        .progress),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Icon(Icons.error),
+                                          ),
+                                        ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            // mainAxisSize: MainAxisSize.min,
+                            children: [
+                              for (int i = 0;
+                                  i <
+                                      widget.partModel.details[widget.partIndex]
+                                          .productImages.length;
+                                  i++)
+                                indicator(i == page ? true : false),
+                            ],
+                          ),
+                        ],
+                      ),
               ),
               Text(
                 widget.partModel.details[widget.partIndex].partName.toString(),
@@ -57,15 +175,22 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                 child: FlatButton(
                   padding: EdgeInsets.all(0),
                   // height: 20,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                  color:
-                      widget.partModel.details[widget.partIndex].outOfStock ? Colors.red.shade50 : Colors.green.shade50,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                  color: widget.partModel.details[widget.partIndex].outOfStock
+                      ? Colors.red.shade50
+                      : Colors.green.shade50,
                   onPressed: () {},
                   child: Text(
-                    widget.partModel.details[widget.partIndex].outOfStock ? "OutOfStock" : "Instock",
+                    widget.partModel.details[widget.partIndex].outOfStock
+                        ? "OutOfStock"
+                        : "Instock",
 //                textAlign: TextAlign.,
                     style: TextStyle(
-                      color: widget.partModel.details[widget.partIndex].outOfStock ? Colors.red : Colors.green,
+                      color:
+                          widget.partModel.details[widget.partIndex].outOfStock
+                              ? Colors.red
+                              : Colors.green,
                     ),
                   ),
                 ),
@@ -74,7 +199,9 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
 //            height: 10,
 //          ),
               Text(
-                "Rs " + widget.partModel.details[widget.partIndex].itemPrice.toString(),
+                "Rs " +
+                    widget.partModel.details[widget.partIndex].itemPrice
+                        .toString(),
                 style: TextStyle(fontSize: 30),
               ),
             ],
@@ -101,20 +228,32 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                   ? Expanded(
                       child: RaisedButton(
                         color: Colors.white,
-                        onPressed: widget.partModel.details[widget.partIndex].outOfStock
+                        onPressed: widget
+                                .partModel.details[widget.partIndex].outOfStock
                             ? null
                             : () {
                                 OrderItemModel item = new OrderItemModel(
-                                    partId: widget.partModel.details[widget.partIndex].id,
+                                    partId: widget
+                                        .partModel.details[widget.partIndex].id,
                                     brandName: widget.partModel.carBrand,
                                     vehicleName: widget.partModel.carName,
                                     vehicleModel: widget.partModel.carModel,
-                                    vehicleYear: widget.partModel.modelYear.toString(),
-                                    partName: widget.partModel.details[widget.partIndex].partName,
-                                    partPrice: widget.partModel.details[widget.partIndex].itemPrice.toString(),
+                                    vehicleYear:
+                                        widget.partModel.modelYear.toString(),
+                                    partName: widget.partModel
+                                        .details[widget.partIndex].partName,
+                                    partPrice: widget.partModel
+                                        .details[widget.partIndex].itemPrice
+                                        .toString(),
                                     orderQty: 1);
-                                Provider.of<CartProvider>(context, listen: false).itemAdd(item);
-                                Navigator.push(context, CupertinoPageRoute(builder: (context) => CartItemsScreen()));
+                                Provider.of<CartProvider>(context,
+                                        listen: false)
+                                    .itemAdd(item);
+                                Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                        builder: (context) =>
+                                            CartItemsScreen()));
                               },
                         child: Center(
                           child: Text(
@@ -131,10 +270,15 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                   : Expanded(
                       child: RaisedButton(
                         color: Colors.white,
-                        onPressed: widget.partModel.details[widget.partIndex].outOfStock
+                        onPressed: widget
+                                .partModel.details[widget.partIndex].outOfStock
                             ? null
                             : () {
-                                Navigator.push(context, CupertinoPageRoute(builder: (context) => CartItemsScreen()));
+                                Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                        builder: (context) =>
+                                            CartItemsScreen()));
                               },
                         child: Center(
                           child: Text(
@@ -150,25 +294,36 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                     ),
               Expanded(
                 child: RaisedButton(
-                  onPressed: widget.partModel.details[widget.partIndex].outOfStock
+                  onPressed: widget
+                          .partModel.details[widget.partIndex].outOfStock
                       ? null
                       : () async {
                           List<OrderItemModel> item = List<OrderItemModel>();
                           item.add(new OrderItemModel(
-                              partId: widget.partModel.details[widget.partIndex].id,
+                              partId:
+                                  widget.partModel.details[widget.partIndex].id,
                               brandName: widget.partModel.carBrand,
                               vehicleName: widget.partModel.carName,
                               vehicleModel: widget.partModel.carModel,
-                              vehicleYear: widget.partModel.modelYear.toString(),
-                              partName: widget.partModel.details[widget.partIndex].partName,
-                              partPrice: widget.partModel.details[widget.partIndex].itemPrice.toString(),
+                              vehicleYear:
+                                  widget.partModel.modelYear.toString(),
+                              partName: widget
+                                  .partModel.details[widget.partIndex].partName,
+                              partPrice: widget
+                                  .partModel.details[widget.partIndex].itemPrice
+                                  .toString(),
                               orderQty: 1));
 
-                          if (Provider.of<CustomerDetailsProvider>(context, listen: false).token != null) {
-                            Provider.of<CustomerDetailsProvider>(context, listen: false)
+                          if (Provider.of<CustomerDetailsProvider>(context,
+                                      listen: false)
+                                  .token !=
+                              null) {
+                            Provider.of<CustomerDetailsProvider>(context,
+                                    listen: false)
                                 .addOrderItems(orderItemsList: item);
                             print("sndns" +
-                                Provider.of<CustomerDetailsProvider>(context, listen: false)
+                                Provider.of<CustomerDetailsProvider>(context,
+                                        listen: false)
                                     .orderItems
                                     .length
                                     .toString());
@@ -179,8 +334,11 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                                 CupertinoPageRoute(
                                     builder: (context) => ChooseAddressScreen(
                                           cartOrder: false,
-                                          amount: double.parse(
-                                              widget.partModel.details[widget.partIndex].itemPrice.toString()),
+                                          amount: double.parse(widget
+                                              .partModel
+                                              .details[widget.partIndex]
+                                              .itemPrice
+                                              .toString()),
                                         )));
                           } else {
                             Navigator.push(
