@@ -150,18 +150,25 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                               ],
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            // mainAxisSize: MainAxisSize.min,
-                            children: [
-                              for (int i = 0;
-                                  i <
-                                      widget.partModel.details[widget.partIndex]
-                                          .productImages.length;
-                                  i++)
-                                indicator(i == page ? true : false),
-                            ],
-                          ),
+                          widget.partModel.details[widget.partIndex]
+                                      .productImages.length >
+                                  1
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  // mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    for (int i = 0;
+                                        i <
+                                            widget
+                                                .partModel
+                                                .details[widget.partIndex]
+                                                .productImages
+                                                .length;
+                                        i++)
+                                      indicator(i == page ? true : false),
+                                  ],
+                                )
+                              : Container(),
                         ],
                       ),
               ),
@@ -245,7 +252,11 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                                     partPrice: widget.partModel
                                         .details[widget.partIndex].itemPrice
                                         .toString(),
-                                    orderQty: 1);
+                                    orderQty: 1,
+                                    productImages: widget
+                                        .partModel
+                                        .details[widget.partIndex]
+                                        .productImages);
                                 Provider.of<CartProvider>(context,
                                         listen: false)
                                     .itemAdd(item);
@@ -312,7 +323,9 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                               partPrice: widget
                                   .partModel.details[widget.partIndex].itemPrice
                                   .toString(),
-                              orderQty: 1));
+                              orderQty: 1,
+                              productImages: widget.partModel
+                                  .details[widget.partIndex].productImages));
 
                           if (Provider.of<CustomerDetailsProvider>(context,
                                       listen: false)

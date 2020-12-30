@@ -6,6 +6,7 @@ import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/cartProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/urls.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -53,7 +54,8 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                   ),
                   RaisedButton(
                     color: Colors.blue,
-                    child: Text("Continue Shopping", style: TextStyle(color: Colors.white)),
+                    child: Text("Continue Shopping",
+                        style: TextStyle(color: Colors.white)),
                     onPressed: () {
                       //TODO:ROUTE TO MAINSCREEN.DART
                       Navigator.pop(context);
@@ -65,7 +67,8 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: ListView.separated(
                   itemBuilder: (context, index) {
-                    OrderItemModel itemModel = Provider.of<CartProvider>(context).getCartItems[index];
+                    OrderItemModel itemModel =
+                        Provider.of<CartProvider>(context).getCartItems[index];
                     return Dismissible(
                       direction: DismissDirection.endToStart,
                       key: UniqueKey(),
@@ -73,21 +76,31 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                         alignment: Alignment.centerRight,
                         color: Colors.red,
                         padding: EdgeInsets.all(10),
-                        child: Text("Swipe left to Remove Item", style: TextStyle(color: Colors.white)),
+                        child: Text("Swipe left to Remove Item",
+                            style: TextStyle(color: Colors.white)),
                       ),
                       onDismissed: (direction) {
-                        Provider.of<CartProvider>(context, listen: false).itemRemove(Id: itemModel.partId);
+                        Provider.of<CartProvider>(context, listen: false)
+                            .itemRemove(Id: itemModel.partId);
                       },
                       child: Card(
                         child: ListTile(
+                          
                           leading: Container(
-//                      width: 100,
-//                      height: 200,
-                            child: Image.asset(
-                              IMAGE,
-//                        fit: BoxFit.fill,
-                            ),
-                          ),
+                              width: 50,
+
+//                              height: 200,
+                              child: itemModel.productImages.isEmpty
+                                  ? Image.asset(IMAGE)
+                                  : CachedNetworkImage(
+                                      imageUrl: itemModel.productImages[0],
+                                      progressIndicatorBuilder: (context, url,
+                                              downloadProgress) =>
+                                          CircularProgressIndicator(
+                                              value: downloadProgress.progress),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
+                                    )),
                           title: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,7 +111,10 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                                   children: <Widget>[
                                     tagStyle(str: itemModel.brandName),
                                     tagStyle(str: itemModel.vehicleName),
-                                    tagStyle(str: itemModel.vehicleModel + " " + itemModel.vehicleYear),
+                                    tagStyle(
+                                        str: itemModel.vehicleModel +
+                                            " " +
+                                            itemModel.vehicleYear),
                                   ],
                                 ),
                               ),
@@ -107,7 +123,8 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                                 child: Row(
 //                            mainAxisAlignment: MainAxisAlignment.sp,
                                   children: <Widget>[
-                                    Text("Item Price: Rs. " + itemModel.partPrice),
+                                    Text("Item Price: Rs. " +
+                                        itemModel.partPrice),
 //                                Spacer(),
 //                                Text("Total Price: Rs. " +
 //                                    (double.parse(itemModel.partPrice) *
@@ -122,7 +139,9 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                                   Expanded(
                                     child: Text(
                                       "Total Price: Rs. " +
-                                          (double.parse(itemModel.partPrice) * itemModel.orderQty).toString(),
+                                          (double.parse(itemModel.partPrice) *
+                                                  itemModel.orderQty)
+                                              .toString(),
                                     ),
                                   ),
 //                                  Spacer(),
@@ -131,21 +150,30 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                                     child: Row(
 //                                crossAxisAlignment: CrossAxisAlignment.baseline,
                                       mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         IconButton(
-                                            icon: Icon(Icons.remove_circle_outline),
+                                            icon: Icon(
+                                                Icons.remove_circle_outline),
                                             onPressed: () {
-                                              Provider.of<CartProvider>(context, listen: false)
-                                                  .updateQtyById(partId: itemModel.partId, qty: -1);
+                                              Provider.of<CartProvider>(context,
+                                                      listen: false)
+                                                  .updateQtyById(
+                                                      partId: itemModel.partId,
+                                                      qty: -1);
 //                                  setState(() {});
                                             }),
                                         Text(itemModel.orderQty.toString()),
                                         IconButton(
-                                            icon: Icon(Icons.add_circle_outline),
+                                            icon:
+                                                Icon(Icons.add_circle_outline),
                                             onPressed: () {
-                                              Provider.of<CartProvider>(context, listen: false)
-                                                  .updateQtyById(partId: itemModel.partId, qty: 1);
+                                              Provider.of<CartProvider>(context,
+                                                      listen: false)
+                                                  .updateQtyById(
+                                                      partId: itemModel.partId,
+                                                      qty: 1);
 //                                  setState(() {});
                                             }),
                                       ],
@@ -158,9 +186,11 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                                   children: [
                                     Spacer(),
                                     FlatButton(
-                                      shape: RoundedRectangleBorder(side: BorderSide(width: 0.5)),
+                                      shape: RoundedRectangleBorder(
+                                          side: BorderSide(width: 0.5)),
                                       onPressed: () {
-                                        Provider.of<CartProvider>(context, listen: false)
+                                        Provider.of<CartProvider>(context,
+                                                listen: false)
                                             .itemRemove(Id: itemModel.partId);
                                       },
                                       child: Text("Remove"),
@@ -191,10 +221,14 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          "Rs " + Provider.of<CartProvider>(context).getTotalPriceOfCart().toString(),
+                          "Rs " +
+                              Provider.of<CartProvider>(context)
+                                  .getTotalPriceOfCart()
+                                  .toString(),
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text("Total Cart", style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text("Total Cart",
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                       ],
                     ),
                   ),
@@ -203,20 +237,34 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                   child: RaisedButton(
                     color: Colors.green,
                     child: Center(
-                        child:
-                            Text('Confirm Order', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
-                    onPressed: Provider.of<CartProvider>(context, listen: false).getTotalPriceOfCart() == 0
+                        child: Text('Confirm Order',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold))),
+                    onPressed: Provider.of<CartProvider>(context, listen: false)
+                                .getTotalPriceOfCart() ==
+                            0
                         ? null
                         : () async {
-                            if (Provider.of<CustomerDetailsProvider>(context, listen: false).token != null) {
-                              Provider.of<CustomerDetailsProvider>(context, listen: false).addOrderItems(
-                                  orderItemsList: Provider.of<CartProvider>(context, listen: false).cartItems);
+                            if (Provider.of<CustomerDetailsProvider>(context,
+                                        listen: false)
+                                    .token !=
+                                null) {
+                              Provider.of<CustomerDetailsProvider>(context,
+                                      listen: false)
+                                  .addOrderItems(
+                                      orderItemsList: Provider.of<CartProvider>(
+                                              context,
+                                              listen: false)
+                                          .cartItems);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => ChooseAddressScreen(
                                           cartOrder: true,
-                                          amount: Provider.of<CartProvider>(context).getTotalPriceOfCart(),
+                                          amount:
+                                              Provider.of<CartProvider>(context)
+                                                  .getTotalPriceOfCart(),
                                         )),
                               );
                             } else {

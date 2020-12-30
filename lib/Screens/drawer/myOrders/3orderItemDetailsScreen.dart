@@ -1,6 +1,8 @@
 import 'package:bodmoo/methods/get/getPartById.dart';
 import 'package:bodmoo/models/orderItemModel.dart';
-import 'package:bodmoo/utils/urls.dart';
+//import 'package:bodmoo/utils/urls.dart';
+import 'package:bodmoo/utils/utils.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class OrderItemDetailsScreen extends StatefulWidget {
@@ -11,6 +13,8 @@ class OrderItemDetailsScreen extends StatefulWidget {
 }
 
 class _OrderItemDetailsScreenState extends State<OrderItemDetailsScreen> {
+  PageController pageController = PageController();
+  int page = 0;
   @override
   Widget build(BuildContext context) {
     print(widget.orderItem.partId + " " + widget.orderItem.brandName);
@@ -34,9 +38,100 @@ class _OrderItemDetailsScreenState extends State<OrderItemDetailsScreen> {
                     children: [
                       Container(
                         height: MediaQuery.of(context).size.height * 0.5,
-                        child: Hero(
-                            tag: "images_${widget.orderItem.partId}",
-                            child: Image.asset(IMAGE)),
+                        child: widget.orderItem.productImages.isEmpty
+                            ? Hero(
+                                tag: "images_${widget.orderItem.partId}",
+                                child: Image.asset(
+                                  IMAGE,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.4,
+                                ),
+                              )
+                            : Column(
+                                children: [
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.4,
+                                    child: PageView(
+                                      physics: ScrollPhysics(),
+                                      controller: pageController,
+                                      onPageChanged: (p) {
+                                        page = p;
+                                        setState(() {});
+                                      },
+                                      children: [
+                                        for (int i = 0;
+                                            i <
+                                                widget.orderItem.productImages
+                                                    .length;
+                                            i++)
+                                          i == 0
+                                              ? Stack(
+                                                  children: [
+                                                    Center(
+                                                      child: Hero(
+                                                          tag:
+                                                              "images_${widget.orderItem.partId}",
+                                                          child:
+                                                              CachedNetworkImage(
+                                                            imageUrl: widget
+                                                                .orderItem
+                                                                .productImages[0],
+                                                            // 'https://picsum.photos/250?image=9',
+                                                            // placeholder: (context, url) =>
+                                                            //     Container(child: CircularProgressIndicator()),
+                                                            progressIndicatorBuilder: (context,
+                                                                    url,
+                                                                    downloadProgress) =>
+                                                                CircularProgressIndicator(
+                                                                    value: downloadProgress
+                                                                        .progress),
+                                                            errorWidget:
+                                                                (context, url,
+                                                                        error) =>
+                                                                    Icon(Icons
+                                                                        .error),
+                                                          )),
+                                                    ),
+                                                  ],
+                                                )
+                                              : Center(
+                                                  child: CachedNetworkImage(
+                                                    imageUrl: widget.orderItem
+                                                        .productImages[i],
+                                                    progressIndicatorBuilder: (context,
+                                                            url,
+                                                            downloadProgress) =>
+                                                        CircularProgressIndicator(
+                                                            value:
+                                                                downloadProgress
+                                                                    .progress),
+                                                    errorWidget:
+                                                        (context, url, error) =>
+                                                            Icon(Icons.error),
+                                                  ),
+                                                ),
+                                      ],
+                                    ),
+                                  ),
+                                  widget.orderItem.productImages.length > 1
+                                      ? Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          // mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            for (int i = 0;
+                                                i <
+                                                    widget.orderItem
+                                                        .productImages.length;
+                                                i++)
+                                              indicator(
+                                                  i == page ? true : false),
+                                          ],
+                                        )
+                                      : Container(),
+                                ],
+                              ),
                       ),
                       Text(
                         widget.orderItem.partName.toString(),

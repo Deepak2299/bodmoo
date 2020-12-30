@@ -16,6 +16,7 @@ class OrderItemModel {
     @required this.partName,
     @required this.partPrice,
     @required this.orderQty,
+    @required this.productImages,
   });
 
   String partId;
@@ -26,7 +27,9 @@ class OrderItemModel {
   String partName;
   String partPrice;
   int orderQty;
-  factory OrderItemModel.fromJson(String str) => OrderItemModel.fromMap(json.decode(str));
+  List<String> productImages = [];
+  factory OrderItemModel.fromJson(String str) =>
+      OrderItemModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
@@ -34,11 +37,15 @@ class OrderItemModel {
         partId: json["part_id"] == null ? null : json["part_id"],
         brandName: json["brand_name"] == null ? null : json["brand_name"],
         vehicleName: json["vehicle_name"] == null ? null : json["vehicle_name"],
-        vehicleModel: json["vehicle_model"] == null ? null : json["vehicle_model"],
+        vehicleModel:
+            json["vehicle_model"] == null ? null : json["vehicle_model"],
         vehicleYear: json["vehicle_year"] == null ? null : json["vehicle_year"],
         partName: json["part_name"] == null ? null : json["part_name"],
         partPrice: json["item_price"] == null ? null : json["item_price"],
         orderQty: json["quantity"] == null ? null : json["quantity"],
+        productImages: json["productImages"] == null
+            ? null
+            : List<String>.from(json["productImages"].map((x) => x)),
       );
 
   Map<String, dynamic> toMap() => {
@@ -50,5 +57,8 @@ class OrderItemModel {
         "part_name": partName == null ? null : partName,
         "item_price": partPrice == null ? null : partPrice,
         "quantity": orderQty == null ? null : orderQty,
+        "productImages": productImages == null
+            ? null
+            : List<dynamic>.from(productImages.map((x) => x)),
       };
 }
