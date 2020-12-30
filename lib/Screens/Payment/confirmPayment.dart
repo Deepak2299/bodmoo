@@ -90,6 +90,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
 //    showToast(msg: 'Error in Order');
+    print("pay");
     Provider.of<ScreenProvider>(context, listen: false).setOrderLoader(true);
 
     bool b = await prepareOrder(
