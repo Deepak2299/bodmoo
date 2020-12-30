@@ -85,7 +85,6 @@ class _CartItemsScreenState extends State<CartItemsScreen> {
                       },
                       child: Card(
                         child: ListTile(
-                          
                           leading: Container(
                               width: 50,
 
