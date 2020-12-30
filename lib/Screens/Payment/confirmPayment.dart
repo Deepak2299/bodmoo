@@ -92,13 +92,13 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
 //    showToast(msg: 'Error in Order');
     Provider.of<ScreenProvider>(context, listen: false).setOrderLoader(true);
 
-//    bool b = await prepareOrder(
-//      address: widget.addressModel,
-//      context: context,
-//      orderId: response.orderId,
-//      transactionId: response.paymentId,
-//    );
-    bool b = false;
+    bool b = await prepareOrder(
+      address: widget.addressModel,
+      context: context,
+      orderId: response.orderId,
+      transactionId: response.paymentId,
+    );
+//    bool b = false;
     Provider.of<ScreenProvider>(context, listen: false).setOrderLoader(false);
     if (b) {
       // TODO:SHOW ORDER PLACED SUCCEFULLY
