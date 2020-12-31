@@ -281,12 +281,12 @@ class _DropdownUIState extends State<DropdownUI> {
         child: Container(
             width: MediaQuery.of(context).size.width * 0.5,
             child: ListTile(
-                leading: Icon(Icons.card_giftcard),
+                // leading: Icon(Icons.card_giftcard),
                 title: Text(
-                  widget.dropIndex != 4
-                      ? snapshot.data[i].toString()
-                      : snapshot.data[i].modelName.toString() + ' ' + snapshot.data[i].manufactureYear.toString(),
-                ))),
+              widget.dropIndex != 4
+                  ? snapshot.data[i].toString()
+                  : snapshot.data[i].modelName.toString() + ' ' + snapshot.data[i].manufactureYear.toString(),
+            ))),
       ));
     }
     return items;

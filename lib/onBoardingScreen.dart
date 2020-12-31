@@ -10,7 +10,7 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  final int _numPages = 4;
+  final int _numPages = 3;
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
 
@@ -50,8 +50,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Container(
                   alignment: Alignment.centerRight,
                   child: FlatButton(
-                    onPressed: () =>
-                        Navigator.push(context, new MaterialPageRoute(builder: (context) => new HomeScreen())),
+                    onPressed: () => _getStartedTapped(),
+                    // Navigator.push(context, new MaterialPageRoute(builder: (context) => new HomeScreen())),
                     child: Text(
                       'Skip',
                       style: TextStyle(
@@ -74,32 +74,32 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       });
                     },
                     children: <Widget>[
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Image.asset(
-                            'assets/google.png',
-                            height: 300,
-                            width: 300,
-                          ),
-                          Text(
-                            "Sign In",
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColorDark,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20,
-                            ),
-                          ),
-                          Text(
-                            'Sign in with Google Account and verify phone number',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.grey,
-                              fontSize: 18,
-                            ),
-                          )
-                        ],
-                      ),
+                      // Column(
+                      //   mainAxisSize: MainAxisSize.min,
+                      //   children: <Widget>[
+                      //     Image.asset(
+                      //       'assets/google.png',
+                      //       height: 300,
+                      //       width: 300,
+                      //     ),
+                      //     Text(
+                      //       "Sign In",
+                      //       style: TextStyle(
+                      //         color: Theme.of(context).primaryColorDark,
+                      //         fontWeight: FontWeight.w700,
+                      //         fontSize: 20,
+                      //       ),
+                      //     ),
+                      //     Text(
+                      //       'Sign in with Google Account and verify phone number',
+                      //       style: TextStyle(
+                      //         fontWeight: FontWeight.w400,
+                      //         color: Colors.grey,
+                      //         fontSize: 18,
+                      //       ),
+                      //     )
+                      //   ],
+                      // ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
@@ -267,6 +267,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _getStartedTapped() {
-    Navigator.push(context, new MaterialPageRoute(builder: (context) => new GoogleScreen()));
+    // Navigator.push(context, new MaterialPageRoute(builder: (context) => new
+    //
+    // GoogleScreen()));
+    Navigator.pushAndRemoveUntil(
+        context,
+        CupertinoPageRoute(
+          builder: (context) => HomeScreen(),
+        ),
+        (route) => false);
   }
 }

@@ -8,19 +8,19 @@ import 'package:flutter/cupertino.dart';
 import 'dart:math';
 import 'package:provider/provider.dart';
 
-Future<bool> prepareOrder(
-    {@required AddressModel address,
-    @required BuildContext context,
-    @required bool prepaid,
-    @required String razorpayOrderId,
-    @required String transactionId}) async {
+Future<bool> prepareOrder({
+  @required AddressModel address,
+  @required BuildContext context,
+  @required bool prepaid,
+  @required String razorpayOrderId,
+  @required String transactionId,
+}) async {
   OrderModel order = OrderModel(
-    paymentTransactionId:
-        prepaid ? transactionId : new Random().nextInt(100000).toString(),
+    paymentTransactionId: transactionId,
+    // prepaid ? transactionId : new Random().nextInt(100000).toString() * 5,
     razorpayOrderId: razorpayOrderId,
     prepaid: prepaid,
-    orderItems:
-        Provider.of<CustomerDetailsProvider>(context, listen: false).orderItems,
+    orderItems: Provider.of<CustomerDetailsProvider>(context, listen: false).orderItems,
     addressModel: address,
     // orderId: orderId
   );

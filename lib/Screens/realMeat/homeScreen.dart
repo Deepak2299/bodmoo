@@ -36,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
 //    print(context.watch<ScreenProvider>().getScreenData.catgName);
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.blue[100],
         appBar: AppBar(
           actions: [
             CartIcon(context: context),
@@ -50,12 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
             children: <Widget>[
               UserAccountsDrawerHeader(
                 accountName: Text(
-                  Provider.of<CustomerDetailsProvider>(context).customerName !=
-                          null
-                      ? 'Hello ' +
-                          Provider.of<CustomerDetailsProvider>(context)
-                              .customerName
-                              .toString()
+                  Provider.of<CustomerDetailsProvider>(context).customerName != null
+                      ? 'Hello ' + Provider.of<CustomerDetailsProvider>(context).customerName.toString()
                       : 'Hello! User,',
                 ),
               ),
@@ -64,39 +61,26 @@ class _HomeScreenState extends State<HomeScreen> {
                       ListTile(
                         title: Text("My Orders"),
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => OrderListScreen()));
+                          Navigator.push(context, CupertinoPageRoute(builder: (context) => OrderListScreen()));
                         },
                       ),
                       ListTile(
                         title: Text("My Addresses"),
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => AddressListScreen()));
+                          Navigator.push(context, CupertinoPageRoute(builder: (context) => AddressListScreen()));
                         },
                       )
                     ])
                   : Container(),
-              Provider.of<CustomerDetailsProvider>(context, listen: false)
-                          .token !=
-                      null
+              Provider.of<CustomerDetailsProvider>(context, listen: false).token != null
                   ? ListTile(
                       leading: Icon(Icons.exit_to_app),
                       title: Text("Logout"),
                       onTap: () {
                         clearPrefsForLogin();
-                        Provider.of<CustomerDetailsProvider>(context,
-                                listen: false)
-                            .clearCustomerDetails();
+                        Provider.of<CustomerDetailsProvider>(context, listen: false).clearCustomerDetails();
                         Navigator.pushAndRemoveUntil(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => SignInWithPhoneNO()),
-                            (route) => true);
+                            context, CupertinoPageRoute(builder: (context) => SignInWithPhoneNO()), (route) => true);
                       },
                     )
                   : ListTile(
@@ -106,8 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          CupertinoPageRoute(
-                              builder: (context) => SignInWithPhoneNO()),
+                          CupertinoPageRoute(builder: (context) => SignInWithPhoneNO()),
                           // (route) => false
                         );
                       },
@@ -129,76 +112,75 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         body: Consumer<ScreenProvider>(builder: (context, screenProvider, _) {
-          return Card(
-            child: Center(
-              child: Column(
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
 //              shrinkWrap: true,
 //              physics: ScrollPhysics(),
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
-                  // ItemView(
-                  //   context: context,
-                  //   title: "Categories",
-                  //   futureFunction: getCategories(),
-                  //   i: 0,
-                  // ),
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
-                  // screenProvider.getScreenData.catgName != null
-                  //     ? ItemView(
-                  //         context: context,
-                  //         title: "Sub Categories",
-                  //         futureFunction:
-                  //             getSubCategories(catgName: Provider.of<ScreenProvider>(context).getScreenData.catgName),
-                  //         i: 1,
-                  //       )
-                  //     : Container(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  DropdownUI(
-                    futureFunction: getCategories(),
-                    header: 'Category',
-                    dropIndex: 0,
-                  ),
-                  screenProvider.getScreenData.catgName != null
-                      ? DropdownUI(
-                          futureFunction: getSubCategories(
-                              catgName: Provider.of<ScreenProvider>(context)
-                                  .getScreenData
-                                  .catgName),
-                          header: 'Sub-Category',
-                          dropIndex: 1,
-                        )
-                      : dummyDropdown('Sub-Category'),
-                  DropdownUI(
-                    futureFunction: getBrands(),
-                    header: 'Brand',
-                    dropIndex: 2,
-                  ),
-                  screenProvider.getScreenData.brandName != null
-                      ? DropdownUI(
-                          futureFunction: getVehiclesByBrand(
-                              brandName:
-                                  screenProvider.getScreenData.brandName),
-                          header: 'Vehicle',
-                          dropIndex: 3,
-                        )
-                      : dummyDropdown('Vehicle'),
-                  screenProvider.getScreenData.vehicleName != null
-                      ? DropdownUI(
-                          futureFunction: getVariants(
-                              Vehiclename:
-                                  screenProvider.getScreenData.vehicleName),
-                          header: 'Model',
-                          dropIndex: 4,
-                        )
-                      : dummyDropdown('Model'),
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // SizedBox(
+                      //   height: 20,
+                      // ),
+                      // ItemView(
+                      //   context: context,
+                      //   title: "Categories",
+                      //   futureFunction: getCategories(),
+                      //   i: 0,
+                      // ),
+                      // SizedBox(
+                      //   height: 20,
+                      // ),
+                      // screenProvider.getScreenData.catgName != null
+                      //     ? ItemView(
+                      //         context: context,
+                      //         title: "Sub Categories",
+                      //         futureFunction:
+                      //             getSubCategories(catgName: Provider.of<ScreenProvider>(context).getScreenData.catgName),
+                      //         i: 1,
+                      //       )
+                      //     : Container(),
+
+                      DropdownUI(
+                        futureFunction: getCategories(),
+                        header: 'Category',
+                        dropIndex: 0,
+                      ),
+                      screenProvider.getScreenData.catgName != null
+                          ? DropdownUI(
+                              futureFunction: getSubCategories(
+                                  catgName: Provider.of<ScreenProvider>(context).getScreenData.catgName),
+                              header: 'Sub-Category',
+                              dropIndex: 1,
+                            )
+                          : dummyDropdown('Sub-Category'),
+                      DropdownUI(
+                        futureFunction: getBrands(),
+                        header: 'Brand',
+                        dropIndex: 2,
+                      ),
+                      screenProvider.getScreenData.brandName != null
+                          ? DropdownUI(
+                              futureFunction: getVehiclesByBrand(brandName: screenProvider.getScreenData.brandName),
+                              header: 'Vehicle',
+                              dropIndex: 3,
+                            )
+                          : dummyDropdown('Vehicle'),
+                      screenProvider.getScreenData.vehicleName != null
+                          ? DropdownUI(
+                              futureFunction: getVariants(Vehiclename: screenProvider.getScreenData.vehicleName),
+                              header: 'Model',
+                              dropIndex: 4,
+                            )
+                          : dummyDropdown('Model'),
 //               SizedBox(
 //                 height: 20,
 //               ),
@@ -235,7 +217,9 @@ class _HomeScreenState extends State<HomeScreen> {
 //               SizedBox(
 //                 height: 20,
 //               ),
-                ],
+                    ],
+                  ),
+                ),
               ),
             ),
           );
@@ -252,10 +236,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 : null,
             child: Container(
-              color:
-                  Provider.of<ScreenProvider>(context).getScreenData.vm != null
-                      ? Colors.blue
-                      : Colors.grey,
+              color: Provider.of<ScreenProvider>(context).getScreenData.vm != null ? Colors.blue : Colors.grey,
               height: MediaQuery.of(context).size.height * 0.07,
               width: MediaQuery.of(context).size.width,
               child: Column(
@@ -274,40 +255,25 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Text(
-                        textWidget(Provider.of<ScreenProvider>(context)
-                            .getScreenData
-                            .catgName),
+                        textWidget(Provider.of<ScreenProvider>(context).getScreenData.catgName),
                         style: TextStyle(color: Colors.white),
                       ),
                       Text(
-                        textWidget(Provider.of<ScreenProvider>(context)
-                            .getScreenData
-                            .subCatgName),
+                        textWidget(Provider.of<ScreenProvider>(context).getScreenData.subCatgName),
                         style: TextStyle(color: Colors.white),
                       ),
                       Text(
-                        textWidget(Provider.of<ScreenProvider>(context)
-                            .getScreenData
-                            .brandName),
+                        textWidget(Provider.of<ScreenProvider>(context).getScreenData.brandName),
                         style: TextStyle(color: Colors.white),
                       ),
                       Text(
-                        textWidget(Provider.of<ScreenProvider>(context)
-                            .getScreenData
-                            .vehicleName),
+                        textWidget(Provider.of<ScreenProvider>(context).getScreenData.vehicleName),
                         style: TextStyle(color: Colors.white),
                       ),
                       Text(
-                        Provider.of<ScreenProvider>(context).getScreenData.vm !=
-                                null
-                            ? Provider.of<ScreenProvider>(context)
-                                    .getScreenData
-                                    .vm
-                                    .modelName +
-                                Provider.of<ScreenProvider>(context)
-                                    .getScreenData
-                                    .vm
-                                    .manufactureYear
+                        Provider.of<ScreenProvider>(context).getScreenData.vm != null
+                            ? Provider.of<ScreenProvider>(context).getScreenData.vm.modelName +
+                                Provider.of<ScreenProvider>(context).getScreenData.vm.manufactureYear
                             : '',
                         style: TextStyle(color: Colors.white),
                       ),
