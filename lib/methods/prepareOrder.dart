@@ -11,15 +11,14 @@ import 'package:provider/provider.dart';
 Future<bool> prepareOrder(
     {@required AddressModel address,
     @required BuildContext context,
-    @required String orderId,
-//    @required String razorpayOrderId,
+    @required bool prepaid,
+    @required String razorpayOrderId,
     @required String transactionId}) async {
   OrderModel order = OrderModel(
     paymentTransactionId: transactionId,
-    razorpayOrderId: orderId,
-    paymentType: "COD",
-    orderItems:
-        Provider.of<CustomerDetailsProvider>(context, listen: false).orderItems,
+    razorpayOrderId: razorpayOrderId,
+    prepaid: prepaid,
+    orderItems: Provider.of<CustomerDetailsProvider>(context, listen: false).orderItems,
     addressModel: address,
     // orderId: orderId
   );

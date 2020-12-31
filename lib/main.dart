@@ -54,12 +54,12 @@ class MyApp extends StatelessWidget {
         // "phoneSignUp": (context) => SignInWithPhoneNO(),
         // "userSignUp": (context) => SignUpScreen(),
       },
-      // onGenerateRoute: (route) {
-      //   if (route.name == '/parts')
-      //     return CupertinoPageRoute(builder: (context) => PartScreen(), maintainState: true);
-      //   else
-      //     return null;
-      // },
+      onGenerateRoute: (route) {
+        if (route.name == '/parts')
+          return CupertinoPageRoute(builder: (context) => PartScreen(), maintainState: true);
+        else
+          return null;
+      },
     );
   }
 }

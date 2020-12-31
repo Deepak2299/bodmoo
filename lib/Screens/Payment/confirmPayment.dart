@@ -27,7 +27,6 @@ class ConfirmPaymentScreen extends StatefulWidget {
     @required this.cartOrder,
     @required this.amount,
     @required this.items,
-    // @required this.addressModel,
   });
 
   @override
@@ -47,94 +46,52 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
   }
 
   @override
-//  Widget build(BuildContext context) {
-//    return SafeArea(
-//      child: Scaffold(
-//        body: Stack(
-//          children: <Widget>[
-//            Text(widget.items[0].partName),
-//            // ListView.builder(
-//            //     shrinkWrap: true,
-//            //     itemCount: widget.items.length,
-//            //     itemBuilder: (context, index) {
-//            //       return Card(
-//            //         child: Container(
-//            //           child: Column(
-//            //             children: <Widget>[
-//            //               Text(widget.items[index].partName),
-//            //             ],
-//            //           ),
-//            //         ),
-//            //       );
-//            //     }),
-//            Provider.of<ScreenProvider>(context, listen: true).orderLoader
-//                ? LoadingWidget(
-//                    msg: 'Ordering...',
-//                  )
-//                : Container()
-//          ],
-//        ),
-//        bottomNavigationBar: RaisedButton(
-//          child: Text("Proceed to pay"),
-//          onPressed: () {
-//            pay(
-//              amount: widget.amount,
-//              razorpay: _razorpay,
-//              PhoneNumber: widget.addressModel.customerMobile,
-//            );
-//          },
-//        ),
-//      ),
-//    );
-//  }
-
-  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
-//    showToast(msg: 'Error in Order');
-    print("pay");
-    Provider.of<ScreenProvider>(context, listen: false).setOrderLoader(true);
-
+  placeOrder(PaymentSuccessResponse response) async {
     bool b = await prepareOrder(
       address: widget.addressModel,
       context: context,
-      orderId: response.orderId,
-      transactionId: response.paymentId,
+      razorpayOrderId: prepaid ? response.orderId : '',
+      transactionId: prepaid ? response.paymentId : '',
+      prepaid: prepaid,
     );
 //    bool b = false;
     Provider.of<ScreenProvider>(context, listen: false).setOrderLoader(false);
     if (b) {
       // TODO:SHOW ORDER PLACED SUCCEFULLY
-      widget.cartOrder
-          ? Provider.of<CartProvider>(context, listen: false).clearCart()
-          : null;
-      Navigator.pushReplacement(
+      widget.cartOrder ? Provider.of<CartProvider>(context, listen: false).clearCart() : null;
+      Navigator.pushAndRemoveUntil(
         context,
         CupertinoPageRoute(builder: (context) => OrderListScreen()),
-        // ModalRoute.withName('/parts'),
+        ModalRoute.withName('/parts'),
       );
     } else {
-      Navigator.pushReplacement(
-          context,
-          CupertinoPageRoute(
-            builder: (context) => OrderPlaceErrorScreen(
-              transactionId: response.paymentId,
-            ),
-          ));
-      // showDialog(
-      //   context: context,
-      //   child: CupertinoAlertDialog(
-      //     title: Text("Error"),
-      //     content: Text("Some error occurred while placing the order. Contact dealer for refund."),
-      //   ),
-      // );
-      //
+      prepaid
+          ? Navigator.pushReplacement(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => OrderPlaceErrorScreen(
+                  transactionId: response.paymentId,
+                ),
+              ))
+          : showDialog(
+              context: context,
+              child: CupertinoAlertDialog(
+                title: Text("Error"),
+                content: Text("Some error occurred while placing the order. "),
+              ),
+            );
     }
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    Provider.of<ScreenProvider>(context, listen: false).setOrderLoader(true);
+    placeOrder(response);
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     _razorpay.clear(); // Removes all listeners
-
     super.dispose();
   }
 
@@ -161,6 +118,8 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
     });
     return sum;
   }
+
+  bool prepaid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -225,34 +184,22 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                               Flexible(
                                 child: Row(
                                   children: <Widget>[
+                                    tagStyle(str: orderItem[orderItemIndex].brandName),
+                                    tagStyle(str: orderItem[orderItemIndex].vehicleName),
                                     tagStyle(
-                                        str: orderItem[orderItemIndex]
-                                            .brandName),
-                                    tagStyle(
-                                        str: orderItem[orderItemIndex]
-                                            .vehicleName),
-                                    tagStyle(
-                                        str: orderItem[orderItemIndex]
-                                                .vehicleModel +
+                                        str: orderItem[orderItemIndex].vehicleModel +
                                             " " +
-                                            orderItem[orderItemIndex]
-                                                .vehicleYear),
+                                            orderItem[orderItemIndex].vehicleYear),
                                   ],
                                 ),
                               ),
                               SizedBox(
                                 height: 2,
                               ),
-                              Text(
-                                  "Price: Rs. " +
-                                      orderItem[orderItemIndex].partPrice,
-                                  style: TextStyle(fontSize: 14)),
+                              Text("Price: Rs. " + orderItem[orderItemIndex].partPrice, style: TextStyle(fontSize: 14)),
                               SizedBox(height: 2),
                               Text(
-                                "Qty: " +
-                                    orderItem[orderItemIndex]
-                                        .orderQty
-                                        .toString(),
+                                "Qty: " + orderItem[orderItemIndex].orderQty.toString(),
                                 style: TextStyle(fontSize: 14),
                               ),
                             ],
@@ -269,8 +216,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                     Container(
                       width: double.maxFinite,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 10.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
                         child: Text(
                           "Shipping Details",
                           style: TextStyle(color: Colors.black54),
@@ -283,8 +229,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                     ),
                     Container(
                       width: double.maxFinite,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0, vertical: 10.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
                       child: addressWidget(addressModel: widget.addressModel),
                     ),
                   ],
@@ -294,8 +239,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                     Container(
                       width: double.maxFinite,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 10.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
                         child: Text(
                           "Price Details",
                           style: TextStyle(color: Colors.black54),
@@ -307,8 +251,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                       thickness: 1.2,
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0, vertical: 8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
                       child: Row(
                         children: [
                           Text(
@@ -328,6 +271,31 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                       height: 2,
                       thickness: 1.2,
                     ),
+                    RadioListTile(
+                      title: Text('Cash On Delivery'),
+                      controlAffinity: ListTileControlAffinity.trailing,
+                      groupValue: prepaid,
+                      onChanged: (b) {
+                        print(b.toString());
+                        // b ? prepaid = false : true;
+                        prepaid = b;
+                        setState(() {});
+                      },
+                      value: false,
+                    ),
+                    RadioListTile(
+                      title: Text('Prepaid Online'),
+                      controlAffinity: ListTileControlAffinity.trailing,
+                      groupValue: prepaid,
+                      onChanged: (b) {
+                        print(b.toString());
+                        prepaid = b;
+
+                        // b ? prepaid = true : false;
+                        setState(() {});
+                      },
+                      value: true,
+                    ),
                   ],
                 ),
               ],
@@ -339,24 +307,47 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                 : Container()
           ],
         ),
-        bottomNavigationBar: GestureDetector(
-          onTap: () {
-            pay(
-              amount: widget.amount,
-              razorpay: _razorpay,
-              PhoneNumber: widget.addressModel.customerMobile,
-            );
-          },
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.06,
-            color: Colors.deepOrange,
-            child: Center(
-              child: Text(
-                "Proceed to pay",
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-              ),
-            ),
+        bottomNavigationBar: prepaid ? prepaidOnline() : cashOnDelivery(),
+      ),
+    );
+  }
+
+  cashOnDelivery() {
+    return GestureDetector(
+      onTap: () async {
+        Provider.of<ScreenProvider>(context, listen: false).setOrderLoader(true);
+
+        await placeOrder(null);
+      },
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.06,
+        color: Colors.deepOrange,
+        child: Center(
+          child: Text(
+            "Confirm Order",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+          ),
+        ),
+      ),
+    );
+  }
+
+  prepaidOnline() {
+    return GestureDetector(
+      onTap: () {
+        pay(
+          amount: widget.amount,
+          razorpay: _razorpay,
+          PhoneNumber: widget.addressModel.customerMobile,
+        );
+      },
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.06,
+        color: Colors.deepOrange,
+        child: Center(
+          child: Text(
+            "Proceed to pay",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
           ),
         ),
       ),

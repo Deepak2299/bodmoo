@@ -7,6 +7,7 @@ import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class OrderListScreen extends StatefulWidget {
@@ -39,6 +40,20 @@ class _OrderListScreen1State extends State<OrderListScreen> {
                         OrderModel orderModel = ordersList[orderIndex];
 
                         return ListTile(
+                          leading: Column(
+                            children: [
+                              Text(orderModel.orderDate.year.toString()),
+                              Text(
+                                orderModel.orderDate.day.toString(),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              Text(DateFormat.MMM().format(new DateTime.now())),
+                              // Text(DateFormat.(orderModel.orderDate)),
+                            ],
+                          ),
                           title: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
@@ -48,26 +63,23 @@ class _OrderListScreen1State extends State<OrderListScreen> {
 //                          mainAxisSize: MainAxisSize.max,
                               children: <Widget>[
                                 Text(
-                                  "Order No: " + orderModel.orderNumber,
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                                Text(
-                                  "Order at " + orderModel.orderDate.toIso8601String(),
-                                  style: TextStyle(fontSize: 15),
+                                  "Order: #" + orderModel.orderNumber,
+                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
                                 ),
                                 Text(
                                   "Status: " + orderModel.orderStatus,
                                   style: TextStyle(fontSize: 12),
                                 ),
                                 Text(
-                                  "Payment Mode: " + orderModel.paymentType,
+                                  "Payment Mode: ${orderModel.prepaid ? 'Online' : 'COD'}",
                                   style: TextStyle(fontSize: 12),
                                 ),
-                                Text(
-                                  "Transaction Id: " + orderModel.paymentTransactionId,
-                                  style: TextStyle(fontSize: 12),
-                                ),
-//                        Text(orderModel.paymentTransactionId),
+                                orderModel.prepaid
+                                    ? SelectableText(
+                                        "Transaction Id: " + orderModel.paymentTransactionId,
+                                        style: TextStyle(fontSize: 12),
+                                      )
+                                    : Container(),
                               ],
                             ),
                           ),
