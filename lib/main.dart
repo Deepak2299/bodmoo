@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
       // initialRoute: '/home',
       routes: {
         // "/home": (context) => HomeScreen(),
-        // '/parts': (context) => PartScreen(),
+        '/parts': (context) => PartScreen(),
         // "partDetail": (context) => PartDetailsScren(),
         // "cartScreen": (context) => CartItemsScreen(),
         // "phoneSignUp": (context) => SignInWithPhoneNO(),
