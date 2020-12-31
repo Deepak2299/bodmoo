@@ -15,10 +15,12 @@ Future<bool> prepareOrder(
     @required String razorpayOrderId,
     @required String transactionId}) async {
   OrderModel order = OrderModel(
-    paymentTransactionId: transactionId,
+    paymentTransactionId:
+        prepaid ? transactionId : new Random().nextInt(100000).toString(),
     razorpayOrderId: razorpayOrderId,
     prepaid: prepaid,
-    orderItems: Provider.of<CustomerDetailsProvider>(context, listen: false).orderItems,
+    orderItems:
+        Provider.of<CustomerDetailsProvider>(context, listen: false).orderItems,
     addressModel: address,
     // orderId: orderId
   );
