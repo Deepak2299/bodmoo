@@ -23,21 +23,24 @@ Future<PartsModel> getParts({
     carModel: modelName,
     modelYear: int.parse(year),
   );
+  Map<String, dynamic> params = {"carName": vehicleName, "carModel": modelName};
   String url = GET_CAR_PART_URL +
       brandName +
       '&' +
-      vehicleName +
-      '&' +
-      modelName +
-      '&' +
+//      vehicleName +
+//      '&' +
+//      modelName +
+//      '&' +
       year +
       '&' +
       category +
       '&' +
       subCategory;
   print(url);
-  var req = await http.get(url, headers: {'Content-type': 'application/json'});
+  var req = await http.post(url,
+      body: jsonEncode(params), headers: {'Content-type': 'application/json'});
   print(req.body);
+
   if (req.statusCode != 200) {
 //    ScreenErrorData.partsError = jsonDecode(req.body)['message'];
   }
@@ -55,5 +58,6 @@ Future<PartsModel> getParts({
       }
     }
   }
+
   return partsModel;
 }
