@@ -259,7 +259,7 @@ class _DropdownUIState extends State<DropdownUI> {
       case 4:
         return Provider.of<ScreenProvider>(context).getScreenData.vm != null
             ? (Provider.of<ScreenProvider>(context).getScreenData.vm.modelName.trim().toString() +
-                ' ' +
+                '@' +
                 Provider.of<ScreenProvider>(context).getScreenData.vm.manufactureYear.trim().toString())
             : null;
         break;
@@ -276,7 +276,7 @@ class _DropdownUIState extends State<DropdownUI> {
       print(widget.dropIndex.toString());
       items.add(DropdownMenuItem<String>(
         value: widget.dropIndex == 4
-            ? snapshot.data[i].modelName.trim() + ' ' + snapshot.data[i].manufactureYear.trim()
+            ? snapshot.data[i].modelName.toString() + '@' + snapshot.data[i].manufactureYear.toString()
             : snapshot.data[i].toString(),
         child: Container(
             width: MediaQuery.of(context).size.width * 0.5,
@@ -306,7 +306,7 @@ class _DropdownUIState extends State<DropdownUI> {
             onChanged: (String str) {
               Provider.of<ScreenProvider>(context, listen: false).updateData(
                   dataValue: widget.dropIndex == 4
-                      ? VariantsModel(manufactureYear: str.split(' ')[1], modelName: str.split(' ')[0])
+                      ? VariantsModel(manufactureYear: str.split('@')[1].toString(), modelName: str.split('@')[0])
                       : str,
                   dataIndex: widget.dropIndex);
               items = [];
