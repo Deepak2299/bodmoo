@@ -271,7 +271,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     // Navigator.push(context, new MaterialPageRoute(builder: (context) => new
     //
     // GoogleScreen()));
-    Navigator.pushAndRemoveUntil(
-        context, CupertinoPageRoute(builder: (context) => AllPartsHomeScreen()), (route) => false);
+    Navigator.pushNamedAndRemoveUntil(
+        context, "/home", (route) => false);
   }
 }

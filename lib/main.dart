@@ -4,6 +4,7 @@ import 'package:bodmoo/Screens/realMeat/PartDetailsScreen.dart';
 import 'package:bodmoo/Screens/realMeat/PartScreen.dart';
 import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
 import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
+import 'package:bodmoo/Screens/realMeat/home_screen_all_part.dart';
 import 'package:bodmoo/Screens/splashScreen.dart';
 import 'package:bodmoo/methods/get/getAllParts.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
@@ -49,7 +50,8 @@ class MyApp extends StatelessWidget {
           SplashScreen(),
       // initialRoute: '/home',
       routes: {
-        // "/home": (context) => HomeScreen(),
+        "/home": (context) => AllPartsHomeScreen(),
+        "onboard": (context) => AllPartsHomeScreen(),
         '/parts': (context) => PartScreen(),
         // "partDetail": (context) => PartDetailsScren(),
         // "cartScreen": (context) => CartItemsScreen(),
@@ -61,6 +63,9 @@ class MyApp extends StatelessWidget {
         if (route.name.contains('/parts'))
           return CupertinoPageRoute(
               builder: (context) => PartScreen(), maintainState: true);
+        else if (route.name.contains('/home'))
+          return CupertinoPageRoute(
+              builder: (context) => AllPartsHomeScreen(), maintainState: true);
         else
           return null;
       },

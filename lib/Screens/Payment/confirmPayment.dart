@@ -58,11 +58,13 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
     Provider.of<ScreenProvider>(context, listen: false).setOrderLoader(false);
     if (b) {
       // TODO:SHOW ORDER PLACED SUCCEFULLY
-      widget.cartOrder ? Provider.of<CartProvider>(context, listen: false).clearCart() : null;
+      widget.cartOrder
+          ? Provider.of<CartProvider>(context, listen: false).clearCart()
+          : null;
       Navigator.pushAndRemoveUntil(
         context,
         CupertinoPageRoute(builder: (context) => OrderListScreen()),
-        ModalRoute.withName('/parts'),
+        ModalRoute.withName('/home'),
       );
     } else {
       prepaid
@@ -184,22 +186,34 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                               Flexible(
                                 child: Row(
                                   children: <Widget>[
-                                    tagStyle(str: orderItem[orderItemIndex].brandName),
-                                    tagStyle(str: orderItem[orderItemIndex].vehicleName),
                                     tagStyle(
-                                        str: orderItem[orderItemIndex].vehicleModel +
+                                        str: orderItem[orderItemIndex]
+                                            .brandName),
+                                    tagStyle(
+                                        str: orderItem[orderItemIndex]
+                                            .vehicleName),
+                                    tagStyle(
+                                        str: orderItem[orderItemIndex]
+                                                .vehicleModel +
                                             " " +
-                                            orderItem[orderItemIndex].vehicleYear),
+                                            orderItem[orderItemIndex]
+                                                .vehicleYear),
                                   ],
                                 ),
                               ),
                               SizedBox(
                                 height: 2,
                               ),
-                              Text("Price: Rs. " + orderItem[orderItemIndex].partPrice, style: TextStyle(fontSize: 14)),
+                              Text(
+                                  "Price: Rs. " +
+                                      orderItem[orderItemIndex].partPrice,
+                                  style: TextStyle(fontSize: 14)),
                               SizedBox(height: 2),
                               Text(
-                                "Qty: " + orderItem[orderItemIndex].orderQty.toString(),
+                                "Qty: " +
+                                    orderItem[orderItemIndex]
+                                        .orderQty
+                                        .toString(),
                                 style: TextStyle(fontSize: 14),
                               ),
                             ],
@@ -216,7 +230,8 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                     Container(
                       width: double.maxFinite,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15.0, vertical: 10.0),
                         child: Text(
                           "Shipping Details",
                           style: TextStyle(color: Colors.black54),
@@ -229,7 +244,8 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                     ),
                     Container(
                       width: double.maxFinite,
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 10.0),
                       child: addressWidget(addressModel: widget.addressModel),
                     ),
                   ],
@@ -239,7 +255,8 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                     Container(
                       width: double.maxFinite,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15.0, vertical: 10.0),
                         child: Text(
                           "Price Details",
                           style: TextStyle(color: Colors.black54),
@@ -251,7 +268,8 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                       thickness: 1.2,
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 8.0),
                       child: Row(
                         children: [
                           Text(
@@ -315,7 +333,8 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
   cashOnDelivery() {
     return GestureDetector(
       onTap: () async {
-        Provider.of<ScreenProvider>(context, listen: false).setOrderLoader(true);
+        Provider.of<ScreenProvider>(context, listen: false)
+            .setOrderLoader(true);
 
         await placeOrder(null);
       },

@@ -20,17 +20,21 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Future.delayed(Duration(seconds: 2), () async {
       bool b = await checkPrefsForLogin(context: context);
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              fullscreenDialog: true,
-              builder: (context) {
-                if (b) {
-                  return AllPartsHomeScreen();
-                } else
-                  return OnboardingScreen();
-                // return SignInWithPhoneNO();
-              }));
+//      Navigator.pushReplacementNamed(
+//          context,
+//          MaterialPageRoute(
+//              fullscreenDialog: true,
+//              builder: (context) {
+//                if (b) {
+//                  return AllPartsHomeScreen();
+//                } else
+//                  return OnboardingScreen();
+//                // return SignInWithPhoneNO();
+//              }));
+      if (b)
+        Navigator.pushReplacementNamed(context, '/home');
+      else
+        Navigator.pushReplacementNamed(context, '/onboard');
     });
   }
 
