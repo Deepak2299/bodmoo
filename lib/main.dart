@@ -5,6 +5,7 @@ import 'package:bodmoo/Screens/realMeat/PartScreen.dart';
 import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
 import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:bodmoo/Screens/splashScreen.dart';
+import 'package:bodmoo/methods/get/getAllParts.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/cartProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
@@ -12,7 +13,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+//  var pt = await getAllParts();
+//  print(pt);
   runApp(
     MultiProvider(
       providers: [
@@ -56,7 +59,8 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (route) {
         print(route.name);
         if (route.name.contains('/parts'))
-          return CupertinoPageRoute(builder: (context) => PartScreen(), maintainState: true);
+          return CupertinoPageRoute(
+              builder: (context) => PartScreen(), maintainState: true);
         else
           return null;
       },

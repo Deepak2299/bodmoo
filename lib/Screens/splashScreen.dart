@@ -1,6 +1,7 @@
 import 'package:bodmoo/Screens/GoogleSignIn/googleSignInScreen.dart';
 import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
+import 'package:bodmoo/Screens/realMeat/home_screen_all_part.dart';
 import 'package:bodmoo/onBoardingScreen.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
               fullscreenDialog: true,
               builder: (context) {
                 if (b) {
-                  return HomeScreen();
+                  return AllPartsHomeScreen();
                 } else
                   return OnboardingScreen();
                 // return SignInWithPhoneNO();
