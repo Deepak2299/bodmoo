@@ -13,9 +13,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class AllPartsHomeScreen extends StatelessWidget {
-  listTile(int subPartIndex, List<PartDetail> parts, int partIndex, PartsModel pm, BuildContext context) {
+  listTile(int subPartIndex, List<PartDetail> parts, int partIndex,
+      PartsModel pm, BuildContext context) {
     return Card(
       child: ListTile(
         leading: Container(
@@ -29,8 +31,10 @@ class AllPartsHomeScreen extends StatelessWidget {
                     ? Image.asset(IMAGE)
                     : CachedNetworkImage(
                         imageUrl: parts[subPartIndex].productImages[0],
-                        progressIndicatorBuilder: (context, url, downloadProgress) =>
-                            CircularProgressIndicator(value: downloadProgress.progress),
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) =>
+                                CircularProgressIndicator(
+                                    value: downloadProgress.progress),
                         errorWidget: (context, url, error) => Icon(Icons.error),
                       )),
           ),
@@ -54,7 +58,8 @@ class AllPartsHomeScreen extends StatelessWidget {
             Text(
               parts[subPartIndex].outOfStock ? "OutOfStock" : "Instock",
               style: TextStyle(
-                color: parts[subPartIndex].outOfStock ? Colors.red : Colors.green,
+                color:
+                    parts[subPartIndex].outOfStock ? Colors.red : Colors.green,
               ),
             ),
           ],
@@ -98,8 +103,12 @@ class AllPartsHomeScreen extends StatelessWidget {
           children: <Widget>[
             UserAccountsDrawerHeader(
               accountName: Text(
-                Provider.of<CustomerDetailsProvider>(context).customerName != null
-                    ? 'Hello ' + Provider.of<CustomerDetailsProvider>(context).customerName.toString()
+                Provider.of<CustomerDetailsProvider>(context).customerName !=
+                        null
+                    ? 'Hello ' +
+                        Provider.of<CustomerDetailsProvider>(context)
+                            .customerName
+                            .toString()
                     : 'Hello! User,',
               ),
             ),
@@ -108,26 +117,39 @@ class AllPartsHomeScreen extends StatelessWidget {
                     ListTile(
                       title: Text("My Orders"),
                       onTap: () {
-                        Navigator.push(context, CupertinoPageRoute(builder: (context) => OrderListScreen()));
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => OrderListScreen()));
                       },
                     ),
                     ListTile(
                       title: Text("My Addresses"),
                       onTap: () {
-                        Navigator.push(context, CupertinoPageRoute(builder: (context) => AddressListScreen()));
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => AddressListScreen()));
                       },
                     )
                   ])
                 : Container(),
-            Provider.of<CustomerDetailsProvider>(context, listen: false).token != null
+            Provider.of<CustomerDetailsProvider>(context, listen: false)
+                        .token !=
+                    null
                 ? ListTile(
                     leading: Icon(Icons.exit_to_app),
                     title: Text("Logout"),
                     onTap: () {
                       clearPrefsForLogin();
-                      Provider.of<CustomerDetailsProvider>(context, listen: false).clearCustomerDetails();
+                      Provider.of<CustomerDetailsProvider>(context,
+                              listen: false)
+                          .clearCustomerDetails();
                       Navigator.pushAndRemoveUntil(
-                          context, CupertinoPageRoute(builder: (context) => SignInWithPhoneNO()), (route) => true);
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => SignInWithPhoneNO()),
+                          (route) => true);
                     },
                   )
                 : ListTile(
@@ -137,7 +159,8 @@ class AllPartsHomeScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        CupertinoPageRoute(builder: (context) => SignInWithPhoneNO()),
+                        CupertinoPageRoute(
+                            builder: (context) => SignInWithPhoneNO()),
                         // (route) => false
                       );
                     },
@@ -187,13 +210,17 @@ class AllPartsHomeScreen extends StatelessWidget {
                                                 tagStyle(str: pm.carBrand),
                                                 tagStyle(str: pm.carName),
                                                 tagStyle(str: pm.carModel),
-                                                tagStyle(str: pm.modelYear.toString()),
+                                                tagStyle(
+                                                    str: pm.modelYear
+                                                        .toString()),
                                               ],
                                             ),
-                                            listTile(subPartIndex, parts, partIndex, pm, context)
+                                            listTile(subPartIndex, parts,
+                                                partIndex, pm, context)
                                           ],
                                         )
-                                      : listTile(subPartIndex, parts, partIndex, pm, context);
+                                      : listTile(subPartIndex, parts, partIndex,
+                                          pm, context);
                                 },
 //                            separatorBuilder: (context, ind) => Divider(
 //                              color: Colors.blue,
@@ -209,7 +236,73 @@ class AllPartsHomeScreen extends StatelessWidget {
                         ),
                       );
               } else
-                return Center(child: CircularProgressIndicator());
+                return Expanded(
+                  child: Shimmer.fromColors(
+                    baseColor: Colors.grey[300],
+                    highlightColor: Colors.grey[100],
+//                    enabled: _enabled,
+                    child: ListView.builder(
+                      itemBuilder: (_, __) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListTile(
+                          leading: Container(
+                            width: 80,
+                            color: Colors.white,
+                          ),
+                          title: Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                  width: double.infinity,
+                                  height: 8.0,
+                                  color: Colors.white,
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 2.0),
+                                ),
+                                Container(
+                                  width: double.infinity,
+                                  height: 8.0,
+                                  color: Colors.white,
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 2.0),
+                                ),
+                                Container(
+                                  width: 40.0,
+                                  height: 8.0,
+                                  color: Colors.white,
+                                ),
+                              ],
+                            ),
+                          ),
+//                          trailing: Column(
+//                            crossAxisAlignment: CrossAxisAlignment.center,
+//                            mainAxisAlignment: MainAxisAlignment.center,
+//                            children: [
+//                              Container(
+//                                height: 15,
+//                                width: 40,
+//                                color: Colors.white,
+//                              ),
+//                              const Padding(
+//                                padding: EdgeInsets.symmetric(vertical: 1.0),
+//                              ),
+//                              Container(
+//                                height: 15,
+//                                width: 40,
+//                                color: Colors.white,
+//                              ),
+//                            ],
+//                          ),
+                        ),
+                      ),
+                      itemCount:
+                          (MediaQuery.of(context).size.height / 60).toInt(),
+                    ),
+                  ),
+                );
             },
           ),
         ],
@@ -225,7 +318,8 @@ class AllPartsHomeScreen extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
         ),
         onPressed: () {
-          Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeScreen()));
+          Navigator.push(
+              context, CupertinoPageRoute(builder: (context) => HomeScreen()));
         },
       ),
     );
