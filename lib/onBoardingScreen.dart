@@ -3,6 +3,7 @@ import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:bodmoo/Screens/realMeat/home_screen_all_part.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -271,10 +272,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     //
     // GoogleScreen()));
     Navigator.pushAndRemoveUntil(
-        context,
-        CupertinoPageRoute(
-          builder: (context) => HomeScreen(),
-        ),
-        (route) => false);
+        context, CupertinoPageRoute(builder: (context) => AllPartsHomeScreen()), (route) => false);
   }
 }

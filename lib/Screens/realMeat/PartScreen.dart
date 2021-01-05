@@ -15,6 +15,7 @@ class PartScreen extends StatefulWidget {
 }
 
 class _PartScreenState extends State<PartScreen> {
+  int partIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,26 +35,12 @@ class _PartScreenState extends State<PartScreen> {
             children: <Widget>[
               FutureBuilder(
                 future: getParts(
-                  category: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .catgName,
-                  subCategory: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .subCatgName,
-                  brandName: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .brandName,
-                  vehicleName: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .vehicleName,
-                  modelName: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .vm
-                      .modelName,
-                  year: Provider.of<ScreenProvider>(context)
-                      .getScreenData
-                      .vm
-                      .manufactureYear,
+                  category: Provider.of<ScreenProvider>(context).getScreenData.catgName,
+                  subCategory: Provider.of<ScreenProvider>(context).getScreenData.subCatgName,
+                  brandName: Provider.of<ScreenProvider>(context).getScreenData.brandName,
+                  vehicleName: Provider.of<ScreenProvider>(context).getScreenData.vehicleName,
+                  modelName: Provider.of<ScreenProvider>(context).getScreenData.vm.modelName,
+                  year: Provider.of<ScreenProvider>(context).getScreenData.vm.manufactureYear,
                 ),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -70,7 +57,7 @@ class _PartScreenState extends State<PartScreen> {
                             child: ListView.separated(
                             padding: EdgeInsets.all(8),
                             itemCount: partsList.length,
-                            itemBuilder: (context, index) {
+                            itemBuilder: (context, subPartIndex) {
                               return Card(
                                 child: ListTile(
                                   leading: Container(
@@ -79,56 +66,37 @@ class _PartScreenState extends State<PartScreen> {
                                       widthFactor: 1,
                                       heightFactor: 0.8,
                                       child: Hero(
-                                          tag: "images_${index}",
-                                          child: partsList[index]
-                                                  .productImages
-                                                  .isEmpty
+                                          tag: "images_${partIndex}_${subPartIndex}",
+                                          child: partsList[subPartIndex].productImages.isEmpty
                                               ? Image.asset(IMAGE)
                                               : CachedNetworkImage(
-                                                  imageUrl: partsList[index]
-                                                      .productImages[0],
-                                                  progressIndicatorBuilder: (context,
-                                                          url,
-                                                          downloadProgress) =>
-                                                      CircularProgressIndicator(
-                                                          value:
-                                                              downloadProgress
-                                                                  .progress),
-                                                  errorWidget:
-                                                      (context, url, error) =>
-                                                          Icon(Icons.error),
+                                                  imageUrl: partsList[subPartIndex].productImages[0],
+                                                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                                      CircularProgressIndicator(value: downloadProgress.progress),
+                                                  errorWidget: (context, url, error) => Icon(Icons.error),
                                                 )),
                                     ),
                                   ),
                                   title: Text(
-                                    partsList[index].partName,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                    partsList[subPartIndex].partName,
+                                    style: TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   subtitle: Column(
                                     mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        "Rs " +
-                                            partsList[index]
-                                                .itemPrice
-                                                .toString(),
+                                        "Rs " + partsList[subPartIndex].itemPrice.toString(),
 //                                    style: textStyle,
                                       ),
                                       Text(
-                                        partsList[index].quantity.toString(),
+                                        partsList[subPartIndex].quantity.toString(),
 //                                    style: textStyle,
                                       ),
                                       Text(
-                                        partsList[index].outOfStock
-                                            ? "OutOfStock"
-                                            : "Instock",
+                                        partsList[subPartIndex].outOfStock ? "OutOfStock" : "Instock",
                                         style: TextStyle(
-                                          color: partsList[index].outOfStock
-                                              ? Colors.red
-                                              : Colors.green,
+                                          color: partsList[subPartIndex].outOfStock ? Colors.red : Colors.green,
                                         ),
                                       ),
                                     ],
@@ -137,18 +105,16 @@ class _PartScreenState extends State<PartScreen> {
                                   trailing: Text(
                                     "View\nDetails",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.w500),
+                                    style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
                                   ),
                                   onTap: () {
                                     Navigator.push(
                                         context,
                                         CupertinoPageRoute(
-                                            builder: (context) =>
-                                                PartDetailsScren(
+                                            builder: (context) => PartDetailsScren(
                                                   partModel: pm,
-                                                  partIndex: index,
+                                                  subPartIndex: subPartIndex,
+                                                  PartIndex: partIndex,
                                                 )));
                                   },
                                 ),
