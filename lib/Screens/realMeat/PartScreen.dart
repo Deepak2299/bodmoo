@@ -21,12 +21,7 @@ class _PartScreenState extends State<PartScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Parts"),
-        actions: [
-          CartIcon(context: context),
-          SizedBox(
-            width: 10,
-          )
-        ],
+        actions: [CartIcon(context: context), SizedBox(width: 10)],
       ),
       body: Stack(
         children: <Widget>[

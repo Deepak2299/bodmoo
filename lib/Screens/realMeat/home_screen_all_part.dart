@@ -2,6 +2,7 @@ import 'package:bodmoo/Screens/drawer/myAddresses/addressListScreen.dart';
 import 'package:bodmoo/Screens/drawer/myOrders/1ordersListScreen.dart';
 import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/Screens/realMeat/PartDetailsScreen.dart';
+import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
 import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:bodmoo/methods/get/getAllParts.dart';
 import 'package:bodmoo/models/partsModel.dart';
@@ -14,64 +15,67 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AllPartsHomeScreen extends StatelessWidget {
-  listTile(int index, List<PartDetail> parts, int i, PartsModel pm, BuildContext context) {
-    return ListTile(
-      leading: Container(
-        width: 80,
-        child: Center(
-          widthFactor: 1,
-          heightFactor: 0.8,
-          child: Hero(
-              tag: "images_${i}_${index}",
-              child: parts[index].productImages.isEmpty
-                  ? Image.asset(IMAGE)
-                  : CachedNetworkImage(
-                      imageUrl: parts[index].productImages[0],
-                      progressIndicatorBuilder: (context, url, downloadProgress) =>
-                          CircularProgressIndicator(value: downloadProgress.progress),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                    )),
+  listTile(int subPartIndex, List<PartDetail> parts, int partIndex, PartsModel pm, BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: Container(
+          width: 80,
+          child: Center(
+            widthFactor: 1,
+            heightFactor: 0.8,
+            child: Hero(
+                tag: "images_${partIndex}_${subPartIndex}",
+                child: parts[subPartIndex].productImages.isEmpty
+                    ? Image.asset(IMAGE)
+                    : CachedNetworkImage(
+                        imageUrl: parts[subPartIndex].productImages[0],
+                        progressIndicatorBuilder: (context, url, downloadProgress) =>
+                            CircularProgressIndicator(value: downloadProgress.progress),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      )),
+          ),
         ),
-      ),
-      title: Text(
-        parts[index].partName,
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      subtitle: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            "Rs " + parts[index].itemPrice.toString(),
+        title: Text(
+          parts[subPartIndex].partName,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "Rs " + parts[subPartIndex].itemPrice.toString(),
 //                                    style: textStyle,
-          ),
-          Text(
-            parts[index].quantity.toString(),
-//                                    style: textStyle,
-          ),
-          Text(
-            parts[index].outOfStock ? "OutOfStock" : "Instock",
-            style: TextStyle(
-              color: parts[index].outOfStock ? Colors.red : Colors.green,
             ),
-          ),
-        ],
-      ),
+            Text(
+              parts[subPartIndex].quantity.toString(),
+//                                    style: textStyle,
+            ),
+            Text(
+              parts[subPartIndex].outOfStock ? "OutOfStock" : "Instock",
+              style: TextStyle(
+                color: parts[subPartIndex].outOfStock ? Colors.red : Colors.green,
+              ),
+            ),
+          ],
+        ),
 //                              isThreeLine: true,
-      trailing: Text(
-        "View\nDetails",
-        textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
+        trailing: Text(
+          "View\nDetails",
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
+        ),
+        onTap: () {
+          Navigator.push(
+              context,
+              CupertinoPageRoute(
+                  builder: (context) => PartDetailsScren(
+                        partModel: pm,
+                        subPartIndex: subPartIndex,
+                        PartIndex: partIndex,
+                      )));
+        },
       ),
-      onTap: () {
-        Navigator.push(
-            context,
-            CupertinoPageRoute(
-                builder: (context) => PartDetailsScren(
-                      partModel: pm,
-                      subPartIndex: index,
-                    )));
-      },
     );
   }
 
@@ -175,67 +179,21 @@ class AllPartsHomeScreen extends StatelessWidget {
                                 physics: NeverScrollableScrollPhysics(),
                                 itemCount: parts.length,
                                 itemBuilder: (context, subPartIndex) {
-                                  return Card(
-                                    child: ListTile(
-                                      leading: Container(
-                                        width: 80,
-                                        child: Center(
-                                          widthFactor: 1,
-                                          heightFactor: 0.8,
-                                          child: Hero(
-                                              tag: "images_${partIndex}_${subPartIndex}",
-                                              child: parts[subPartIndex].productImages.isEmpty
-                                                  ? Image.asset(IMAGE)
-                                                  : CachedNetworkImage(
-                                                      imageUrl: parts[subPartIndex].productImages[0],
-                                                      progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                                          CircularProgressIndicator(value: downloadProgress.progress),
-                                                      errorWidget: (context, url, error) => Icon(Icons.error),
-                                                    )),
-                                        ),
-                                      ),
-                                      title: Text(
-                                        parts[subPartIndex].partName,
-                                        style: TextStyle(fontWeight: FontWeight.bold),
-                                      ),
-                                      subtitle: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Text(
-                                            "Rs " + parts[subPartIndex].itemPrice.toString(),
-//                                    style: textStyle,
-                                          ),
-                                          Text(
-                                            parts[subPartIndex].quantity.toString(),
-//                                    style: textStyle,
-                                          ),
-                                          Text(
-                                            parts[subPartIndex].outOfStock ? "OutOfStock" : "Instock",
-                                            style: TextStyle(
-                                              color: parts[subPartIndex].outOfStock ? Colors.red : Colors.green,
+                                  return subPartIndex == 0
+                                      ? Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                tagStyle(str: pm.carBrand),
+                                                tagStyle(str: pm.carName),
+                                                tagStyle(str: pm.carModel),
+                                                tagStyle(str: pm.modelYear.toString()),
+                                              ],
                                             ),
-                                          ),
-                                        ],
-                                      ),
-//                              isThreeLine: true,
-                                      trailing: Text(
-                                        "View\nDetails",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
-                                      ),
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            CupertinoPageRoute(
-                                                builder: (context) => PartDetailsScren(
-                                                      partModel: pm,
-                                                      subPartIndex: subPartIndex,
-                                                      PartIndex: partIndex,
-                                                    )));
-                                      },
-                                    ),
-                                  );
+                                            listTile(subPartIndex, parts, partIndex, pm, context)
+                                          ],
+                                        )
+                                      : listTile(subPartIndex, parts, partIndex, pm, context);
                                 },
 //                            separatorBuilder: (context, ind) => Divider(
 //                              color: Colors.blue,
