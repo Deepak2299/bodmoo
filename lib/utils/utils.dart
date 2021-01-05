@@ -10,13 +10,11 @@ final Color flipkartBlue = new Color(0XFF2874f0);
 final OutlineInputBorder fieldBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(4.0),
     gapPadding: 2,
-    borderSide:
-        BorderSide(width: 1.8, color: flipkartBlue, style: BorderStyle.solid));
+    borderSide: BorderSide(width: 1.8, color: flipkartBlue, style: BorderStyle.solid));
 final OutlineInputBorder errorBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(4.0),
     gapPadding: 2,
-    borderSide: BorderSide(
-        width: 1.8, color: Colors.redAccent, style: BorderStyle.solid));
+    borderSide: BorderSide(width: 1.8, color: Colors.redAccent, style: BorderStyle.solid));
 
 pwdValidator(String pwd) {
   pwd = pwd.trim();
@@ -48,9 +46,7 @@ addressWidget({@required AddressModel addressModel}) {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Phone number : ",
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.w500)),
+          Text("Phone number : ", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500)),
           Text(addressModel.customerMobile.toString(),
               style: TextStyle(
                 color: Colors.black,
@@ -63,13 +59,7 @@ addressWidget({@required AddressModel addressModel}) {
 }
 
 String prepareAddress({@required AddressModel addressModel}) {
-  return addressModel.houseno +
-      "," +
-      addressModel.roadname +
-      "," +
-      addressModel.city +
-      "," +
-      addressModel.state;
+  return addressModel.houseno + "," + addressModel.roadname + "," + addressModel.city + "," + addressModel.state;
 }
 
 class LoadingWidget extends StatelessWidget {
@@ -89,8 +79,7 @@ class LoadingWidget extends StatelessWidget {
           children: <Widget>[
             Text(
               msg ?? 'Loading',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
             ),
             SizedBox(width: 20),
             CircularProgressIndicator(
@@ -186,33 +175,31 @@ Widget shimmerLoader(@required BuildContext context) {
               width: 80,
               color: Colors.white,
             ),
-            title: Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    width: double.infinity,
-                    height: 8.0,
-                    color: Colors.white,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 2.0),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 8.0,
-                    color: Colors.white,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 2.0),
-                  ),
-                  Container(
-                    width: 40.0,
-                    height: 8.0,
-                    color: Colors.white,
-                  ),
-                ],
-              ),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  width: double.infinity,
+                  height: 8.0,
+                  color: Colors.white,
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 2.0),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 8.0,
+                  color: Colors.white,
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 2.0),
+                ),
+                Container(
+                  width: 40.0,
+                  height: 8.0,
+                  color: Colors.white,
+                ),
+              ],
             ),
 //                          trailing: Column(
 //                            crossAxisAlignment: CrossAxisAlignment.center,
