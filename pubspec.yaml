@@ -25,6 +25,7 @@ dependencies:
   shared_preferences: ^0.5.12+4
   cached_network_image:
 
+
 #  LOGIN
   firebase_analytics: ^5.0.15
   firebase_auth: ^0.16.1

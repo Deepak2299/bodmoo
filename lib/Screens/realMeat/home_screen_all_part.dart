@@ -10,6 +10,7 @@ import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:bodmoo/widgets/cartIcon.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -236,73 +237,7 @@ class AllPartsHomeScreen extends StatelessWidget {
                         ),
                       );
               } else
-                return Expanded(
-                  child: Shimmer.fromColors(
-                    baseColor: Colors.grey[300],
-                    highlightColor: Colors.grey[100],
-//                    enabled: _enabled,
-                    child: ListView.builder(
-                      itemBuilder: (_, __) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ListTile(
-                          leading: Container(
-                            width: 80,
-                            color: Colors.white,
-                          ),
-                          title: Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  width: double.infinity,
-                                  height: 8.0,
-                                  color: Colors.white,
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 2.0),
-                                ),
-                                Container(
-                                  width: double.infinity,
-                                  height: 8.0,
-                                  color: Colors.white,
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 2.0),
-                                ),
-                                Container(
-                                  width: 40.0,
-                                  height: 8.0,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
-                          ),
-//                          trailing: Column(
-//                            crossAxisAlignment: CrossAxisAlignment.center,
-//                            mainAxisAlignment: MainAxisAlignment.center,
-//                            children: [
-//                              Container(
-//                                height: 15,
-//                                width: 40,
-//                                color: Colors.white,
-//                              ),
-//                              const Padding(
-//                                padding: EdgeInsets.symmetric(vertical: 1.0),
-//                              ),
-//                              Container(
-//                                height: 15,
-//                                width: 40,
-//                                color: Colors.white,
-//                              ),
-//                            ],
-//                          ),
-                        ),
-                      ),
-                      itemCount:
-                          (MediaQuery.of(context).size.height / 60).toInt(),
-                    ),
-                  ),
-                );
+                return shimmerLoader(context);
             },
           ),
         ],
@@ -310,8 +245,8 @@ class AllPartsHomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         elevation: 15,
         icon: Icon(
-          Icons.filter_list,
-          size: 30,
+          MdiIcons.filter,
+          size: 27,
         ),
         label: Text(
           "Filter",

@@ -3,6 +3,7 @@ import 'package:bodmoo/models/addressModel.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 String IMAGE = 'assets/bike.png';
 final Color flipkartBlue = new Color(0XFF2874f0);
@@ -169,4 +170,73 @@ Widget indicator(bool isActive) {
   //     borderRadius: BorderRadius.all(Radius.circular(12)),
   //   ),
   // );
+}
+
+Widget shimmerLoader(@required BuildContext context) {
+  return Expanded(
+    child: Shimmer.fromColors(
+      baseColor: Colors.grey[300],
+      highlightColor: Colors.grey[100],
+//                    enabled: _enabled,
+      child: ListView.builder(
+        itemBuilder: (_, __) => Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListTile(
+            leading: Container(
+              width: 80,
+              color: Colors.white,
+            ),
+            title: Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    width: double.infinity,
+                    height: 8.0,
+                    color: Colors.white,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 2.0),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 8.0,
+                    color: Colors.white,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 2.0),
+                  ),
+                  Container(
+                    width: 40.0,
+                    height: 8.0,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+            ),
+//                          trailing: Column(
+//                            crossAxisAlignment: CrossAxisAlignment.center,
+//                            mainAxisAlignment: MainAxisAlignment.center,
+//                            children: [
+//                              Container(
+//                                height: 15,
+//                                width: 40,
+//                                color: Colors.white,
+//                              ),
+//                              const Padding(
+//                                padding: EdgeInsets.symmetric(vertical: 1.0),
+//                              ),
+//                              Container(
+//                                height: 15,
+//                                width: 40,
+//                                color: Colors.white,
+//                              ),
+//                            ],
+//                          ),
+          ),
+        ),
+        itemCount: (MediaQuery.of(context).size.height / 60).toInt(),
+      ),
+    ),
+  );
 }
