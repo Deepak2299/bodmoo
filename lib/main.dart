@@ -7,6 +7,7 @@ import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:bodmoo/Screens/realMeat/home_screen_all_part.dart';
 import 'package:bodmoo/Screens/splashScreen.dart';
 import 'package:bodmoo/methods/get/getAllParts.dart';
+import 'package:bodmoo/onBoardingScreen.dart';
 import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/cartProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
       // initialRoute: '/home',
       routes: {
         "/home": (context) => AllPartsHomeScreen(),
-        "onboard": (context) => AllPartsHomeScreen(),
+        "/onboard": (context) => OnboardingScreen(),
         '/parts': (context) => PartScreen(),
         // "partDetail": (context) => PartDetailsScren(),
         // "cartScreen": (context) => CartItemsScreen(),

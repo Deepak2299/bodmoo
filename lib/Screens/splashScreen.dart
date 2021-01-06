@@ -31,10 +31,11 @@ class _SplashScreenState extends State<SplashScreen> {
 //                  return OnboardingScreen();
 //                // return SignInWithPhoneNO();
 //              }));
-      if (b)
+      if (b) {
         Navigator.pushReplacementNamed(context, '/home');
-      else
+      } else {
         Navigator.pushReplacementNamed(context, '/onboard');
+      }
     });
   }
 
