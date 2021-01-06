@@ -18,7 +18,8 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class AllPartsHomeScreen extends StatelessWidget {
-  listTile(int subPartIndex, List<PartDetail> parts, int partIndex, PartsModel pm, BuildContext context) {
+  listTile(int subPartIndex, List<PartDetail> parts, int partIndex,
+      PartsModel pm, BuildContext context) {
     return Card(
       child: ListTile(
         leading: Container(
@@ -32,8 +33,10 @@ class AllPartsHomeScreen extends StatelessWidget {
                     ? Image.asset(IMAGE)
                     : CachedNetworkImage(
                         imageUrl: parts[subPartIndex].productImages[0],
-                        progressIndicatorBuilder: (context, url, downloadProgress) =>
-                            CircularProgressIndicator(value: downloadProgress.progress),
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) =>
+                                CircularProgressIndicator(
+                                    value: downloadProgress.progress),
                         errorWidget: (context, url, error) => Icon(Icons.error),
                       )),
           ),
@@ -57,7 +60,8 @@ class AllPartsHomeScreen extends StatelessWidget {
             Text(
               parts[subPartIndex].outOfStock ? "OutOfStock" : "Instock",
               style: TextStyle(
-                color: parts[subPartIndex].outOfStock ? Colors.red : Colors.green,
+                color:
+                    parts[subPartIndex].outOfStock ? Colors.red : Colors.green,
               ),
             ),
           ],
@@ -101,8 +105,12 @@ class AllPartsHomeScreen extends StatelessWidget {
           children: <Widget>[
             UserAccountsDrawerHeader(
               accountName: Text(
-                Provider.of<CustomerDetailsProvider>(context).customerName != null
-                    ? 'Hello ' + Provider.of<CustomerDetailsProvider>(context).customerName.toString()
+                Provider.of<CustomerDetailsProvider>(context).customerName !=
+                        null
+                    ? 'Hello ' +
+                        Provider.of<CustomerDetailsProvider>(context)
+                            .customerName
+                            .toString()
                     : 'Hello! User,',
               ),
             ),
@@ -111,26 +119,39 @@ class AllPartsHomeScreen extends StatelessWidget {
                     ListTile(
                       title: Text("My Orders"),
                       onTap: () {
-                        Navigator.push(context, CupertinoPageRoute(builder: (context) => OrderListScreen()));
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => OrderListScreen()));
                       },
                     ),
                     ListTile(
                       title: Text("My Addresses"),
                       onTap: () {
-                        Navigator.push(context, CupertinoPageRoute(builder: (context) => AddressListScreen()));
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => AddressListScreen()));
                       },
                     )
                   ])
                 : Container(),
-            Provider.of<CustomerDetailsProvider>(context, listen: false).token != null
+            Provider.of<CustomerDetailsProvider>(context, listen: false)
+                        .token !=
+                    null
                 ? ListTile(
                     leading: Icon(Icons.exit_to_app),
                     title: Text("Logout"),
                     onTap: () {
                       clearPrefsForLogin();
-                      Provider.of<CustomerDetailsProvider>(context, listen: false).clearCustomerDetails();
+                      Provider.of<CustomerDetailsProvider>(context,
+                              listen: false)
+                          .clearCustomerDetails();
                       Navigator.pushAndRemoveUntil(
-                          context, CupertinoPageRoute(builder: (context) => SignInWithPhoneNO()), (route) => true);
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => SignInWithPhoneNO()),
+                          (route) => true);
                     },
                   )
                 : ListTile(
@@ -140,7 +161,8 @@ class AllPartsHomeScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        CupertinoPageRoute(builder: (context) => SignInWithPhoneNO()),
+                        CupertinoPageRoute(
+                            builder: (context) => SignInWithPhoneNO()),
                         // (route) => false
                       );
                     },
@@ -154,69 +176,69 @@ class AllPartsHomeScreen extends StatelessWidget {
           FutureBuilder(
             future: getAllParts(),
             builder: (context, snapshot) {
-//               if (snapshot.hasData) {
-//                 List<PartsModel> partsList = snapshot.data;
-//                 return partsList.length == 0
-//                     ? Center(
-//                         child: Text(
-//                         "No Parts found",
-//                         style: TextStyle(color: Colors.grey),
-//                       ))
-//                     : Expanded(
-//                         child: CupertinoScrollbar(
-//                           controller: sc,
-//                           isAlwaysShown: true,
-//                           child: ListView.builder(
-//                             controller: sc,
-//                             shrinkWrap: true,
-//                             physics: ScrollPhysics(),
-//                             padding: EdgeInsets.all(8),
-//                             itemCount: partsList.length,
-//                             itemBuilder: (context, partIndex) {
-//                               PartsModel pm = partsList[partIndex];
-//                               print(pm.id);
-//                               List<PartDetail> parts = pm.details;
-//                               return ListView.builder(
-//                                 shrinkWrap: true,
-// //                            padding: EdgeInsets.all(8),
-//                                 physics: NeverScrollableScrollPhysics(),
-//                                 itemCount: parts.length,
-//                                 itemBuilder: (context, subPartIndex) {
-//                                   return subPartIndex == 0
-//                                       ? Column(
-//                                           children: [
-//                                             Row(
-//                                               children: [
-//                                                 tagStyle(str: pm.carBrand),
-//                                                 tagStyle(str: pm.carName),
-//                                                 tagStyle(str: pm.carModel),
-//                                                 tagStyle(
-//                                                     str: pm.modelYear
-//                                                         .toString()),
-//                                               ],
-//                                             ),
-//                                             listTile(subPartIndex, parts,
-//                                                 partIndex, pm, context)
-//                                           ],
-//                                         )
-//                                       : listTile(subPartIndex, parts, partIndex,
-//                                           pm, context);
-//                                 },
-// //                            separatorBuilder: (context, ind) => Divider(
-// //                              color: Colors.blue,
-// //                              thickness: 1,
-// //                            ),
-//                               );
-//                             },
-// //                        separatorBuilder: (context, ind1) => Divider(
-// //                          color: Colors.blue,
-// //                          thickness: 1,
-// //                        ),
-//                           ),
-//                         ),
-//                       );
-//               } else
-              return shimmerLoader(context);
+              if (snapshot.hasData) {
+                List<PartsModel> partsList = snapshot.data;
+                return partsList.length == 0
+                    ? Center(
+                        child: Text(
+                        "No Parts found",
+                        style: TextStyle(color: Colors.grey),
+                      ))
+                    : Expanded(
+                        child: CupertinoScrollbar(
+                          controller: sc,
+                          isAlwaysShown: true,
+                          child: ListView.builder(
+                            controller: sc,
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            padding: EdgeInsets.all(8),
+                            itemCount: partsList.length,
+                            itemBuilder: (context, partIndex) {
+                              PartsModel pm = partsList[partIndex];
+                              print(pm.id);
+                              List<PartDetail> parts = pm.details;
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                //                            padding: EdgeInsets.all(8),
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: parts.length,
+                                itemBuilder: (context, subPartIndex) {
+                                  return subPartIndex == 0
+                                      ? Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                tagStyle(str: pm.carBrand),
+                                                tagStyle(str: pm.carName),
+                                                tagStyle(str: pm.carModel),
+                                                tagStyle(
+                                                    str: pm.modelYear
+                                                        .toString()),
+                                              ],
+                                            ),
+                                            listTile(subPartIndex, parts,
+                                                partIndex, pm, context)
+                                          ],
+                                        )
+                                      : listTile(subPartIndex, parts, partIndex,
+                                          pm, context);
+                                },
+                                //                            separatorBuilder: (context, ind) => Divider(
+                                //                              color: Colors.blue,
+                                //                              thickness: 1,
+                                //                            ),
+                              );
+                            },
+                            //                        separatorBuilder: (context, ind1) => Divider(
+                            //                          color: Colors.blue,
+                            //                          thickness: 1,
+                            //                        ),
+                          ),
+                        ),
+                      );
+              } else
+                return shimmerLoader(context);
             },
           ),
         ],
@@ -232,7 +254,8 @@ class AllPartsHomeScreen extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
         ),
         onPressed: () {
-          Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeScreen()));
+          Navigator.push(
+              context, CupertinoPageRoute(builder: (context) => HomeScreen()));
         },
       ),
     );
