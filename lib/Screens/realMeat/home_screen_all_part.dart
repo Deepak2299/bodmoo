@@ -298,11 +298,11 @@ class AllPartsHomeScreen extends StatelessWidget {
                                     .recentPartsList
                                     .length >
                                 6
-                            ? Provider.of<CustomerDetailsProvider>(context,
+                            ? 5
+                            : Provider.of<CustomerDetailsProvider>(context,
                                     listen: false)
                                 .recentPartsList
-                                .length
-                            : 5,
+                                .length,
                       ),
                     ),
                   ],

@@ -135,11 +135,8 @@ class _OTPScreenState extends State<OTPScreen> {
 //                      nav.pop();
                     } else
                       // Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeScreen()));
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => HomeScreen()),
-                          (route) => false);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, "/home", (route) => false);
                   } else {
                     Navigator.pop(context);
                     Navigator.pushReplacement(
