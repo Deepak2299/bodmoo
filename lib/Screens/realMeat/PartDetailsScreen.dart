@@ -19,8 +19,12 @@ class PartDetailsScren extends StatefulWidget {
   PartsModel partModel;
   int subPartIndex;
   int PartIndex;
+  int recent;
   PartDetailsScren(
-      {@required this.partModel, @required this.subPartIndex, this.PartIndex});
+      {@required this.partModel,
+      @required this.subPartIndex,
+      this.PartIndex,
+      this.recent = 0});
   @override
   _PartDetailsScrenState createState() => _PartDetailsScrenState();
 }
@@ -72,7 +76,7 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                         .productImages.isEmpty
                     ? Hero(
                         tag:
-                            "images_${widget.PartIndex}_${widget.subPartIndex}",
+                            "images_${widget.PartIndex}_${widget.subPartIndex - widget.recent}",
                         child: Image.asset(
                           IMAGE,
                           height: MediaQuery.of(context).size.height * 0.4,
@@ -125,7 +129,7 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                                             Center(
                                               child: Hero(
                                                   tag:
-                                                      "images_${widget.PartIndex}_${widget.subPartIndex}",
+                                                      "images_${widget.PartIndex}_${widget.subPartIndex - widget.recent}",
                                                   child: CachedNetworkImage(
                                                     imageUrl: widget
                                                         .partModel
