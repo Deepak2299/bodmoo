@@ -162,45 +162,45 @@ Widget indicator(bool isActive) {
 }
 
 Widget shimmerLoader(@required BuildContext context) {
-  return Expanded(
-    child: Shimmer.fromColors(
-      baseColor: Colors.grey[300],
-      highlightColor: Colors.grey[100],
+  return Shimmer.fromColors(
+    baseColor: Colors.grey[300],
+    highlightColor: Colors.grey[100],
 //                    enabled: _enabled,
-      child: ListView.builder(
-        itemBuilder: (_, __) => Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListTile(
-            leading: Container(
-              width: 80,
-              color: Colors.white,
-            ),
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: double.infinity,
-                  height: 8.0,
-                  color: Colors.white,
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 2.0),
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 8.0,
-                  color: Colors.white,
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 2.0),
-                ),
-                Container(
-                  width: 40.0,
-                  height: 8.0,
-                  color: Colors.white,
-                ),
-              ],
-            ),
+    child: ListView.builder(
+      shrinkWrap: true,
+      itemBuilder: (_, __) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListTile(
+          leading: Container(
+            width: 80,
+            color: Colors.white,
+          ),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                height: 8.0,
+                color: Colors.white,
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 2.0),
+              ),
+              Container(
+                width: double.infinity,
+                height: 8.0,
+                color: Colors.white,
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 2.0),
+              ),
+              Container(
+                width: 40.0,
+                height: 8.0,
+                color: Colors.white,
+              ),
+            ],
+          ),
 //                          trailing: Column(
 //                            crossAxisAlignment: CrossAxisAlignment.center,
 //                            mainAxisAlignment: MainAxisAlignment.center,
@@ -220,10 +220,9 @@ Widget shimmerLoader(@required BuildContext context) {
 //                              ),
 //                            ],
 //                          ),
-          ),
         ),
-        itemCount: (MediaQuery.of(context).size.height / 60).toInt(),
       ),
+      itemCount: (MediaQuery.of(context).size.height / 60).toInt(),
     ),
   );
 }

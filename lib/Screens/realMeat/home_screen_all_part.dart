@@ -19,8 +19,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class AllPartsHomeScreen extends StatelessWidget {
-  listTile(int subPartIndex, List<PartDetail> parts, int partIndex,
-      PartsModel pm, BuildContext context) {
+  listTile(int subPartIndex, List<PartDetail> parts, int partIndex, PartsModel pm, BuildContext context) {
     return Card(
       child: ListTile(
         leading: Container(
@@ -34,10 +33,8 @@ class AllPartsHomeScreen extends StatelessWidget {
                     ? Image.asset(IMAGE)
                     : CachedNetworkImage(
                         imageUrl: parts[subPartIndex].productImages[0],
-                        progressIndicatorBuilder:
-                            (context, url, downloadProgress) =>
-                                CircularProgressIndicator(
-                                    value: downloadProgress.progress),
+                        progressIndicatorBuilder: (context, url, downloadProgress) =>
+                            CircularProgressIndicator(value: downloadProgress.progress),
                         errorWidget: (context, url, error) => Icon(Icons.error),
                       )),
           ),
@@ -61,8 +58,7 @@ class AllPartsHomeScreen extends StatelessWidget {
             Text(
               parts[subPartIndex].outOfStock ? "OutOfStock" : "Instock",
               style: TextStyle(
-                color:
-                    parts[subPartIndex].outOfStock ? Colors.red : Colors.green,
+                color: parts[subPartIndex].outOfStock ? Colors.red : Colors.green,
               ),
             ),
           ],
@@ -106,12 +102,8 @@ class AllPartsHomeScreen extends StatelessWidget {
           children: <Widget>[
             UserAccountsDrawerHeader(
               accountName: Text(
-                Provider.of<CustomerDetailsProvider>(context).customerName !=
-                        null
-                    ? 'Hello ' +
-                        Provider.of<CustomerDetailsProvider>(context)
-                            .customerName
-                            .toString()
+                Provider.of<CustomerDetailsProvider>(context).customerName != null
+                    ? 'Hello ' + Provider.of<CustomerDetailsProvider>(context).customerName.toString()
                     : 'Hello! User,',
               ),
             ),
@@ -120,39 +112,26 @@ class AllPartsHomeScreen extends StatelessWidget {
                     ListTile(
                       title: Text("My Orders"),
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => OrderListScreen()));
+                        Navigator.push(context, CupertinoPageRoute(builder: (context) => OrderListScreen()));
                       },
                     ),
                     ListTile(
                       title: Text("My Addresses"),
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => AddressListScreen()));
+                        Navigator.push(context, CupertinoPageRoute(builder: (context) => AddressListScreen()));
                       },
                     )
                   ])
                 : Container(),
-            Provider.of<CustomerDetailsProvider>(context, listen: false)
-                        .token !=
-                    null
+            Provider.of<CustomerDetailsProvider>(context, listen: false).token != null
                 ? ListTile(
                     leading: Icon(Icons.exit_to_app),
                     title: Text("Logout"),
                     onTap: () {
                       clearPrefsForLogin();
-                      Provider.of<CustomerDetailsProvider>(context,
-                              listen: false)
-                          .clearCustomerDetails();
+                      Provider.of<CustomerDetailsProvider>(context, listen: false).clearCustomerDetails();
                       Navigator.pushAndRemoveUntil(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => SignInWithPhoneNO()),
-                          (route) => true);
+                          context, CupertinoPageRoute(builder: (context) => SignInWithPhoneNO()), (route) => true);
                     },
                   )
                 : ListTile(
@@ -162,8 +141,7 @@ class AllPartsHomeScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        CupertinoPageRoute(
-                            builder: (context) => SignInWithPhoneNO()),
+                        CupertinoPageRoute(builder: (context) => SignInWithPhoneNO()),
                         // (route) => false
                       );
                     },
@@ -171,151 +149,130 @@ class AllPartsHomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: Column(
-//        shrinkWrap: true,
+      body: ListView(
+        physics: ClampingScrollPhysics(),
+        // shrinkWrap: true,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Recent"),
-              FlatButton(
-                // height: 30,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
+          Provider.of<CustomerDetailsProvider>(context, listen: false).recentPartsList.length > 0
+              ? Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Recently Viewed",
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          FlatButton(
+                            // height: 30,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
 //                    padding: EdgeInsets.all(5),
-                color: Colors.red,
-                onPressed:
-                    Provider.of<CustomerDetailsProvider>(context, listen: false)
-                                .recentPartsList
-                                .length >
-                            0
-                        ? () {
-                            Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                    builder: (context) => RecentScreen()));
-                          }
-                        : null,
-                child: Text(
-                  "View All",
-                  style: TextStyle(color: Colors.white),
-                ),
-              )
-            ],
-          ),
-          Provider.of<CustomerDetailsProvider>(context, listen: false)
-                      .recentPartsList
-                      .length ==
-                  0
-              ? Center(
-                  child: Text("No Recent View"),
+                            color: Colors.red,
+                            onPressed: Provider.of<CustomerDetailsProvider>(context, listen: false)
+                                        .recentPartsList
+                                        .length >
+                                    0
+                                ? () {
+                                    Navigator.push(context, CupertinoPageRoute(builder: (context) => RecentScreen()));
+                                  }
+                                : null,
+                            child: Text(
+                              "View All",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 100,
+                      width: double.infinity,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          PartsModel p = Provider.of<CustomerDetailsProvider>(context, listen: false)
+                              .recentPartsList
+                              .reversed
+                              .elementAt(index);
+                          return Container(
+                            height: 100,
+                            width: 100,
+                            margin: EdgeInsets.symmetric(horizontal: 8),
+                            alignment: Alignment.bottomCenter,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: p.details[0].productImages.isEmpty
+                                        ? AssetImage(IMAGE)
+                                        : NetworkImage(p.details[0].productImages[0]))),
+                            child: Text(
+                              p.details[0].partName,
+                              style: TextStyle(color: Colors.blue),
+                            ),
+                          );
+                        },
+                        itemCount:
+                            Provider.of<CustomerDetailsProvider>(context, listen: false).recentPartsList.length > 5
+                                ? 5
+                                : Provider.of<CustomerDetailsProvider>(context, listen: false).recentPartsList.length,
+                      ),
+                    ),
+                  ],
                 )
-              : Container(
-                  height: 100,
-                  width: double.infinity,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      PartsModel p = Provider.of<CustomerDetailsProvider>(
-                              context,
-                              listen: false)
-                          .recentPartsList
-                          .reversed
-                          .elementAt(index);
-                      return Container(
-                        height: 100,
-                        width: 100,
-                        margin: EdgeInsets.symmetric(horizontal: 8),
-                        alignment: Alignment.bottomCenter,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: p.details[0].productImages.isEmpty
-                                    ? AssetImage(IMAGE)
-                                    : NetworkImage(
-                                        p.details[0].productImages[0]))),
-                        child: Text(
-                          p.details[0].partName,
-                          style: TextStyle(color: Colors.blue),
-                        ),
-                      );
-                    },
-                    itemCount: Provider.of<CustomerDetailsProvider>(context,
-                                    listen: false)
-                                .recentPartsList
-                                .length >
-                            5
-                        ? 5
-                        : Provider.of<CustomerDetailsProvider>(context,
-                                listen: false)
-                            .recentPartsList
-                            .length,
-                  ),
-                ),
+              : Container(),
           FutureBuilder(
             future: getAllParts(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 List<PartsModel> partsList = snapshot.data;
                 return partsList.length == 0
-                    ? Center(
-                        child: Text(
+                    ? Text(
                         "No Parts found",
                         style: TextStyle(color: Colors.grey),
-                      ))
-                    : Expanded(
-                        child: CupertinoScrollbar(
-                          controller: sc,
-                          isAlwaysShown: true,
-                          child: ListView.builder(
-                            controller: sc,
+                      )
+                    : ListView.builder(
+                        controller: sc,
+                        shrinkWrap: true,
+                        physics: ClampingScrollPhysics(),
+                        padding: EdgeInsets.all(8),
+                        itemCount: partsList.length,
+                        itemBuilder: (context, partIndex) {
+                          PartsModel pm = partsList[partIndex];
+                          print(pm.id);
+                          List<PartDetail> parts = pm.details;
+                          // return Text(parts[0].partName);
+
+                          return ListView.builder(
                             shrinkWrap: true,
-                            physics: ScrollPhysics(),
-                            padding: EdgeInsets.all(8),
-                            itemCount: partsList.length,
-                            itemBuilder: (context, partIndex) {
-                              PartsModel pm = partsList[partIndex];
-                              print(pm.id);
-                              List<PartDetail> parts = pm.details;
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                //                            padding: EdgeInsets.all(8),
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: parts.length,
-                                itemBuilder: (context, subPartIndex) {
-                                  return subPartIndex == 0
-                                      ? Column(
+                            //                            padding: EdgeInsets.all(8),
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: parts.length,
+                            itemBuilder: (context, subPartIndex) {
+                              return subPartIndex == 0
+                                  ? Column(
+                                      children: [
+                                        Row(
                                           children: [
-                                            Row(
-                                              children: [
-                                                tagStyle(str: pm.carBrand),
-                                                tagStyle(str: pm.carName),
-                                                tagStyle(str: pm.carModel),
-                                                tagStyle(
-                                                    str: pm.modelYear
-                                                        .toString()),
-                                              ],
-                                            ),
-                                            listTile(subPartIndex, parts,
-                                                partIndex, pm, context)
+                                            tagStyle(str: pm.carBrand),
+                                            tagStyle(str: pm.carName),
+                                            tagStyle(str: pm.carModel),
+                                            tagStyle(str: pm.modelYear.toString()),
                                           ],
-                                        )
-                                      : listTile(subPartIndex, parts, partIndex,
-                                          pm, context);
-                                },
-                                //                            separatorBuilder: (context, ind) => Divider(
-                                //                              color: Colors.blue,
-                                //                              thickness: 1,
-                                //                            ),
-                              );
+                                        ),
+                                        listTile(subPartIndex, parts, partIndex, pm, context)
+                                      ],
+                                    )
+                                  : listTile(subPartIndex, parts, partIndex, pm, context);
                             },
-                            //                        separatorBuilder: (context, ind1) => Divider(
-                            //                          color: Colors.blue,
-                            //                          thickness: 1,
-                            //                        ),
-                          ),
-                        ),
+                            //                            separatorBuilder: (context, ind) => Divider(
+                            //                              color: Colors.blue,
+                            //                              thickness: 1,
+                            //                            ),
+                          );
+                        },
                       );
               } else
                 return shimmerLoader(context);
@@ -334,8 +291,7 @@ class AllPartsHomeScreen extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
         ),
         onPressed: () {
-          Navigator.push(
-              context, CupertinoPageRoute(builder: (context) => HomeScreen()));
+          Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeScreen()));
         },
       ),
     );
