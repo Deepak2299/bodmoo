@@ -29,7 +29,7 @@ class PartsModel {
   factory PartsModel.fromJson(String str) =>
       PartsModel.fromMap(json.decode(str));
 
-  // String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap());
 
   factory PartsModel.fromMap(Map<String, dynamic> json) => PartsModel(
         id: json["_id"] == null ? null : json["_id"],
@@ -45,18 +45,18 @@ class PartsModel {
                 json["details"].map((x) => PartDetail.fromMap(x))),
       );
 
-//   Map<String, dynamic> toMap() => {
-// //    "_id": id == null ? null : id,
-//         "car_brand": carBrand == null ? null : carBrand,
-//         "car_name": carName == null ? null : carName,
-//         "car_model": carModel == null ? null : carModel,
-//         "model_year": modelYear == null ? null : modelYear,
-//         "category": category == null ? null : category,
-//         "sub_category": subCategory == null ? null : subCategory,
-//         "details": details == null
-//             ? null
-//             : List<dynamic>.from(details.map((x) => x.toMap())),
-//       };
+  Map<String, dynamic> toMap() => {
+        //    "_id": id == null ? null : id,
+        "car_brand": carBrand == null ? null : carBrand,
+        "car_name": carName == null ? null : carName,
+        "car_model": carModel == null ? null : carModel,
+        "model_year": modelYear == null ? null : modelYear,
+        "category": category == null ? null : category,
+        "sub_category": subCategory == null ? null : subCategory,
+        "details": details == null
+            ? null
+            : List<dynamic>.from(details.map((x) => x.toMap())),
+      };
 }
 
 class PartDetail {
@@ -81,7 +81,7 @@ class PartDetail {
   factory PartDetail.fromJson(String str) =>
       PartDetail.fromMap(json.decode(str));
 
-//  String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap());
 
   factory PartDetail.fromMap(Map<String, dynamic> json) => PartDetail(
         id: json["_id"] == null ? null : json["_id"],
@@ -95,15 +95,15 @@ class PartDetail {
             : List<String>.from(json["productImages"].map((x) => x)),
       );
 
-//  Map<String, dynamic> toMap() => {
-//    "_id": id == null ? null : id,
-//    "part_name": partName == null ? null : partName,
-//    "description": description == null ? null : description,
-//    "item_price": itemPrice == null ? null : itemPrice,
-//    "quantity": quantity == null ? null : quantity,
-//    "outOfStock": outOfStock,
-//    "productImages": productImages == null
-//        ? null
-//        : List<dynamic>.from(productImages.map((x) => x)),
-//  };
+  Map<String, dynamic> toMap() => {
+        "_id": id == null ? null : id,
+        "part_name": partName == null ? null : partName,
+        "description": description == null ? null : description,
+        "item_price": itemPrice == null ? null : itemPrice,
+        "quantity": quantity == null ? null : quantity,
+        "outOfStock": outOfStock,
+        "productImages": productImages == null
+            ? null
+            : List<dynamic>.from(productImages.map((x) => x)),
+      };
 }

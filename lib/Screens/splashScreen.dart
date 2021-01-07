@@ -2,6 +2,7 @@ import 'package:bodmoo/Screens/GoogleSignIn/googleSignInScreen.dart';
 import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
 import 'package:bodmoo/Screens/realMeat/home_screen_all_part.dart';
+import 'package:bodmoo/methods/recents/loadRecents.dart';
 import 'package:bodmoo/onBoardingScreen.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:flutter/cupertino.dart';
@@ -67,6 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     fetchPrefsForCarts(context: context);
+    loadRecents(context: context);
     super.didChangeDependencies();
   }
 }
