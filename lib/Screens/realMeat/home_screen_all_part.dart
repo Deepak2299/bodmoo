@@ -4,6 +4,7 @@ import 'package:bodmoo/Screens/login/phoneVerification.dart';
 import 'package:bodmoo/Screens/realMeat/PartDetailsScreen.dart';
 import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
 import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
+import 'package:bodmoo/Screens/realMeat/recent_screen.dart';
 import 'package:bodmoo/methods/get/getAllParts.dart';
 import 'package:bodmoo/models/partsModel.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
@@ -171,8 +172,87 @@ class AllPartsHomeScreen extends StatelessWidget {
         ),
       ),
       body: Column(
-        mainAxisSize: MainAxisSize.min,
+//        shrinkWrap: true,
         children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Recent"),
+              FlatButton(
+                // height: 30,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+//                    padding: EdgeInsets.all(5),
+                color: Colors.red,
+                onPressed:
+                    Provider.of<CustomerDetailsProvider>(context, listen: false)
+                                .recentPartsList
+                                .length >
+                            0
+                        ? () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) => RecentScreen()));
+                          }
+                        : null,
+                child: Text(
+                  "View All",
+                  style: TextStyle(color: Colors.white),
+                ),
+              )
+            ],
+          ),
+          Provider.of<CustomerDetailsProvider>(context, listen: false)
+                      .recentPartsList
+                      .length ==
+                  0
+              ? Center(
+                  child: Text("No Recent View"),
+                )
+              : Container(
+                  height: 100,
+                  width: double.infinity,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      PartsModel p = Provider.of<CustomerDetailsProvider>(
+                              context,
+                              listen: false)
+                          .recentPartsList
+                          .reversed
+                          .elementAt(index);
+                      return Container(
+                        height: 100,
+                        width: 100,
+                        margin: EdgeInsets.symmetric(horizontal: 8),
+                        alignment: Alignment.bottomCenter,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: p.details[0].productImages.isEmpty
+                                    ? AssetImage(IMAGE)
+                                    : NetworkImage(
+                                        p.details[0].productImages[0]))),
+                        child: Text(
+                          p.details[0].partName,
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      );
+                    },
+                    itemCount: Provider.of<CustomerDetailsProvider>(context,
+                                    listen: false)
+                                .recentPartsList
+                                .length >
+                            5
+                        ? 5
+                        : Provider.of<CustomerDetailsProvider>(context,
+                                listen: false)
+                            .recentPartsList
+                            .length,
+                  ),
+                ),
           FutureBuilder(
             future: getAllParts(),
             builder: (context, snapshot) {

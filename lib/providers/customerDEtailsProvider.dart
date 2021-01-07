@@ -50,7 +50,7 @@ class CustomerDetailsProvider extends ChangeNotifier {
 
   addRecentParts(PartsModel part) async {
     recentPartsList.add(part);
-   await SaveRecents(parts: recentPartsList);
+    await SaveRecents(parts: recentPartsList);
     notifyListeners();
   }
 }
