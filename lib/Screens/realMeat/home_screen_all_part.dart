@@ -28,15 +28,16 @@ class AllPartsHomeScreen extends StatelessWidget {
             widthFactor: 1,
             heightFactor: 0.8,
             child: Hero(
-                tag: "images_${partIndex}_${subPartIndex}",
-                child: parts[subPartIndex].productImages.isEmpty
-                    ? Image.asset(IMAGE)
-                    : CachedNetworkImage(
-                        imageUrl: parts[subPartIndex].productImages[0],
-                        progressIndicatorBuilder: (context, url, downloadProgress) =>
-                            CircularProgressIndicator(value: downloadProgress.progress),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
-                      )),
+              tag: "images_${partIndex}_${subPartIndex}",
+              child: parts[subPartIndex].productImages.isEmpty
+                  ? Image.asset(IMAGE)
+                  : CachedNetworkImage(
+                      imageUrl: parts[subPartIndex].productImages[0],
+                      progressIndicatorBuilder: (context, url, downloadProgress) =>
+                          CircularProgressIndicator(value: downloadProgress.progress),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+            ),
           ),
         ),
         title: Text(
@@ -155,6 +156,7 @@ class AllPartsHomeScreen extends StatelessWidget {
         children: <Widget>[
           Provider.of<CustomerDetailsProvider>(context, listen: false).recentPartsList.length > 0
               ? Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -169,7 +171,7 @@ class AllPartsHomeScreen extends StatelessWidget {
                             // height: 30,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
 //                    padding: EdgeInsets.all(5),
-                            color: Colors.red,
+                            color: Colors.blue,
                             onPressed: Provider.of<CustomerDetailsProvider>(context, listen: false)
                                         .recentPartsList
                                         .length >
@@ -187,8 +189,8 @@ class AllPartsHomeScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      height: 100,
-                      width: double.infinity,
+                      height: 250,
+                      alignment: Alignment.centerLeft,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
@@ -197,32 +199,67 @@ class AllPartsHomeScreen extends StatelessWidget {
                               .recentPartsList
                               .reversed
                               .elementAt(index);
-                          return Container(
-                            height: 100,
-                            width: 100,
-                            margin: EdgeInsets.symmetric(horizontal: 8),
-                            alignment: Alignment.bottomCenter,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: p.details[0].productImages.isEmpty
-                                        ? AssetImage(IMAGE)
-                                        : NetworkImage(p.details[0].productImages[0]))),
-                            child: Text(
-                              p.details[0].partName,
-                              style: TextStyle(color: Colors.blue),
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) => PartDetailsScren(
+                                            partModel: p,
+                                            subPartIndex: 0,
+                                            PartIndex: index,
+                                          )));
+                            },
+                            child: Card(
+                              child: Container(
+                                height: 100,
+                                width: 100,
+                                margin: EdgeInsets.symmetric(horizontal: 8),
+                                // padding: EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    p.details[0].productImages.isEmpty
+                                        ? Image.asset(IMAGE)
+                                        : CachedNetworkImage(
+                                            height: 100,
+                                            imageUrl: p.details[0].productImages[0],
+                                            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                                CircularProgressIndicator(value: downloadProgress.progress),
+                                            errorWidget: (context, url, error) => Icon(Icons.error),
+                                          ),
+                                    Text(p.details[0].partName, style: TextStyle(fontWeight: FontWeight.bold)),
+                                    SizedBox(height: 5),
+                                    Text("Rs " + p.details[0].itemPrice.toString() + "/-"),
+                                    Divider(),
+                                    Text('About:', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                                    Text(p.carBrand),
+                                    Text(p.carName),
+                                    Text(
+                                      p.carModel + "-" + p.modelYear.toString(),
+                                      overflow: TextOverflow.clip,
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           );
                         },
                         itemCount:
-                            Provider.of<CustomerDetailsProvider>(context, listen: false).recentPartsList.length > 5
-                                ? 5
-                                : Provider.of<CustomerDetailsProvider>(context, listen: false).recentPartsList.length,
+                            Provider.of<CustomerDetailsProvider>(context, listen: false).recentPartsList.length % 5,
                       ),
                     ),
                   ],
                 )
               : Container(),
+          Divider(),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, top: 10),
+            child: Text(
+              "All Parts",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
           FutureBuilder(
             future: getAllParts(),
             builder: (context, snapshot) {
