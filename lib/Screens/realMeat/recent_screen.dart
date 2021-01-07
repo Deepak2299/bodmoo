@@ -95,7 +95,9 @@ class RecentScreen extends StatelessWidget {
                 .length,
             itemBuilder: (context, i) {
               PartsModel pm = Provider.of<CustomerDetailsProvider>(context)
-                  .recentPartsList[i];
+                  .recentPartsList
+                  .reversed
+                  .elementAt(i);
 
               return listTile(0, pm.details, i, pm, context);
             },

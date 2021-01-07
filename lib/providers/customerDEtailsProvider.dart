@@ -51,13 +51,20 @@ class CustomerDetailsProvider extends ChangeNotifier {
   addRecentParts(PartsModel part) async {
     print("recent list: " + recentPartsList.length.toString());
     bool c = false;
+    int ind;
     for (int i = 0; i < recentPartsList.length; i++) {
       if (recentPartsList[i].details[0].id.contains(part.details[0].id)) {
         c = true;
+        ind = i;
         break;
       }
     }
     if (!c) {
+      recentPartsList.add(part);
+      await SaveRecents(parts: recentPartsList);
+      notifyListeners();
+    } else {
+      recentPartsList.removeAt(ind);
       recentPartsList.add(part);
       await SaveRecents(parts: recentPartsList);
       notifyListeners();
