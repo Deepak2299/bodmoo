@@ -243,6 +243,7 @@ class AllPartsHomeScreen extends StatelessWidget {
                                             partModel: p,
                                             subPartIndex: 0,
                                             PartIndex: index,
+                                            recent: 2,
                                           )));
                             },
                             child: Card(
@@ -254,21 +255,25 @@ class AllPartsHomeScreen extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    p.details[0].productImages.isEmpty
-                                        ? Image.asset(IMAGE)
-                                        : CachedNetworkImage(
-                                            height: 100,
-                                            imageUrl:
-                                                p.details[0].productImages[0],
-                                            progressIndicatorBuilder: (context,
-                                                    url, downloadProgress) =>
-                                                CircularProgressIndicator(
-                                                    value: downloadProgress
-                                                        .progress),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    Icon(Icons.error),
-                                          ),
+                                    Hero(
+                                        tag: "images_${index}_${-2}",
+                                        child:
+                                            p.details[0].productImages.isEmpty
+                                                ? Image.asset(IMAGE)
+                                                : CachedNetworkImage(
+                                                    imageUrl: p.details[0]
+                                                        .productImages[0],
+                                                    progressIndicatorBuilder: (context,
+                                                            url,
+                                                            downloadProgress) =>
+                                                        CircularProgressIndicator(
+                                                            value:
+                                                                downloadProgress
+                                                                    .progress),
+                                                    errorWidget:
+                                                        (context, url, error) =>
+                                                            Icon(Icons.error),
+                                                  )),
                                     Text(p.details[0].partName,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
