@@ -8,8 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class RecentScreen extends StatelessWidget {
-  listTile(int subPartIndex, List<PartDetail> parts, int partIndex,
-      PartsModel pm, BuildContext context) {
+  listTile(int subPartIndex, List<PartDetail> parts, int partIndex, PartsModel pm, BuildContext context) {
     return Card(
       child: ListTile(
         leading: Container(
@@ -18,35 +17,16 @@ class RecentScreen extends StatelessWidget {
             widthFactor: 1,
             heightFactor: 0.8,
             child: Hero(
-              tag: "images_${partIndex}_${-1}",
+              tag: parts[subPartIndex].id + 'R',
+              // "images_${partIndex}_${-1}",
               child: parts[subPartIndex].productImages.isEmpty
                   ? Image.asset(IMAGE)
                   : CachedNetworkImage(
                       imageUrl: parts[subPartIndex].productImages[0],
-                      progressIndicatorBuilder:
-                          (context, url, downloadProgress) =>
-                              CircularProgressIndicator(
-                                  value: downloadProgress.progress),
+                      progressIndicatorBuilder: (context, url, downloadProgress) =>
+                          CircularProgressIndicator(value: downloadProgress.progress),
                       errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
-              flightShuttleBuilder: (flightContext, animation, direction,
-                  fromHeroContext, toHeroContext) {
-                if (direction == HeroFlightDirection.push) {
-                  return parts[subPartIndex].productImages.isEmpty
-                      ? Image.asset(IMAGE)
-                      : CachedNetworkImage(
-                          imageUrl: parts[subPartIndex].productImages[0],
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) =>
-                                  CircularProgressIndicator(
-                                      value: downloadProgress.progress),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                        );
-                } else if (direction == HeroFlightDirection.pop) {
-                  return Container();
-                }
-              },
             ),
           ),
         ),
@@ -69,8 +49,7 @@ class RecentScreen extends StatelessWidget {
             Text(
               parts[subPartIndex].outOfStock ? "OutOfStock" : "Instock",
               style: TextStyle(
-                color:
-                    parts[subPartIndex].outOfStock ? Colors.red : Colors.green,
+                color: parts[subPartIndex].outOfStock ? Colors.red : Colors.green,
               ),
             ),
           ],
@@ -89,7 +68,7 @@ class RecentScreen extends StatelessWidget {
                         partModel: pm,
                         subPartIndex: subPartIndex,
                         PartIndex: partIndex,
-                        recent: 1,
+                        recent: true,
                       )));
         },
       ),
@@ -109,14 +88,9 @@ class RecentScreen extends StatelessWidget {
           isAlwaysShown: true,
           child: ListView.builder(
             controller: sc,
-            itemCount: Provider.of<CustomerDetailsProvider>(context)
-                .recentPartsList
-                .length,
+            itemCount: Provider.of<CustomerDetailsProvider>(context).recentPartsList.length,
             itemBuilder: (context, i) {
-              PartsModel pm = Provider.of<CustomerDetailsProvider>(context)
-                  .recentPartsList
-                  .reversed
-                  .elementAt(i);
+              PartsModel pm = Provider.of<CustomerDetailsProvider>(context).recentPartsList.reversed.elementAt(i);
 
               return listTile(0, pm.details, i, pm, context);
             },

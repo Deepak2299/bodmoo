@@ -19,12 +19,8 @@ class PartDetailsScren extends StatefulWidget {
   PartsModel partModel;
   int subPartIndex;
   int PartIndex;
-  int recent;
-  PartDetailsScren(
-      {@required this.partModel,
-      @required this.subPartIndex,
-      this.PartIndex,
-      this.recent = 0});
+  bool recent;
+  PartDetailsScren({@required this.partModel, @required this.subPartIndex, this.PartIndex, this.recent});
   @override
   _PartDetailsScrenState createState() => _PartDetailsScrenState();
 }
@@ -37,16 +33,15 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<CustomerDetailsProvider>(context, listen: false).addRecentParts(
-        PartsModel(
-            id: widget.partModel.id,
-            carBrand: widget.partModel.carBrand,
-            carName: widget.partModel.carName,
-            carModel: widget.partModel.carModel,
-            modelYear: widget.partModel.modelYear,
-            category: widget.partModel.category,
-            subCategory: widget.partModel.subCategory,
-            details: [widget.partModel.details[widget.subPartIndex]]));
+    Provider.of<CustomerDetailsProvider>(context, listen: false).addRecentParts(PartsModel(
+        id: widget.partModel.id,
+        carBrand: widget.partModel.carBrand,
+        carName: widget.partModel.carName,
+        carModel: widget.partModel.carModel,
+        modelYear: widget.partModel.modelYear,
+        category: widget.partModel.category,
+        subCategory: widget.partModel.subCategory,
+        details: [widget.partModel.details[widget.subPartIndex]]));
   }
 
   @override
@@ -72,11 +67,13 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
             children: [
               Container(
                 height: MediaQuery.of(context).size.height * 0.5,
-                child: widget.partModel.details[widget.subPartIndex]
-                        .productImages.isEmpty
+                child: widget.partModel.details[widget.subPartIndex].productImages.isEmpty
                     ? Hero(
                         tag:
-                            "images_${widget.PartIndex}_${widget.subPartIndex - widget.recent}",
+                            // "images_${widget.PartIndex}_${widget.subPartIndex - widget.recent}"
+                            widget.recent
+                                ? widget.partModel.details[widget.subPartIndex].id + 'R'
+                                : widget.partModel.details[widget.subPartIndex].id + 'A',
                         child: Image.asset(
                           IMAGE,
                           height: MediaQuery.of(context).size.height * 0.4,
@@ -116,76 +113,49 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                               },
                               children: [
                                 for (int i = 0;
-                                    i <
-                                        widget
-                                            .partModel
-                                            .details[widget.subPartIndex]
-                                            .productImages
-                                            .length;
+                                    i < widget.partModel.details[widget.subPartIndex].productImages.length;
                                     i++)
                                   i == 0
                                       ? Stack(
                                           children: [
                                             Center(
                                               child: Hero(
-                                                  tag:
-                                                      "images_${widget.PartIndex}_${widget.subPartIndex - widget.recent}",
+                                                  tag: widget.recent
+                                                      ? widget.partModel.details[widget.subPartIndex].id + 'R'
+                                                      : widget.partModel.details[widget.subPartIndex].id + 'A'
+                                                  // "images_${widget.PartIndex}_${widget.subPartIndex - widget.recent}",
+                                                  ,
                                                   child: CachedNetworkImage(
-                                                    imageUrl: widget
-                                                        .partModel
-                                                        .details[
-                                                            widget.subPartIndex]
-                                                        .productImages[0],
+                                                    imageUrl:
+                                                        widget.partModel.details[widget.subPartIndex].productImages[0],
                                                     // 'https://picsum.photos/250?image=9',
                                                     // placeholder: (context, url) =>
                                                     //     Container(child: CircularProgressIndicator()),
-                                                    progressIndicatorBuilder: (context,
-                                                            url,
-                                                            downloadProgress) =>
-                                                        CircularProgressIndicator(
-                                                            value:
-                                                                downloadProgress
-                                                                    .progress),
-                                                    errorWidget:
-                                                        (context, url, error) =>
-                                                            Icon(Icons.error),
+                                                    progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                                        CircularProgressIndicator(value: downloadProgress.progress),
+                                                    errorWidget: (context, url, error) => Icon(Icons.error),
                                                   )),
                                             ),
                                           ],
                                         )
                                       : Center(
                                           child: CachedNetworkImage(
-                                            imageUrl: widget
-                                                .partModel
-                                                .details[widget.subPartIndex]
-                                                .productImages[i],
-                                            progressIndicatorBuilder: (context,
-                                                    url, downloadProgress) =>
-                                                CircularProgressIndicator(
-                                                    value: downloadProgress
-                                                        .progress),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    Icon(Icons.error),
+                                            imageUrl: widget.partModel.details[widget.subPartIndex].productImages[i],
+                                            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                                CircularProgressIndicator(value: downloadProgress.progress),
+                                            errorWidget: (context, url, error) => Icon(Icons.error),
                                           ),
                                         ),
                               ],
                             ),
                           ),
-                          widget.partModel.details[widget.subPartIndex]
-                                      .productImages.length >
-                                  1
+                          widget.partModel.details[widget.subPartIndex].productImages.length > 1
                               ? Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   // mainAxisSize: MainAxisSize.min,
                                   children: [
                                     for (int i = 0;
-                                        i <
-                                            widget
-                                                .partModel
-                                                .details[widget.subPartIndex]
-                                                .productImages
-                                                .length;
+                                        i < widget.partModel.details[widget.subPartIndex].productImages.length;
                                         i++)
                                       indicator(i == page ? true : false),
                                   ],
@@ -195,8 +165,7 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                       ),
               ),
               Text(
-                widget.partModel.details[widget.subPartIndex].partName
-                    .toString(),
+                widget.partModel.details[widget.subPartIndex].partName.toString(),
                 style: TextStyle(fontSize: 25),
               ),
 
@@ -205,23 +174,16 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                 child: FlatButton(
                   padding: EdgeInsets.all(0),
                   // height: 20,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5)),
-                  color:
-                      widget.partModel.details[widget.subPartIndex].outOfStock
-                          ? Colors.red.shade50
-                          : Colors.green.shade50,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                  color: widget.partModel.details[widget.subPartIndex].outOfStock
+                      ? Colors.red.shade50
+                      : Colors.green.shade50,
                   onPressed: () {},
                   child: Text(
-                    widget.partModel.details[widget.subPartIndex].outOfStock
-                        ? "OutOfStock"
-                        : "Instock",
+                    widget.partModel.details[widget.subPartIndex].outOfStock ? "OutOfStock" : "Instock",
 //                textAlign: TextAlign.,
                     style: TextStyle(
-                      color: widget
-                              .partModel.details[widget.subPartIndex].outOfStock
-                          ? Colors.red
-                          : Colors.green,
+                      color: widget.partModel.details[widget.subPartIndex].outOfStock ? Colors.red : Colors.green,
                     ),
                   ),
                 ),
@@ -230,9 +192,7 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
 //            height: 10,
 //          ),
               Text(
-                "Rs " +
-                    widget.partModel.details[widget.subPartIndex].itemPrice
-                        .toString(),
+                "Rs " + widget.partModel.details[widget.subPartIndex].itemPrice.toString(),
                 style: TextStyle(fontSize: 30),
               ),
             ],
@@ -242,8 +202,7 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child:
-                Text(widget.partModel.details[widget.subPartIndex].description),
+            child: Text(widget.partModel.details[widget.subPartIndex].description),
           ),
         ],
       ),
@@ -254,43 +213,27 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
           child: Row(
             children: <Widget>[
               Provider.of<CartProvider>(context).getQty(
-                        partId:
-                            widget.partModel.details[widget.subPartIndex].id,
+                        partId: widget.partModel.details[widget.subPartIndex].id,
                       ) ==
                       0
                   ? Expanded(
                       child: RaisedButton(
                         color: Colors.white,
-                        onPressed: widget.partModel.details[widget.subPartIndex]
-                                .outOfStock
+                        onPressed: widget.partModel.details[widget.subPartIndex].outOfStock
                             ? null
                             : () {
                                 OrderItemModel item = new OrderItemModel(
-                                    partId: widget.partModel
-                                        .details[widget.subPartIndex].id,
+                                    partId: widget.partModel.details[widget.subPartIndex].id,
                                     brandName: widget.partModel.carBrand,
                                     vehicleName: widget.partModel.carName,
                                     vehicleModel: widget.partModel.carModel,
-                                    vehicleYear:
-                                        widget.partModel.modelYear.toString(),
-                                    partName: widget.partModel
-                                        .details[widget.subPartIndex].partName,
-                                    partPrice: widget.partModel
-                                        .details[widget.subPartIndex].itemPrice
-                                        .toString(),
+                                    vehicleYear: widget.partModel.modelYear.toString(),
+                                    partName: widget.partModel.details[widget.subPartIndex].partName,
+                                    partPrice: widget.partModel.details[widget.subPartIndex].itemPrice.toString(),
                                     orderQty: 1,
-                                    productImages: widget
-                                        .partModel
-                                        .details[widget.subPartIndex]
-                                        .productImages);
-                                Provider.of<CartProvider>(context,
-                                        listen: false)
-                                    .itemAdd(item);
-                                Navigator.push(
-                                    context,
-                                    CupertinoPageRoute(
-                                        builder: (context) =>
-                                            CartItemsScreen()));
+                                    productImages: widget.partModel.details[widget.subPartIndex].productImages);
+                                Provider.of<CartProvider>(context, listen: false).itemAdd(item);
+                                Navigator.push(context, CupertinoPageRoute(builder: (context) => CartItemsScreen()));
                               },
                         child: Center(
                           child: Text(
@@ -307,15 +250,10 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                   : Expanded(
                       child: RaisedButton(
                         color: Colors.white,
-                        onPressed: widget.partModel.details[widget.subPartIndex]
-                                .outOfStock
+                        onPressed: widget.partModel.details[widget.subPartIndex].outOfStock
                             ? null
                             : () {
-                                Navigator.push(
-                                    context,
-                                    CupertinoPageRoute(
-                                        builder: (context) =>
-                                            CartItemsScreen()));
+                                Navigator.push(context, CupertinoPageRoute(builder: (context) => CartItemsScreen()));
                               },
                         child: Center(
                           child: Text(
@@ -331,38 +269,26 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                     ),
               Expanded(
                 child: RaisedButton(
-                  onPressed: widget
-                          .partModel.details[widget.subPartIndex].outOfStock
+                  onPressed: widget.partModel.details[widget.subPartIndex].outOfStock
                       ? null
                       : () async {
                           List<OrderItemModel> item = List<OrderItemModel>();
                           item.add(new OrderItemModel(
-                              partId: widget
-                                  .partModel.details[widget.subPartIndex].id,
+                              partId: widget.partModel.details[widget.subPartIndex].id,
                               brandName: widget.partModel.carBrand,
                               vehicleName: widget.partModel.carName,
                               vehicleModel: widget.partModel.carModel,
-                              vehicleYear:
-                                  widget.partModel.modelYear.toString(),
-                              partName: widget.partModel
-                                  .details[widget.subPartIndex].partName,
-                              partPrice: widget.partModel
-                                  .details[widget.subPartIndex].itemPrice
-                                  .toString(),
+                              vehicleYear: widget.partModel.modelYear.toString(),
+                              partName: widget.partModel.details[widget.subPartIndex].partName,
+                              partPrice: widget.partModel.details[widget.subPartIndex].itemPrice.toString(),
                               orderQty: 1,
-                              productImages: widget.partModel
-                                  .details[widget.subPartIndex].productImages));
+                              productImages: widget.partModel.details[widget.subPartIndex].productImages));
 
-                          if (Provider.of<CustomerDetailsProvider>(context,
-                                      listen: false)
-                                  .token !=
-                              null) {
-                            Provider.of<CustomerDetailsProvider>(context,
-                                    listen: false)
+                          if (Provider.of<CustomerDetailsProvider>(context, listen: false).token != null) {
+                            Provider.of<CustomerDetailsProvider>(context, listen: false)
                                 .addOrderItems(orderItemsList: item);
                             print("sndns" +
-                                Provider.of<CustomerDetailsProvider>(context,
-                                        listen: false)
+                                Provider.of<CustomerDetailsProvider>(context, listen: false)
                                     .orderItems
                                     .length
                                     .toString());
@@ -373,11 +299,8 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                                 CupertinoPageRoute(
                                     builder: (context) => ChooseAddressScreen(
                                           cartOrder: false,
-                                          amount: double.parse(widget
-                                              .partModel
-                                              .details[widget.subPartIndex]
-                                              .itemPrice
-                                              .toString()),
+                                          amount: double.parse(
+                                              widget.partModel.details[widget.subPartIndex].itemPrice.toString()),
                                         )));
                           } else {
                             Navigator.push(
