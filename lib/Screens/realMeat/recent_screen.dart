@@ -18,17 +18,36 @@ class RecentScreen extends StatelessWidget {
             widthFactor: 1,
             heightFactor: 0.8,
             child: Hero(
-                tag: "images_${partIndex}_${-1}",
-                child: parts[subPartIndex].productImages.isEmpty
-                    ? Image.asset(IMAGE)
-                    : CachedNetworkImage(
-                        imageUrl: parts[subPartIndex].productImages[0],
-                        progressIndicatorBuilder:
-                            (context, url, downloadProgress) =>
-                                CircularProgressIndicator(
-                                    value: downloadProgress.progress),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
-                      )),
+              tag: "images_${partIndex}_${-1}",
+              child: parts[subPartIndex].productImages.isEmpty
+                  ? Image.asset(IMAGE)
+                  : CachedNetworkImage(
+                      imageUrl: parts[subPartIndex].productImages[0],
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) =>
+                              CircularProgressIndicator(
+                                  value: downloadProgress.progress),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+              flightShuttleBuilder: (flightContext, animation, direction,
+                  fromHeroContext, toHeroContext) {
+                if (direction == HeroFlightDirection.push) {
+                  return parts[subPartIndex].productImages.isEmpty
+                      ? Image.asset(IMAGE)
+                      : CachedNetworkImage(
+                          imageUrl: parts[subPartIndex].productImages[0],
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) =>
+                                  CircularProgressIndicator(
+                                      value: downloadProgress.progress),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        );
+                } else if (direction == HeroFlightDirection.pop) {
+                  return Container();
+                }
+              },
+            ),
           ),
         ),
         title: Text(

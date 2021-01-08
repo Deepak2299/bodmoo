@@ -255,7 +255,8 @@ class AllPartsHomeScreen extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Hero(
+                                    Container(
+                                      child: Hero(
                                         tag: "images_${index}_${-2}",
                                         child:
                                             p.details[0].productImages.isEmpty
@@ -273,7 +274,39 @@ class AllPartsHomeScreen extends StatelessWidget {
                                                     errorWidget:
                                                         (context, url, error) =>
                                                             Icon(Icons.error),
-                                                  )),
+                                                  ),
+                                        flightShuttleBuilder: (flightContext,
+                                            animation,
+                                            direction,
+                                            fromHeroContext,
+                                            toHeroContext) {
+                                          if (direction ==
+                                              HeroFlightDirection.push) {
+                                            return p.details[0].productImages
+                                                    .isEmpty
+                                                ? Image.asset(IMAGE)
+                                                : CachedNetworkImage(
+                                                    imageUrl: p.details[0]
+                                                        .productImages[0],
+                                                    progressIndicatorBuilder: (context,
+                                                            url,
+                                                            downloadProgress) =>
+                                                        CircularProgressIndicator(
+                                                            value:
+                                                                downloadProgress
+                                                                    .progress),
+                                                    errorWidget:
+                                                        (context, url, error) =>
+                                                            Icon(Icons.error),
+                                                  );
+                                          } else if (direction ==
+                                              HeroFlightDirection.pop) {
+                                            return Container();
+                                          }
+                                        },
+                                      ),
+                                      height: 100,
+                                    ),
                                     Text(p.details[0].partName,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
