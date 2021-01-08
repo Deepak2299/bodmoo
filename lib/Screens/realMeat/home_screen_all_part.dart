@@ -19,7 +19,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class AllPartsHomeScreen extends StatelessWidget {
-  listTile(int subPartIndex, List<PartDetail> parts, int partIndex, PartsModel pm, BuildContext context) {
+  listTile(int subPartIndex, List<PartDetail> parts, PartsModel pm, BuildContext context) {
     return Card(
       child: ListTile(
         leading: Container(
@@ -72,13 +72,15 @@ class AllPartsHomeScreen extends StatelessWidget {
           style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
         ),
         onTap: () {
+          print("HOME All hero tag:");
+          print(pm.details[subPartIndex].id + 'A');
           Navigator.push(
               context,
               CupertinoPageRoute(
                   builder: (context) => PartDetailsScren(
                         partModel: pm,
                         subPartIndex: subPartIndex,
-                        PartIndex: partIndex,
+                        // PartIndex: partIndex,
                         recent: false,
                       )));
         },
@@ -203,13 +205,15 @@ class AllPartsHomeScreen extends StatelessWidget {
                               .elementAt(partIndex);
                           return GestureDetector(
                             onTap: () {
+                              print("HOME recent hero tag:");
+                              print(p.details[0].id + 'R');
+
                               Navigator.push(
                                   context,
                                   CupertinoPageRoute(
                                       builder: (context) => PartDetailsScren(
                                             partModel: p,
                                             subPartIndex: 0,
-                                            PartIndex: partIndex,
                                             recent: true,
                                           )));
                             },
@@ -308,10 +312,10 @@ class AllPartsHomeScreen extends StatelessWidget {
                                             tagStyle(str: pm.modelYear.toString()),
                                           ],
                                         ),
-                                        listTile(subPartIndex, parts, partIndex, pm, context)
+                                        listTile(subPartIndex, parts, pm, context)
                                       ],
                                     )
-                                  : listTile(subPartIndex, parts, partIndex, pm, context);
+                                  : listTile(subPartIndex, parts, pm, context);
                             },
                             //                            separatorBuilder: (context, ind) => Divider(
                             //                              color: Colors.blue,

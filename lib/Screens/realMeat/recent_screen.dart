@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class RecentScreen extends StatelessWidget {
-  listTile(int subPartIndex, List<PartDetail> parts, int partIndex, PartsModel pm, BuildContext context) {
+  listTile({int subPartIndex, List<PartDetail> parts, PartsModel pm, BuildContext context}) {
     return Card(
       child: ListTile(
         leading: Container(
@@ -61,13 +61,14 @@ class RecentScreen extends StatelessWidget {
           style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
         ),
         onTap: () {
+          print("recents screen hero tag:");
+          print(parts[subPartIndex].id + 'R');
           Navigator.push(
               context,
               CupertinoPageRoute(
                   builder: (context) => PartDetailsScren(
                         partModel: pm,
                         subPartIndex: subPartIndex,
-                        PartIndex: partIndex,
                         recent: true,
                       )));
         },
@@ -92,7 +93,12 @@ class RecentScreen extends StatelessWidget {
             itemBuilder: (context, i) {
               PartsModel pm = Provider.of<CustomerDetailsProvider>(context).recentPartsList.reversed.elementAt(i);
 
-              return listTile(0, pm.details, i, pm, context);
+              return listTile(
+                subPartIndex: 0,
+                parts: pm.details,
+                pm: pm,
+                context: context,
+              );
             },
           ),
         ),

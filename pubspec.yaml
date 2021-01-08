@@ -38,6 +38,10 @@ dependencies:
   razorpay_flutter: 1.1.0
   material_design_icons_flutter: ^4.0.5755
 
+# version
+  package_info: ^0.4.1
+  firebase_remote_config: 0.3.0+3
+  firebase_messaging: ^6.0.16
 
 
 dev_dependencies:

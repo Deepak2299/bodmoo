@@ -18,9 +18,13 @@ import 'package:provider/provider.dart';
 class PartDetailsScren extends StatefulWidget {
   PartsModel partModel;
   int subPartIndex;
-  int PartIndex;
+  // int PartIndex;
   bool recent;
-  PartDetailsScren({@required this.partModel, @required this.subPartIndex, this.PartIndex, this.recent});
+  PartDetailsScren(
+      {@required this.partModel,
+      @required this.subPartIndex,
+      // this.PartIndex,
+      this.recent});
   @override
   _PartDetailsScrenState createState() => _PartDetailsScrenState();
 }
@@ -31,6 +35,10 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
   int page = 0;
   @override
   void initState() {
+    print("details hero tag:");
+    print(widget.recent
+        ? widget.partModel.details[widget.subPartIndex].id + 'R'
+        : widget.partModel.details[widget.subPartIndex].id + 'A');
     // TODO: implement initState
     super.initState();
     Provider.of<CustomerDetailsProvider>(context, listen: false).addRecentParts(PartsModel(
