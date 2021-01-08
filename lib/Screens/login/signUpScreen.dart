@@ -1,4 +1,5 @@
 import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
+import 'package:bodmoo/Screens/realMeat/home_screen_all_part.dart';
 import 'package:bodmoo/methods/login/addUser.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
@@ -157,7 +158,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Navigator.pushAndRemoveUntil(
                             context,
                             CupertinoPageRoute(
-                              builder: (context) => HomeScreen(),
+                              builder: (context) => AllPartsHomeScreen(),
                             ),
                             (route) => route != '/');
                       // Navigator.push(
