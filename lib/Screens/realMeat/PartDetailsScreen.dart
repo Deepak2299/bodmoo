@@ -24,7 +24,7 @@ class PartDetailsScren extends StatefulWidget {
       {@required this.partModel,
       @required this.subPartIndex,
       // this.PartIndex,
-      this.recent});
+      @required this.recent});
   @override
   _PartDetailsScrenState createState() => _PartDetailsScrenState();
 }

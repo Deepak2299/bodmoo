@@ -62,7 +62,9 @@ class _PartScreenState extends State<PartScreen> {
                                       widthFactor: 1,
                                       heightFactor: 0.8,
                                       child: Hero(
-                                          tag: "images_${partIndex}_${subPartIndex}",
+                                          tag:
+                                          partsList[subPartIndex].id+'A',
+                                          // "images_${partIndex}_${subPartIndex}",
                                           child: partsList[subPartIndex].productImages.isEmpty
                                               ? Image.asset(IMAGE)
                                               : CachedNetworkImage(
@@ -70,7 +72,7 @@ class _PartScreenState extends State<PartScreen> {
                                                   progressIndicatorBuilder: (context, url, downloadProgress) =>
                                                       CircularProgressIndicator(value: downloadProgress.progress),
                                                   errorWidget: (context, url, error) => Icon(Icons.error),
-                                                )),
+                                                ),),
                                     ),
                                   ),
                                   title: Text(
@@ -110,6 +112,7 @@ class _PartScreenState extends State<PartScreen> {
                                             builder: (context) => PartDetailsScren(
                                                   partModel: pm,
                                                   subPartIndex: subPartIndex,
+                                                  recent:false,
                                                   // PartIndex: partIndex,
                                                 )));
                                   },
