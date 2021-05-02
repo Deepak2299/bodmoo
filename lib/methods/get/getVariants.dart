@@ -20,7 +20,7 @@ Future<List<VariantsModel>> getVariants({
     body: jsonEncode(b),
     headers: {'Content-type': 'application/json'},
   );
-  print("Variuants:" + req.body + req.statusCode.toString());
+  print("Variants:" + req.body + req.statusCode.toString());
   if (req.statusCode != 200) {
     ScreenErrorData.modelError = jsonDecode(req.body)['message'];
   } else {

@@ -226,7 +226,8 @@ class _HomeScreenState extends State<HomeScreen> {
         }),
         bottomNavigationBar: BottomAppBar(
           child: GestureDetector(
-            onTap: Provider.of<ScreenProvider>(context).getScreenData.vm != null
+            onTap: Provider.of<ScreenProvider>(context).getScreenData.subCatgName != null &&
+                    Provider.of<ScreenProvider>(context).getScreenData.vm != null
                 ? () {
                     Navigator.pushNamed(
                       context,
@@ -236,8 +237,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 : null,
             child: Container(
-              color: Provider.of<ScreenProvider>(context).getScreenData.vm != null ? Colors.blue : Colors.grey,
-              height: MediaQuery.of(context).size.height * 0.07,
+              color: Provider.of<ScreenProvider>(context).getScreenData.subCatgName != null &&
+                      Provider.of<ScreenProvider>(context).getScreenData.vm != null
+                  ? Colors.blue
+                  : Colors.grey,
+              height: MediaQuery.of(context).size.height * 0.08,
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: <Widget>[
@@ -254,28 +258,38 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Text(
-                        textWidget(Provider.of<ScreenProvider>(context).getScreenData.catgName),
-                        style: TextStyle(color: Colors.white),
+                      Flexible(
+                        child: Text(
+                          textWidget(Provider.of<ScreenProvider>(context).getScreenData.catgName),
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
-                      Text(
-                        textWidget(Provider.of<ScreenProvider>(context).getScreenData.subCatgName),
-                        style: TextStyle(color: Colors.white),
+                      Flexible(
+                        child: Text(
+                          textWidget(Provider.of<ScreenProvider>(context).getScreenData.subCatgName),
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
-                      Text(
-                        textWidget(Provider.of<ScreenProvider>(context).getScreenData.brandName),
-                        style: TextStyle(color: Colors.white),
+                      Flexible(
+                        child: Text(
+                          textWidget(Provider.of<ScreenProvider>(context).getScreenData.brandName),
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
-                      Text(
-                        textWidget(Provider.of<ScreenProvider>(context).getScreenData.vehicleName),
-                        style: TextStyle(color: Colors.white),
+                      Flexible(
+                        child: Text(
+                          textWidget(Provider.of<ScreenProvider>(context).getScreenData.vehicleName),
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
-                      Text(
-                        Provider.of<ScreenProvider>(context).getScreenData.vm != null
-                            ? Provider.of<ScreenProvider>(context).getScreenData.vm.modelName +
-                                Provider.of<ScreenProvider>(context).getScreenData.vm.manufactureYear
-                            : '',
-                        style: TextStyle(color: Colors.white),
+                      Flexible(
+                        child: Text(
+                          Provider.of<ScreenProvider>(context).getScreenData.vm != null
+                              ? Provider.of<ScreenProvider>(context).getScreenData.vm.modelName +
+                                  Provider.of<ScreenProvider>(context).getScreenData.vm.manufactureYear
+                              : '',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ],
                   )
