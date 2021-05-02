@@ -9,8 +9,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-Future<bool> getUserDetailsOrLogin({@required String PhNo, BuildContext context}) async {
-  PhNo = "8826173684";
+Future<bool> getUserDetailsOrLogin(
+    {@required String PhNo, BuildContext context}) async {
   Map<String, String> body = {"mobile": PhNo};
   var req = await http.post(
     LOGIN_URL,
@@ -22,7 +22,8 @@ Future<bool> getUserDetailsOrLogin({@required String PhNo, BuildContext context}
     Map<String, dynamic> result = json.decode(req.body)['output'];
     UserModel user = UserModel.fromMap(result);
     savePrefsForLogin(signIn: true, user: jsonEncode(result));
-    Provider.of<CustomerDetailsProvider>(context, listen: false).setCustomerDetails(userModel: user);
+    Provider.of<CustomerDetailsProvider>(context, listen: false)
+        .setCustomerDetails(userModel: user);
     return true;
   } else
     return false;

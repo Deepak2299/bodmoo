@@ -15,6 +15,67 @@
       },
       "oauth_client": [
         {
+          "client_id": "277639298038-1jqvumav0n5tv5suil8ltktaoenu73mr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bodmoo",
+            "certificate_hash": "f06304a8c482c556312deb7c7fffad2670d634fb"
+          }
+        },
+        {
+          "client_id": "277639298038-mvstnoktuourt3g3pe7015sql1tvreqa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bodmoo",
+            "certificate_hash": "cf038936d85ef06607e95d5bdeefcc7e4bb78305"
+          }
+        },
+        {
+          "client_id": "277639298038-m4ni2d14dvmaouq7muii77vo8nhipgo2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDce-LduVt4ofjKDEK_SyjWqS0Je9hO_ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "277639298038-m4ni2d14dvmaouq7muii77vo8nhipgo2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277639298038:android:41f3e4bafc0b149c62e5d7",
+        "android_client_info": {
+          "package_name": "com.example.payment_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "277639298038-70fh1d786nk0oboplro95h4gdjfag7vp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.payment_app",
+            "certificate_hash": "f06304a8c482c556312deb7c7fffad2670d634fb"
+          }
+        },
+        {
+          "client_id": "277639298038-kfrq2e8jj4u45c911g66jj6pasio9vp9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.payment_app",
+            "certificate_hash": "0400572f416a4f8066c6a59f7cdc082c91bba8cb"
+          }
+        },
+        {
           "client_id": "277639298038-m4ni2d14dvmaouq7muii77vo8nhipgo2.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -17,7 +17,8 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:provider/provider.dart';
 
 class AllPartsHomeScreen extends StatelessWidget {
-  listTile(int subPartIndex, List<PartDetail> parts, PartsModel pm, BuildContext context) {
+  listTile(int subPartIndex, List<PartDetail> parts, PartsModel pm,
+      BuildContext context) {
     return Card(
       child: ListTile(
         leading: Container(
@@ -32,8 +33,10 @@ class AllPartsHomeScreen extends StatelessWidget {
                   ? Image.asset(IMAGE)
                   : CachedNetworkImage(
                       imageUrl: parts[subPartIndex].productImages[0],
-                      progressIndicatorBuilder: (context, url, downloadProgress) =>
-                          CircularProgressIndicator(value: downloadProgress.progress),
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) =>
+                              CircularProgressIndicator(
+                                  value: downloadProgress.progress),
                       errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
             ),
@@ -58,7 +61,8 @@ class AllPartsHomeScreen extends StatelessWidget {
             Text(
               parts[subPartIndex].outOfStock ? "OutOfStock" : "Instock",
               style: TextStyle(
-                color: parts[subPartIndex].outOfStock ? Colors.red : Colors.green,
+                color:
+                    parts[subPartIndex].outOfStock ? Colors.red : Colors.green,
               ),
             ),
           ],
@@ -105,8 +109,12 @@ class AllPartsHomeScreen extends StatelessWidget {
           children: <Widget>[
             UserAccountsDrawerHeader(
               accountName: Text(
-                Provider.of<CustomerDetailsProvider>(context).customerName != null
-                    ? 'Hello ' + Provider.of<CustomerDetailsProvider>(context).customerName.toString()
+                Provider.of<CustomerDetailsProvider>(context).customerName !=
+                        null
+                    ? 'Hello ' +
+                        Provider.of<CustomerDetailsProvider>(context)
+                            .customerName
+                            .toString()
                     : 'Hello! User,',
               ),
             ),
@@ -115,26 +123,39 @@ class AllPartsHomeScreen extends StatelessWidget {
                     ListTile(
                       title: Text("My Orders"),
                       onTap: () {
-                        Navigator.push(context, CupertinoPageRoute(builder: (context) => OrderListScreen()));
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => OrderListScreen()));
                       },
                     ),
                     ListTile(
                       title: Text("My Addresses"),
                       onTap: () {
-                        Navigator.push(context, CupertinoPageRoute(builder: (context) => AddressListScreen()));
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => AddressListScreen()));
                       },
                     )
                   ])
                 : Container(),
-            Provider.of<CustomerDetailsProvider>(context, listen: false).token != null
+            Provider.of<CustomerDetailsProvider>(context, listen: false)
+                        .token !=
+                    null
                 ? ListTile(
                     leading: Icon(Icons.exit_to_app),
                     title: Text("Logout"),
                     onTap: () {
                       clearPrefsForLogin();
-                      Provider.of<CustomerDetailsProvider>(context, listen: false).clearCustomerDetails();
+                      Provider.of<CustomerDetailsProvider>(context,
+                              listen: false)
+                          .clearCustomerDetails();
                       Navigator.pushAndRemoveUntil(
-                          context, CupertinoPageRoute(builder: (context) => SignInWithPhoneNO()), (route) => true);
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => SignInWithPhoneNO()),
+                          (route) => true);
                     },
                   )
                 : ListTile(
@@ -144,7 +165,8 @@ class AllPartsHomeScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        CupertinoPageRoute(builder: (context) => SignInWithPhoneNO()),
+                        CupertinoPageRoute(
+                            builder: (context) => SignInWithPhoneNO()),
                         // (route) => false
                       );
                     },
@@ -156,7 +178,10 @@ class AllPartsHomeScreen extends StatelessWidget {
         physics: ClampingScrollPhysics(),
         // shrinkWrap: true,
         children: <Widget>[
-          Provider.of<CustomerDetailsProvider>(context, listen: false).recentPartsList.length > 0
+          Provider.of<CustomerDetailsProvider>(context, listen: false)
+                      .recentPartsList
+                      .length >
+                  0
               ? Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -167,19 +192,27 @@ class AllPartsHomeScreen extends StatelessWidget {
                         children: [
                           Text(
                             "Recently Viewed",
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           FlatButton(
                             // height: 30,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
 //                    padding: EdgeInsets.all(5),
                             color: Colors.blue,
-                            onPressed: Provider.of<CustomerDetailsProvider>(context, listen: false)
+                            onPressed: Provider.of<CustomerDetailsProvider>(
+                                            context,
+                                            listen: false)
                                         .recentPartsList
                                         .length >
                                     0
                                 ? () {
-                                    Navigator.push(context, CupertinoPageRoute(builder: (context) => RecentScreen()));
+                                    Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                            builder: (context) =>
+                                                RecentScreen()));
                                   }
                                 : null,
                             child: Text(
@@ -197,7 +230,9 @@ class AllPartsHomeScreen extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
                         itemBuilder: (context, partIndex) {
-                          PartsModel p = Provider.of<CustomerDetailsProvider>(context, listen: false)
+                          PartsModel p = Provider.of<CustomerDetailsProvider>(
+                                  context,
+                                  listen: false)
                               .recentPartsList
                               .reversed
                               .elementAt(partIndex);
@@ -225,18 +260,33 @@ class AllPartsHomeScreen extends StatelessWidget {
                                       child: p.details[0].productImages.isEmpty
                                           ? Image.asset(IMAGE)
                                           : CachedNetworkImage(
-                                              imageUrl: p.details[0].productImages[0],
-                                              progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                                  CircularProgressIndicator(value: downloadProgress.progress),
-                                              errorWidget: (context, url, error) => Icon(Icons.error),
+                                              imageUrl:
+                                                  p.details[0].productImages[0],
+                                              progressIndicatorBuilder:
+                                                  (context, url,
+                                                          downloadProgress) =>
+                                                      CircularProgressIndicator(
+                                                          value:
+                                                              downloadProgress
+                                                                  .progress),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Icon(Icons.error),
                                             ),
                                       height: 100,
                                     ),
-                                    Text(p.details[0].partName, style: TextStyle(fontWeight: FontWeight.bold)),
+                                    Text(p.details[0].partName,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
                                     SizedBox(height: 5),
-                                    Text("Rs " + p.details[0].itemPrice.toString() + "/-"),
+                                    Text("Rs " +
+                                        p.details[0].itemPrice.toString() +
+                                        "/-"),
                                     Divider(),
-                                    Text('About:', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                                    Text('About:',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold)),
                                     Text(p.carBrand),
                                     Text(p.carName),
                                     Text(
@@ -249,10 +299,16 @@ class AllPartsHomeScreen extends StatelessWidget {
                             ),
                           );
                         },
-                        itemCount:
-                            Provider.of<CustomerDetailsProvider>(context, listen: false).recentPartsList.length > 6
-                                ? 5
-                                : Provider.of<CustomerDetailsProvider>(context, listen: false).recentPartsList.length,
+                        itemCount: Provider.of<CustomerDetailsProvider>(context,
+                                        listen: false)
+                                    .recentPartsList
+                                    .length >
+                                6
+                            ? 5
+                            : Provider.of<CustomerDetailsProvider>(context,
+                                    listen: false)
+                                .recentPartsList
+                                .length,
                       ),
                     ),
                   ],
@@ -300,10 +356,12 @@ class AllPartsHomeScreen extends StatelessWidget {
                                             tagStyle(str: pm.carBrand),
                                             tagStyle(str: pm.carName),
                                             // tagStyle(str: pm.carModel),
-                                            tagStyle(str: pm.modelYear.toString()),
+                                            tagStyle(
+                                                str: pm.modelYear.toString()),
                                           ],
                                         ),
-                                        listTile(subPartIndex, parts, pm, context),
+                                        listTile(
+                                            subPartIndex, parts, pm, context),
                                         SizedBox(height: 5),
                                         Divider(),
                                         SizedBox(height: 10),
@@ -331,7 +389,8 @@ class AllPartsHomeScreen extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
         ),
         onPressed: () {
-          Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeScreen()));
+          Navigator.push(
+              context, CupertinoPageRoute(builder: (context) => HomeScreen()));
         },
       ),
     );
