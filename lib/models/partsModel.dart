@@ -21,7 +21,7 @@ class PartsModel {
   String carBrand;
   String carName;
   String carModel;
-  int modelYear;
+  String modelYear;
   String category;
   String subCategory;
   List<PartDetail> details;
@@ -32,7 +32,7 @@ class PartsModel {
   String toJson() => json.encode(toMap());
 
   factory PartsModel.fromMap(Map<String, dynamic> json) => PartsModel(
-        id: json["_id"] == null ? null : json["_id"],
+        id: json["_id"] == null ? '123' : json["_id"],
         carBrand: json["car_brand"] == null ? null : json["car_brand"],
         carName: json["car_name"] == null ? null : json["car_name"],
         carModel: json["car_model"] == null ? null : json["car_model"],
@@ -84,7 +84,7 @@ class PartDetail {
   String toJson() => json.encode(toMap());
 
   factory PartDetail.fromMap(Map<String, dynamic> json) => PartDetail(
-        id: json["_id"] == null ? null : json["_id"],
+        id: json["_id"] == null ? '123' : json["_id"],
         partName: json["part_name"] == null ? null : json["part_name"],
         description: json["description"] == null ? null : json["description"],
         itemPrice: json["item_price"] == null ? null : json["item_price"],
@@ -96,7 +96,7 @@ class PartDetail {
       );
 
   Map<String, dynamic> toMap() => {
-        "_id": id == null ? null : id,
+        "_id": id == null ? '123' : id,
         "part_name": partName == null ? null : partName,
         "description": description == null ? null : description,
         "item_price": itemPrice == null ? null : itemPrice,

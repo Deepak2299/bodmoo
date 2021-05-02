@@ -21,7 +21,7 @@ Future<List<PartsModel>> getAllParts() async {
     print(" All parts" + body.length.toString());
     if (body.length > 0) {
       // partsModel = PartsModel.fromJson(body[0]);
-//    print(body[0][""]);
+
       for (int i = 0; i < body.length; i++) {
         partsModel.add(PartsModel.fromMap(body[i]));
       }

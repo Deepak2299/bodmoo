@@ -37,3 +37,5 @@ String ADD_ADDRESS_URL = BASE_URL + 'store/users/addUser/address';
 String GET_ADDRESS_URL = BASE_URL + 'store/users/getAddress/';
 String EDIT_ADDRESS_URL = BASE_URL + 'store/users/updateAddress/';
 String DELETE_ADDRESS_URL = BASE_URL + 'store/users/deleteAddress/';
+
+String SPECIFIC = BASE_URL + 'store/products/getSpecificParts';

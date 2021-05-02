@@ -77,7 +77,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
               ))
           : showDialog(
               context: context,
-              child: CupertinoAlertDialog(
+              builder: (BuildContext context) => CupertinoAlertDialog(
                 title: Text("Error"),
                 content: Text("Some error occurred while placing the order. "),
               ),

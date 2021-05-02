@@ -57,15 +57,15 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     List<OrderItemModel> orderItem =
                         widget.orderModel.orderItems;
                     return ListTile(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => OrderItemDetailsScreen(
-                                orderItem: orderItem[orderItemIndex],
-                              ),
-                            ));
-                      },
+//                      onTap: () {
+//                        Navigator.push(
+//                            context,
+//                            CupertinoPageRoute(
+//                              builder: (context) => OrderItemDetailsScreen(
+//                                orderItem: orderItem[orderItemIndex],
+//                              ),
+//                            ));
+//                      },
                       leading: Hero(
                         tag: "images_${orderItem[orderItemIndex].partId}",
                         child: orderItem[orderItemIndex].productImages.isEmpty

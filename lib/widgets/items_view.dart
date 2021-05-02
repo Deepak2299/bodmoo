@@ -273,16 +273,28 @@ class _DropdownUIState extends State<DropdownUI> {
   value() {
     switch (widget.dropIndex) {
       case 0:
-        return Provider.of<ScreenProvider>(context).getScreenData.catgName;
+        return Provider.of<ScreenProvider>(context)
+            .getScreenData
+            .catgName
+            .toString();
         break;
       case 1:
-        return Provider.of<ScreenProvider>(context).getScreenData.subCatgName;
+        return Provider.of<ScreenProvider>(context)
+            .getScreenData
+            .subCatgName
+            .toString();
         break;
       case 2:
-        return Provider.of<ScreenProvider>(context).getScreenData.brandName;
+        return Provider.of<ScreenProvider>(context)
+            .getScreenData
+            .brandName
+            .toString();
         break;
       case 3:
-        return Provider.of<ScreenProvider>(context).getScreenData.vehicleName;
+        return Provider.of<ScreenProvider>(context)
+            .getScreenData
+            .vehicleName
+            .toString();
         break;
       case 4:
         return Provider.of<ScreenProvider>(context).getScreenData.vm != null
@@ -290,28 +302,28 @@ class _DropdownUIState extends State<DropdownUI> {
                     .getScreenData
                     .vm
                     .modelName
-                    .trim()
                     .toString() +
                 '@' +
                 Provider.of<ScreenProvider>(context)
                     .getScreenData
                     .vm
                     .manufactureYear
-                    .trim()
                     .toString())
             : null;
         break;
     }
 
-    if (mounted) setState(() {});
+    setState(() {});
   }
 
   List<DropdownMenuItem<String>> items = [];
 
   List<DropdownMenuItem<String>> prepareDropdownItems(AsyncSnapshot snapshot) {
+//    print(value());
+    print('----------------------------------------');
     items = [];
     for (int i = 0; i < snapshot.data.length; i++) {
-      print(widget.dropIndex.toString());
+      if (widget.dropIndex == 4) print(snapshot.data[i].toString());
       items.add(DropdownMenuItem<String>(
         value: widget.dropIndex == 4
             ? snapshot.data[i].modelName.toString() +
@@ -348,14 +360,15 @@ class _DropdownUIState extends State<DropdownUI> {
             items: prepareDropdownItems(snapshot),
             value: value(),
             onChanged: (String str) {
+//              print(str);
               Provider.of<ScreenProvider>(context, listen: false).updateData(
                   dataValue: widget.dropIndex == 4
                       ? VariantsModel(
-                          manufactureYear: str.split('@')[1].toString(),
+                          manufactureYear: str.split('@')[1],
                           modelName: str.split('@')[0])
                       : str,
                   dataIndex: widget.dropIndex);
-              items = [];
+//              items = [];
               // setState(() {});
             },
             isExpanded: true,

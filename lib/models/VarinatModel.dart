@@ -36,4 +36,9 @@ class VariantsModel {
         "model_name": modelName,
         "manufacture_year": manufactureYear,
       };
+  @override
+  String toString() {
+    // TODO: implement toString
+    return modelName + ' ' + manufactureYear;
+  }
 }
