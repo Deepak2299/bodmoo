@@ -8,15 +8,12 @@ Future<List<dynamic>> getVehiclesByBrand({
   @required String brandName,
 }) async {
   List<dynamic> vehicles = [];
-
-  var req = await http.get(GET_CARS_URL + brandName,
-      headers: {'Content-type': 'application/json'});
-//  print(req.body);
+  Map<String, String> b = {"brand": brandName};
+  var req = await http.post(GET_CARS_URL, headers: {'Content-type': 'application/json'}, body: jsonEncode(b));
+  print(req.body);
   if (req.statusCode != 200) {
 //    ScreenErrorData.vehicleError = jsonDecode(req.body)['message'];
   } else
-//    ScreenErrorData.vehicleError = '';
     vehicles = json.decode(req.body)["output"];
-//  print(vehicles.length.toString());
   return vehicles;
 }

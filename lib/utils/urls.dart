@@ -16,7 +16,7 @@ String GET_BRANDS_URL = BASE_URL + 'store/products/brands/';
 String GET_CARS_URL = BASE_URL + 'store/products/getByBrand/';
 
 //VARIANTS
-String GET_VARIANTS_URL = BASE_URL + 'store/products/getCarVarients/';
+String GET_VARIANTS_URL = BASE_URL + 'store/products/getCarVarients';
 
 // CAR PARTS
 String GET_ALL_CAR_PART_URL = BASE_URL + 'store/products/getCarParts/';
