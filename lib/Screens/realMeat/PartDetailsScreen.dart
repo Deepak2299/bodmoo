@@ -1,10 +1,8 @@
-import 'package:bodmoo/Screens/Payment/confirmPayment.dart';
 import 'package:bodmoo/Screens/login/phoneVerification.dart';
-import 'package:bodmoo/Screens/realMeat/chooseAddressScreen.dart';
 import 'package:bodmoo/Screens/realMeat/cartItemsScreen.dart';
+import 'package:bodmoo/Screens/realMeat/chooseAddressScreen.dart';
 import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:bodmoo/models/partsModel.dart';
-import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/cartProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 //import 'package:bodmoo/utils/urls.dart';
@@ -35,10 +33,6 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
   int page = 0;
   @override
   void initState() {
-    print("details hero tag:");
-    print(widget.recent
-        ? widget.partModel.details[widget.subPartIndex].id + 'R'
-        : widget.partModel.details[widget.subPartIndex].id + 'A');
     // TODO: implement initState
     super.initState();
     Provider.of<CustomerDetailsProvider>(context, listen: false).addRecentParts(PartsModel(
@@ -79,9 +73,7 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                     ? Hero(
                         tag:
                             // "images_${widget.PartIndex}_${widget.subPartIndex - widget.recent}"
-                            widget.recent
-                                ? widget.partModel.details[widget.subPartIndex].id + 'R'
-                                : widget.partModel.details[widget.subPartIndex].id + 'A',
+                            widget.recent ? widget.partModel.id + 'R' : widget.partModel.id + 'A',
                         child: Image.asset(
                           IMAGE,
                           height: MediaQuery.of(context).size.height * 0.4,
@@ -129,8 +121,8 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                                             Center(
                                               child: Hero(
                                                   tag: widget.recent
-                                                      ? widget.partModel.details[widget.subPartIndex].id + 'R'
-                                                      : widget.partModel.details[widget.subPartIndex].id + 'A'
+                                                      ? widget.partModel.id + 'R'
+                                                      : widget.partModel.id + 'A'
                                                   // "images_${widget.PartIndex}_${widget.subPartIndex - widget.recent}",
                                                   ,
                                                   child: CachedNetworkImage(
@@ -221,7 +213,7 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
           child: Row(
             children: <Widget>[
               Provider.of<CartProvider>(context).getQty(
-                        partId: widget.partModel.details[widget.subPartIndex].id,
+                        partId: widget.partModel.id,
                       ) ==
                       0
                   ? Expanded(
@@ -231,7 +223,7 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                             ? null
                             : () {
                                 OrderItemModel item = new OrderItemModel(
-                                    partId: widget.partModel.details[widget.subPartIndex].id,
+                                    id: widget.partModel.id,
                                     brandName: widget.partModel.carBrand,
                                     vehicleName: widget.partModel.carName,
                                     vehicleModel: widget.partModel.carModel,
@@ -282,7 +274,7 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                       : () async {
                           List<OrderItemModel> item = List<OrderItemModel>();
                           item.add(new OrderItemModel(
-                              partId: widget.partModel.details[widget.subPartIndex].id,
+                              id: widget.partModel.id,
                               brandName: widget.partModel.carBrand,
                               vehicleName: widget.partModel.carName,
                               vehicleModel: widget.partModel.carModel,
@@ -295,11 +287,6 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
                           if (Provider.of<CustomerDetailsProvider>(context, listen: false).token != null) {
                             Provider.of<CustomerDetailsProvider>(context, listen: false)
                                 .addOrderItems(orderItemsList: item);
-                            print("sndns" +
-                                Provider.of<CustomerDetailsProvider>(context, listen: false)
-                                    .orderItems
-                                    .length
-                                    .toString());
 
                             //TODO:SHOW ORDER PLACED SUCCEFULLY
                             Navigator.push(

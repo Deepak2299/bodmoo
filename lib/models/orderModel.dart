@@ -2,16 +2,13 @@ import 'dart:convert';
 
 import 'package:bodmoo/models/addressModel.dart';
 import 'package:bodmoo/models/orderItemModel.dart';
-import 'package:bodmoo/models/userModel.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 class OrderModel {
   OrderModel(
-      {
-      // this.id,
-      this.orderNumber,
+      {this.orderNumber,
       this.prepaid,
       this.paymentTransactionId,
       this.orderStatus,
@@ -20,7 +17,6 @@ class OrderModel {
       this.razorpayOrderId,
       this.addressModel});
 
-  // String id;
   String orderNumber;
   bool prepaid;
   String paymentTransactionId;
@@ -35,7 +31,6 @@ class OrderModel {
   String toJson(BuildContext context) => json.encode(toMap(context));
 
   factory OrderModel.fromMap(Map<String, dynamic> json) => OrderModel(
-        // id: json["_id"] == null ? null : json["_id"],
         orderNumber: json["orderNumber"] == null ? null : json["orderNumber"],
         addressModel: json["userDetails"] == null ? null : AddressModel.fromMap(json["userDetails"]),
         razorpayOrderId: json["razorpayOrderId"] == null ? null : json["razorpayOrderId"],

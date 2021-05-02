@@ -27,7 +27,7 @@ class CartProvider extends ChangeNotifier {
 
   int findItemById({@required String partId}) {
     int i = cartItems.indexWhere((element) {
-      return element.partId == partId;
+      return element.id == partId;
     });
 
     return i;

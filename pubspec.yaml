@@ -42,7 +42,7 @@ dependencies:
   package_info:
   firebase_remote_config:
   firebase_messaging:
-  ffi: ^1.0.0
+  ffi:
 
 
 dev_dependencies:

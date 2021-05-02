@@ -17,7 +17,7 @@ class RecentScreen extends StatelessWidget {
             widthFactor: 1,
             heightFactor: 0.8,
             child: Hero(
-              tag: parts[subPartIndex].id + 'R',
+              tag: pm.id + 'R',
               // "images_${partIndex}_${-1}",
               child: parts[subPartIndex].productImages.isEmpty
                   ? Image.asset(IMAGE)
@@ -61,8 +61,6 @@ class RecentScreen extends StatelessWidget {
           style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
         ),
         onTap: () {
-          print("recents screen hero tag:");
-          print(parts[subPartIndex].id + 'R');
           Navigator.push(
               context,
               CupertinoPageRoute(

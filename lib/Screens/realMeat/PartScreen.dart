@@ -65,7 +65,8 @@ class _PartScreenState extends State<PartScreen> {
                         child: ListView.separated(
                         shrinkWrap: true,
                         padding: EdgeInsets.all(8),
-                        itemCount: partsList.length,
+                        itemCount: 1,
+                        // partsList.length,
                         itemBuilder: (context, subPartIndex) {
                           return Card(
                             child: ListTile(
@@ -75,7 +76,7 @@ class _PartScreenState extends State<PartScreen> {
                                   widthFactor: 1,
                                   heightFactor: 0.8,
                                   child: Hero(
-                                    tag: partsList[subPartIndex].id + 'A',
+                                    tag: pm.id + 'A',
                                     // "images_${partIndex}_${subPartIndex}",
                                     child: partsList[subPartIndex]
                                             .productImages

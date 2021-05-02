@@ -4,7 +4,6 @@ import 'package:bodmoo/methods/recents/loadRecents.dart';
 import 'package:bodmoo/models/orderItemModel.dart';
 import 'package:bodmoo/models/partsModel.dart';
 import 'package:bodmoo/models/userModel.dart';
-import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/cartProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -32,8 +31,7 @@ class CustomerDetailsProvider extends ChangeNotifier {
 
   addOrderItems({@required List<OrderItemModel> orderItemsList}) {
     orderItems = [];
-    for (int i = 0; i < orderItemsList.length; i++)
-      orderItems.add(orderItemsList[i]);
+    for (int i = 0; i < orderItemsList.length; i++) orderItems.add(orderItemsList[i]);
     // orderItemsList = orderItemsList;
     notifyListeners();
   }
@@ -53,7 +51,7 @@ class CustomerDetailsProvider extends ChangeNotifier {
     bool c = false;
     int ind;
     for (int i = 0; i < recentPartsList.length; i++) {
-      if (recentPartsList[i].details[0].id.contains(part.details[0].id)) {
+      if (recentPartsList[i].id.contains(part.id)) {
         c = true;
         ind = i;
         break;
@@ -80,8 +78,7 @@ Future<bool> checkPrefsForLogin({@required BuildContext context}) async {
   String user = await prefs.getString(PREFS_LOGIN_KEY);
   if (user != null) {
     UserModel userModel = UserModel.fromJson(user);
-    Provider.of<CustomerDetailsProvider>(context, listen: false)
-        .setCustomerDetails(userModel: userModel);
+    Provider.of<CustomerDetailsProvider>(context, listen: false).setCustomerDetails(userModel: userModel);
     return true;
   }
   return false;
@@ -101,11 +98,8 @@ clearPrefsForLogin() async {
 savePrefsForCarts({@required List<OrderItemModel> orderItems}) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   // List<OrderItemModel> orderItems = Provider.of<ScreenProvider>(context, listen: false).cartItems;
-  String carts = jsonEncode({
-    "items": orderItems == null
-        ? null
-        : List<dynamic>.from(orderItems.map((x) => x.toMap()))
-  });
+  String carts =
+      jsonEncode({"items": orderItems == null ? null : List<dynamic>.from(orderItems.map((x) => x.toMap()))});
   // print(carts);
   await prefs.setString(PREFS_CARTS_KEY, carts);
 //  String cartStr = await prefs.getString(PREFS_CARTS_KEY);
@@ -119,10 +113,7 @@ fetchPrefsForCarts({@required BuildContext context}) async {
   if (cartStr != null) {
     var carts = json.decode(cartStr);
     Provider.of<CartProvider>(context, listen: false).cartItems =
-        carts["items"] == null
-            ? null
-            : List<OrderItemModel>.from(
-                carts["items"].map((x) => OrderItemModel.fromMap(x)));
+        carts["items"] == null ? null : List<OrderItemModel>.from(carts["items"].map((x) => OrderItemModel.fromMap(x)));
 //    print(Provider.of<CartProvider>(context, listen: false).cartItems.length);
   }
 }

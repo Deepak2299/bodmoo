@@ -1,8 +1,8 @@
 import 'package:bodmoo/Screens/login/otpScreen.dart';
 import 'package:bodmoo/widgets/toastWidget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
 FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -147,5 +147,6 @@ Future<int> sendCodeToPhoneNumber({@required String phonenumber, BuildContext co
         verificationId = verificationId;
         print(verificationId);
         print("Timeout");
-      });
+      },
+      verificationCompleted: (AuthCredential phoneAuthCredential) {});
 }

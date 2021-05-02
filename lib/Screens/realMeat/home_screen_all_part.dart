@@ -9,14 +9,12 @@ import 'package:bodmoo/methods/get/getAllParts.dart';
 import 'package:bodmoo/models/partsModel.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
-import 'package:bodmoo/utils/utils.dart';
 import 'package:bodmoo/widgets/cartIcon.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 class AllPartsHomeScreen extends StatelessWidget {
   listTile(int subPartIndex, List<PartDetail> parts, PartsModel pm, BuildContext context) {
@@ -28,7 +26,7 @@ class AllPartsHomeScreen extends StatelessWidget {
             widthFactor: 1,
             heightFactor: 0.8,
             child: Hero(
-              tag: parts[subPartIndex].id + 'A',
+              tag: pm.id + 'A',
               // "images_${partIndex}_${subPartIndex}",
               child: parts[subPartIndex].productImages.isEmpty
                   ? Image.asset(IMAGE)
@@ -73,7 +71,7 @@ class AllPartsHomeScreen extends StatelessWidget {
         ),
         onTap: () {
           print("HOME All hero tag:");
-          print(pm.details[subPartIndex].id + 'A');
+          print(pm.id + 'A');
           Navigator.push(
               context,
               CupertinoPageRoute(
@@ -205,9 +203,6 @@ class AllPartsHomeScreen extends StatelessWidget {
                               .elementAt(partIndex);
                           return GestureDetector(
                             onTap: () {
-                              print("HOME recent hero tag:");
-                              print(p.details[0].id + 'R');
-
                               Navigator.push(
                                   context,
                                   CupertinoPageRoute(
@@ -228,7 +223,7 @@ class AllPartsHomeScreen extends StatelessWidget {
                                   children: [
                                     Container(
                                       child: Hero(
-                                        tag: p.details[0].id + 'R',
+                                        tag: p.id + 'R',
                                         // "images_${index}_${-2}",
                                         child: p.details[0].productImages.isEmpty
                                             ? Image.asset(IMAGE)
@@ -308,19 +303,18 @@ class AllPartsHomeScreen extends StatelessWidget {
                                           children: [
                                             tagStyle(str: pm.carBrand),
                                             tagStyle(str: pm.carName),
-                                            tagStyle(str: pm.carModel),
+                                            // tagStyle(str: pm.carModel),
                                             tagStyle(str: pm.modelYear.toString()),
                                           ],
                                         ),
-                                        listTile(subPartIndex, parts, pm, context)
+                                        listTile(subPartIndex, parts, pm, context),
+                                        SizedBox(height: 5),
+                                        Divider(),
+                                        SizedBox(height: 10),
                                       ],
                                     )
                                   : listTile(subPartIndex, parts, pm, context);
                             },
-                            //                            separatorBuilder: (context, ind) => Divider(
-                            //                              color: Colors.blue,
-                            //                              thickness: 1,
-                            //                            ),
                           );
                         },
                       );

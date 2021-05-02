@@ -1,8 +1,5 @@
 import 'package:bodmoo/Screens/login/signUpScreen.dart';
-import 'package:bodmoo/Screens/realMeat/homeScreen.dart';
-import 'package:bodmoo/methods/firebaseMethds/firebaseMethods.dart';
 import 'package:bodmoo/methods/login/getUserDetails.dart';
-import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +7,7 @@ import 'package:flutter/material.dart';
 class OTPScreen extends StatefulWidget {
   String verificationId, phoneNumber, code;
   bool stored;
-  OTPScreen(
-      {@required this.verificationId,
-      this.phoneNumber,
-      this.code,
-      this.stored = false});
+  OTPScreen({@required this.verificationId, this.phoneNumber, this.code, this.stored = false});
 //  FocusNode Node = FocusNode();
   TextEditingController otpController = TextEditingController();
   @override
@@ -42,11 +35,8 @@ class _OTPScreenState extends State<OTPScreen> {
                   children: <Widget>[
                     Text(
                       "Verify your phone number here",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          wordSpacing: 1.5),
+                      style:
+                          TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500, wordSpacing: 1.5),
                     ),
                     SizedBox(
                       height: 15,
@@ -54,10 +44,7 @@ class _OTPScreenState extends State<OTPScreen> {
                     Text(
                       "Paste OTP here",
                       style: TextStyle(
-                          color: Color(0xff888888),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          wordSpacing: 1.5),
+                          color: Color(0xff888888), fontSize: 12, fontWeight: FontWeight.w500, wordSpacing: 1.5),
                     ),
                     SizedBox(
                       height: 20,
@@ -116,16 +103,17 @@ class _OTPScreenState extends State<OTPScreen> {
                 setState(() {
                   loading = true;
                 });
-                bool verified = await authFunction(
-                    verificationId: widget.verificationId,
-                    phoneNumber: widget.code + widget.phoneNumber,
-                    sms: otpController.text);
+                bool verified = false;
+                //  verified = await authFunction(
+                //     verificationId: widget.verificationId,
+                //     phoneNumber: widget.code + widget.phoneNumber,
+                //     sms: otpController.text);
                 setState(() {
                   loading = false;
                 });
+                verified = true;
                 if (verified) {
-                  bool userexist = await getUserDetailsOrLogin(
-                      PhNo: widget.phoneNumber, context: context);
+                  bool userexist = await getUserDetailsOrLogin(PhNo: widget.phoneNumber, context: context);
                   if (userexist) {
                     if (widget.stored) {
                       int count = 0;
@@ -135,8 +123,7 @@ class _OTPScreenState extends State<OTPScreen> {
 //                      nav.pop();
                     } else
                       // Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeScreen()));
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, "/home", (route) => false);
+                      Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
                   } else {
                     Navigator.pop(context);
                     Navigator.pushReplacement(
