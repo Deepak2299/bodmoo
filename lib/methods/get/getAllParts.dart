@@ -6,9 +6,8 @@ import 'package:http/http.dart' as http;
 
 Future<List<PartsModel>> getAllParts() async {
   List<PartsModel> partsModel = [];
-
-  var req = await http
-      .get(GET_ALL_CAR_PART_URL, headers: {'Content-type': 'application/json'});
+  print(GET_ALL_CAR_PART_URL);
+  var req = await http.get(GET_ALL_CAR_PART_URL, headers: {'Content-type': 'application/json'});
   print(req.body);
 
   if (req.statusCode != 200) {

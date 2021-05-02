@@ -58,29 +58,25 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
         ],
       ),
       body: ListView(
+        padding: EdgeInsets.all(15),
         shrinkWrap: true,
         physics: ScrollPhysics(),
         children: [
           SizedBox(height: 20),
-          ListView(
-            shrinkWrap: true,
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            physics: ScrollPhysics(),
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.5,
-                child: widget.partModel.details[widget.subPartIndex].productImages.isEmpty
-                    ? Hero(
-                        tag:
-                            // "images_${widget.PartIndex}_${widget.subPartIndex - widget.recent}"
-                            widget.recent ? widget.partModel.id + 'R' : widget.partModel.id + 'A',
-                        child: Image.asset(
-                          IMAGE,
-                          height: MediaQuery.of(context).size.height * 0.4,
-                        ),
-                      )
-                    : Column(
-                        children: [
+          Container(
+            height: MediaQuery.of(context).size.height * 0.5,
+            child: widget.partModel.details[widget.subPartIndex].productImages.isEmpty
+                ? Hero(
+                    tag:
+                        // "images_${widget.PartIndex}_${widget.subPartIndex - widget.recent}"
+                        widget.recent ? widget.partModel.id + 'R' : widget.partModel.id + 'A',
+                    child: Image.asset(
+                      IMAGE,
+                      height: MediaQuery.of(context).size.height * 0.4,
+                    ),
+                  )
+                : Column(
+                    children: [
 //                          Align(
 //                            alignment: Alignment.centerRight,
 //                            child: RaisedButton(
@@ -102,100 +98,95 @@ class _PartDetailsScrenState extends State<PartDetailsScren> {
 //                              },
 //                            ),
 //                          ),
-                          Container(
-                            height: MediaQuery.of(context).size.height * 0.4,
-                            child: PageView(
-                              physics: ScrollPhysics(),
-                              controller: pageController,
-                              onPageChanged: (p) {
-                                page = p;
-                                setState(() {});
-                              },
+
+                      //IMAGES
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.4,
+                        child: PageView(
+                          physics: ScrollPhysics(),
+                          controller: pageController,
+                          onPageChanged: (p) {
+                            page = p;
+                            setState(() {});
+                          },
+                          children: [
+                            for (int i = 0; i < widget.partModel.details[widget.subPartIndex].productImages.length; i++)
+                              i == 0
+                                  ? Stack(
+                                      children: [
+                                        Center(
+                                          child: Hero(
+                                              tag: widget.recent ? widget.partModel.id + 'R' : widget.partModel.id + 'A'
+                                              // "images_${widget.PartIndex}_${widget.subPartIndex - widget.recent}",
+                                              ,
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    widget.partModel.details[widget.subPartIndex].productImages[0],
+                                                // 'https://picsum.photos/250?image=9',
+                                                // placeholder: (context, url) =>
+                                                //     Container(child: CircularProgressIndicator()),
+                                                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                                    CircularProgressIndicator(value: downloadProgress.progress),
+                                                errorWidget: (context, url, error) => Icon(Icons.error),
+                                              )),
+                                        ),
+                                      ],
+                                    )
+                                  : Center(
+                                      child: CachedNetworkImage(
+                                        imageUrl: widget.partModel.details[widget.subPartIndex].productImages[i],
+                                        progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                            CircularProgressIndicator(value: downloadProgress.progress),
+                                        errorWidget: (context, url, error) => Icon(Icons.error),
+                                      ),
+                                    ),
+                          ],
+                        ),
+                      ),
+                      widget.partModel.details[widget.subPartIndex].productImages.length > 1
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              // mainAxisSize: MainAxisSize.min,
                               children: [
                                 for (int i = 0;
                                     i < widget.partModel.details[widget.subPartIndex].productImages.length;
                                     i++)
-                                  i == 0
-                                      ? Stack(
-                                          children: [
-                                            Center(
-                                              child: Hero(
-                                                  tag: widget.recent
-                                                      ? widget.partModel.id + 'R'
-                                                      : widget.partModel.id + 'A'
-                                                  // "images_${widget.PartIndex}_${widget.subPartIndex - widget.recent}",
-                                                  ,
-                                                  child: CachedNetworkImage(
-                                                    imageUrl:
-                                                        widget.partModel.details[widget.subPartIndex].productImages[0],
-                                                    // 'https://picsum.photos/250?image=9',
-                                                    // placeholder: (context, url) =>
-                                                    //     Container(child: CircularProgressIndicator()),
-                                                    progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                                        CircularProgressIndicator(value: downloadProgress.progress),
-                                                    errorWidget: (context, url, error) => Icon(Icons.error),
-                                                  )),
-                                            ),
-                                          ],
-                                        )
-                                      : Center(
-                                          child: CachedNetworkImage(
-                                            imageUrl: widget.partModel.details[widget.subPartIndex].productImages[i],
-                                            progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                                CircularProgressIndicator(value: downloadProgress.progress),
-                                            errorWidget: (context, url, error) => Icon(Icons.error),
-                                          ),
-                                        ),
+                                  indicator(i == page ? true : false),
                               ],
-                            ),
-                          ),
-                          widget.partModel.details[widget.subPartIndex].productImages.length > 1
-                              ? Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  // mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    for (int i = 0;
-                                        i < widget.partModel.details[widget.subPartIndex].productImages.length;
-                                        i++)
-                                      indicator(i == page ? true : false),
-                                  ],
-                                )
-                              : Container(),
-                        ],
-                      ),
-              ),
-              Text(
-                widget.partModel.details[widget.subPartIndex].partName.toString(),
-                style: TextStyle(fontSize: 25),
-              ),
-
-              Align(
-                alignment: Alignment.topLeft,
-                child: FlatButton(
-                  padding: EdgeInsets.all(0),
-                  // height: 20,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                  color: widget.partModel.details[widget.subPartIndex].outOfStock
-                      ? Colors.red.shade50
-                      : Colors.green.shade50,
-                  onPressed: () {},
-                  child: Text(
-                    widget.partModel.details[widget.subPartIndex].outOfStock ? "OutOfStock" : "Instock",
-//                textAlign: TextAlign.,
-                    style: TextStyle(
-                      color: widget.partModel.details[widget.subPartIndex].outOfStock ? Colors.red : Colors.green,
-                    ),
+                            )
+                          : Container(),
+                    ],
                   ),
+          ),
+          Text(
+            widget.partModel.details[widget.subPartIndex].partName.toString(),
+            style: TextStyle(fontSize: 25),
+          ),
+
+          Align(
+            alignment: Alignment.topLeft,
+            child: FlatButton(
+              padding: EdgeInsets.all(0),
+              // height: 20,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+              color:
+                  widget.partModel.details[widget.subPartIndex].outOfStock ? Colors.red.shade50 : Colors.green.shade50,
+              onPressed: () {},
+              child: Text(
+                widget.partModel.details[widget.subPartIndex].outOfStock ? "OutOfStock" : "Instock",
+//                textAlign: TextAlign.,
+                style: TextStyle(
+                  color: widget.partModel.details[widget.subPartIndex].outOfStock ? Colors.red : Colors.green,
                 ),
               ),
+            ),
+          ),
 //          SizedBox(
 //            height: 10,
 //          ),
-              Text(
-                "Rs " + widget.partModel.details[widget.subPartIndex].itemPrice.toString(),
-                style: TextStyle(fontSize: 30),
-              ),
-            ],
+          Text(
+            "Rs " + widget.partModel.details[widget.subPartIndex].itemPrice.toString(),
+            style: TextStyle(fontSize: 30),
           ),
           Divider(
             thickness: 0.5,

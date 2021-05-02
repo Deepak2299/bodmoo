@@ -31,38 +31,26 @@ class _PartScreenState extends State<PartScreen> {
         children: <Widget>[
           FutureBuilder(
             future: getParts(
-              category:
-                  Provider.of<ScreenProvider>(context).getScreenData.catgName,
-              subCategory: Provider.of<ScreenProvider>(context)
-                  .getScreenData
-                  .subCatgName,
-              brandName:
-                  Provider.of<ScreenProvider>(context).getScreenData.brandName,
-              vehicleName: Provider.of<ScreenProvider>(context)
-                  .getScreenData
-                  .vehicleName,
-              modelName: Provider.of<ScreenProvider>(context)
-                  .getScreenData
-                  .vm
-                  .modelName,
-              year: Provider.of<ScreenProvider>(context)
-                  .getScreenData
-                  .vm
-                  .manufactureYear,
+              category: Provider.of<ScreenProvider>(context).getScreenData.catgName,
+              subCategory: Provider.of<ScreenProvider>(context).getScreenData.subCatgName,
+              brandName: Provider.of<ScreenProvider>(context).getScreenData.brandName,
+              vehicleName: Provider.of<ScreenProvider>(context).getScreenData.vehicleName,
+              modelName: Provider.of<ScreenProvider>(context).getScreenData.vm.modelName,
+              year: Provider.of<ScreenProvider>(context).getScreenData.vm.manufactureYear,
             ),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 PartsModel pm = snapshot.data;
                 print(pm.id);
                 List<PartDetail> partsList = pm.details;
+
                 return partsList.length == 0
                     ? Center(
                         child: Text(
                         "No Parts found",
                         style: TextStyle(color: Colors.grey),
                       ))
-                    : Expanded(
-                        child: ListView.separated(
+                    : ListView.separated(
                         shrinkWrap: true,
                         padding: EdgeInsets.all(8),
                         itemCount: 1,
@@ -78,21 +66,13 @@ class _PartScreenState extends State<PartScreen> {
                                   child: Hero(
                                     tag: pm.id + 'A',
                                     // "images_${partIndex}_${subPartIndex}",
-                                    child: partsList[subPartIndex]
-                                            .productImages
-                                            .isEmpty
+                                    child: partsList[subPartIndex].productImages.isEmpty
                                         ? Image.asset(IMAGE)
                                         : CachedNetworkImage(
-                                            imageUrl: partsList[subPartIndex]
-                                                .productImages[0],
-                                            progressIndicatorBuilder: (context,
-                                                    url, downloadProgress) =>
-                                                CircularProgressIndicator(
-                                                    value: downloadProgress
-                                                        .progress),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    Icon(Icons.error),
+                                            imageUrl: partsList[subPartIndex].productImages[0],
+                                            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                                CircularProgressIndicator(value: downloadProgress.progress),
+                                            errorWidget: (context, url, error) => Icon(Icons.error),
                                           ),
                                   ),
                                 ),
@@ -106,10 +86,7 @@ class _PartScreenState extends State<PartScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    "Rs " +
-                                        partsList[subPartIndex]
-                                            .itemPrice
-                                            .toString(),
+                                    "Rs " + partsList[subPartIndex].itemPrice.toString(),
 //                                    style: textStyle,
                                   ),
                                   Text(
@@ -117,13 +94,9 @@ class _PartScreenState extends State<PartScreen> {
 //                                    style: textStyle,
                                   ),
                                   Text(
-                                    partsList[subPartIndex].outOfStock
-                                        ? "OutOfStock"
-                                        : "Instock",
+                                    partsList[subPartIndex].outOfStock ? "OutOfStock" : "Instock",
                                     style: TextStyle(
-                                      color: partsList[subPartIndex].outOfStock
-                                          ? Colors.red
-                                          : Colors.green,
+                                      color: partsList[subPartIndex].outOfStock ? Colors.red : Colors.green,
                                     ),
                                   ),
                                 ],
@@ -132,20 +105,19 @@ class _PartScreenState extends State<PartScreen> {
                               trailing: Text(
                                 "View\nDetails",
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.w500),
+                                style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
                               ),
                               onTap: () {
                                 Navigator.push(
                                     context,
                                     CupertinoPageRoute(
-                                        builder: (context) => PartDetailsScren(
-                                              partModel: pm,
-                                              subPartIndex: subPartIndex,
-                                              recent: false,
-                                              // PartIndex: partIndex,
-                                            )));
+                                      builder: (context) => PartDetailsScren(
+                                        partModel: pm,
+                                        subPartIndex: subPartIndex,
+                                        recent: false,
+                                        // PartIndex: partIndex,
+                                      ),
+                                    ));
                               },
                             ),
                           );
@@ -154,7 +126,7 @@ class _PartScreenState extends State<PartScreen> {
                           color: Colors.blue,
                           thickness: 1,
                         ),
-                      ));
+                      );
               } else
                 return shimmerLoader(context);
             },

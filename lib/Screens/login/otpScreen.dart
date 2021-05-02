@@ -1,4 +1,5 @@
 import 'package:bodmoo/Screens/login/signUpScreen.dart';
+import 'package:bodmoo/methods/firebaseMethds/firebaseMethods.dart';
 import 'package:bodmoo/methods/login/getUserDetails.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -104,14 +105,13 @@ class _OTPScreenState extends State<OTPScreen> {
                   loading = true;
                 });
                 bool verified = false;
-                //  verified = await authFunction(
-                //     verificationId: widget.verificationId,
-                //     phoneNumber: widget.code + widget.phoneNumber,
-                //     sms: otpController.text);
+                verified = await authFunction(
+                    verificationId: widget.verificationId,
+                    phoneNumber: widget.code + widget.phoneNumber,
+                    sms: otpController.text);
                 setState(() {
                   loading = false;
                 });
-                verified = true;
                 if (verified) {
                   bool userexist = await getUserDetailsOrLogin(PhNo: widget.phoneNumber, context: context);
                   if (userexist) {

@@ -1,8 +1,6 @@
-import 'package:bodmoo/Screens/GoogleSignIn/googleSignInScreen.dart';
 import 'package:bodmoo/Screens/drawer/myAddresses/addressListScreen.dart';
 import 'package:bodmoo/Screens/drawer/myOrders/1ordersListScreen.dart';
 import 'package:bodmoo/Screens/login/phoneVerification.dart';
-import 'package:bodmoo/Screens/realMeat/PartScreen.dart';
 import 'package:bodmoo/methods/get/getBrands.dart';
 import 'package:bodmoo/methods/get/getCategories.dart';
 import 'package:bodmoo/methods/get/getSubCat.dart';
@@ -12,10 +10,9 @@ import 'package:bodmoo/providers/ScreenProvider.dart';
 import 'package:bodmoo/providers/customerDEtailsProvider.dart';
 import 'package:bodmoo/widgets/cartIcon.dart';
 import 'package:bodmoo/widgets/items_view.dart';
-import 'package:bodmoo/widgets/items_view.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -181,6 +178,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               dropIndex: 4,
                             )
                           : dummyDropdown('Model'),
+
+// ---------------------------------
+
 //               SizedBox(
 //                 height: 20,
 //               ),

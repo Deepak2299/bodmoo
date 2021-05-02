@@ -1,4 +1,4 @@
-import 'package:bodmoo/Screens/login/otpScreen.dart';
+import 'package:bodmoo/methods/firebaseMethds/firebaseMethods.dart';
 import 'package:bodmoo/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -160,18 +160,8 @@ class _SignInWithPhoneNOState extends State<SignInWithPhoneNO> {
                       loading = true;
                     });
 
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                          builder: (context) => OTPScreen(
-                                verificationId: 'verificationId',
-                                phoneNumber: "8826173684",
-                                code: "+91",
-                                stored: false,
-                              )),
-                    );
-                    // await sendCodeToPhoneNumber(
-                    //     phonenumber: phoneController.text, context: context, stored: widget.stored);
+                    await sendCodeToPhoneNumber(
+                        phonenumber: phoneController.text, context: context, stored: widget.stored);
 
                     await Future.delayed(Duration(seconds: 1), () {});
                     setState(() {

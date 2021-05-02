@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:bodmoo/Screens/realMeat/screenData.dart';
 import 'package:bodmoo/models/partsModel.dart';
-import 'package:bodmoo/utils/urls.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
@@ -89,36 +89,16 @@ Future<PartsModel> getParts({
     "car_brand": brandName,
     "model_year": year,
     "car_name": vehicleName,
-    "car_model": modelName
+    "car_model": modelName,
   };
 
-//  String url = GET_CAR_PART_URL +
-//      brandName +
-//      '&' +
-////      vehicleName +
-////      '&' +
-////      modelName +
-////      '&' +
-//      year +
-//      '&' +
-//      category +
-//      '&' +
-//      subCategory;
-
-//  Uri uri = Uri.parse(url);
-//  final newURI = uri.replace(
-//    query: jsonEncode(params),
-//  );
-//  print(url);
-  print(jsonEncode(params));
-  var req = await http.post(
-      'https://apicarparts.herokuapp.com/api/store/products/getSpecificParts',
-      body: jsonEncode(params),
-      headers: {'Content-type': 'application/json'});
+  print("GET SPECF PART BODY" + jsonEncode(params));
+  var req = await http.post('https://apicarparts.herokuapp.com/api/store/products/getSpecificParts',
+      body: jsonEncode(params), headers: {'Content-type': 'application/json'});
 
   print(req.body);
   if (req.statusCode != 200) {
-//    ScreenErrorData.partsError = jsonDecode(req.body)['message'];
+    ScreenErrorData.partsError = jsonDecode(req.body)['message'];
   }
 //    ScreenErrorData.partsError = '';
   else {
