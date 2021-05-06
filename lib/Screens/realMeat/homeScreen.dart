@@ -28,6 +28,37 @@ textWidget(String str) {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool collapse = true;
+  int selectYear = null;
+  yearDropdown(String header) {
+    List<int> years = [];
+
+    int num = 2000;
+    while (num <= DateTime.now().year) {
+      years.add(num);
+      num++;
+    }
+    print(years);
+    return DropdownButton<int>(
+      value: selectYear,
+      items: years
+          .map((year) => DropdownMenuItem<int>(
+                child: Container(
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    child: ListTile(
+                        // leading: Icon(Icons.card_giftcard),
+                        title: Text(year.toString()))),
+                value: year,
+              ))
+          .toList(),
+      hint: Text('Select ${header}'),
+      isExpanded: true,
+      onChanged: (var val) {
+        selectYear = val;
+        setState(() {});
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 //    print(context.watch<ScreenProvider>().getScreenData.catgName);
@@ -202,6 +233,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               dropIndex: 4,
                             )
                           : dummyDropdown('Model'),
+                      screenProvider.getScreenData.vm != null
+                          ? yearDropdown('Year')
+                          : dummyDropdown('Year'),
 
 // ---------------------------------
 
